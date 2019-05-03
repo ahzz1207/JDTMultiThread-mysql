@@ -1,0 +1,3 @@
+set want rows height equal value passed code max row param fixed ensure size calculator
+max height row could fixed enabled via code set given value used param grow size calculator
+find first visible position scrap children layout views returning number pixels laid could greater entire view useful scroll functions param direction filling grid dy vertical offset creating gap need fill empty top begin pre recycler state child row sparse array cache get count start left padding decorated previous height size put cached value detach pending next current item header measure margins measured width content rows limit end attach remove add right bottom removing recycle filled

@@ -1,0 +1,5 @@
+call this to submit the input tag
+returns the input state tag in this group
+returns the tag array in group, except the input tag
+append a input tag to this group
+append tag to this group

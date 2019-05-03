@@ -1,0 +1,3 @@
+set to true if you want all rows to be of the same height
+the max height a row could be
+find first visible position, scrap all children, and then layout all visible views returning the number of pixels laid out, which could be greater than the entire view (useful for scroll functions)

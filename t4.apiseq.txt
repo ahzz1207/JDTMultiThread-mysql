@@ -1,0 +1,3 @@
+GreedoLayoutSizeCalculator setFixedHeight
+GreedoLayoutSizeCalculator setMaxRowHeight
+SparseArray new Size getHeight Size getHeight SparseArray put SparseArray size SparseArray valueAt State getItemCount SparseArray get Recycler getViewForPosition View getMeasuredWidth View getMeasuredHeight Size new Size getWidth Size getHeight SparseArray remove Size getWidth Size getHeight Size getWidth SparseArray size SparseArray valueAt Recycler recycleView

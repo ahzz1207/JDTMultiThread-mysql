@@ -1,0 +1,3 @@
+@Override protected void onCreate(@Nullable Bundle savedInstanceState){   super.onCreate(savedInstanceState);   setContentView(R.layout.activity_indicator);   String indicator=getIntent().getStringExtra("indicator");   avi=(AVLoadingIndicatorView)findViewById(R.id.avi);   avi.setIndicator(indicator); } 
+public void setIndicatorColor(int color){   this.mIndicatorColor=color;   mIndicator.setColor(color); } 
+public void addUpdateListener(ValueAnimator animator,ValueAnimator.AnimatorUpdateListener updateListener){   mUpdateListeners.put(animator,updateListener); } 

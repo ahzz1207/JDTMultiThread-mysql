@@ -1,0 +1,3 @@
+created jack wang override create nullable bundle saved instance state set content view layout activity indicator string get intent extra avi loading find id
+set indicator color 0x parse get resources android black param
+use add animator update listener create otherwise doesn work animation restart param value listeners put

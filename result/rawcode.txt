@@ -1,0 +1,809 @@
+@Override protected void onCreate(@Nullable Bundle savedInstanceState){   super.onCreate(savedInstanceState);   setContentView(R.layout.activity_indicator);   String indicator=getIntent().getStringExtra("indicator");   avi=(AVLoadingIndicatorView)findViewById(R.id.avi);   avi.setIndicator(indicator); } 
+public void setIndicatorColor(int color){   this.mIndicatorColor=color;   mIndicator.setColor(color); } 
+public void addUpdateListener(ValueAnimator animator,ValueAnimator.AnimatorUpdateListener updateListener){   mUpdateListeners.put(animator,updateListener); } 
+public void submitTag(){   final TagView inputTag=getInputTag();   if (inputTag != null && inputTag.isInputAvailable()) {     inputTag.endInput();     if (mOnTagChangeListener != null) {       mOnTagChangeListener.onAppend(TagGroup.this,inputTag.getText().toString());     }     appendInputTag();   } } 
+public String getInputTagText(){   final TagView inputTagView=getInputTag();   if (inputTagView != null) {     return inputTagView.getText().toString();   }   return null; } 
+public String[] getTags(){   final int count=getChildCount();   final List<String> tagList=new ArrayList<>();   for (int i=0; i < count; i++) {     final TagView tagView=getTagAt(i);     if (tagView.mState == TagView.STATE_NORMAL) {       tagList.add(tagView.getText().toString());     }   }   return tagList.toArray(new String[tagList.size()]); } 
+protected void appendInputTag(String tag){   final TagView previousInputTag=getInputTag();   if (previousInputTag != null) {     throw new IllegalStateException("Already has a INPUT tag in group.");   }   final TagView newInputTag=new TagView(getContext(),TagView.STATE_INPUT,tag);   newInputTag.setOnClickListener(mInternalTagClickListener);   addView(newInputTag); } 
+protected void appendTag(CharSequence tag){   final TagView newTag=new TagView(getContext(),TagView.STATE_NORMAL,tag);   newTag.setOnClickListener(mInternalTagClickListener);   addView(newTag); } 
+static void sequenceWhile(){   Stream<IO<String>> s=Stream.repeat(stdinReadLine());   IO<Stream<String>> io=IOFunctions.sequenceWhile(s,s2 -> s2.length() > 1);   List<String> list=runSafe(io).take(3).toList();   out.println("list: " + list + " size: "+ list.length()); } 
+@Override public final boolean equals(Object o){   if (this == o)   return true;   if (o == null || getClass() != o.getClass())   return false;   VendingMachine that=(VendingMachine)o;   if (coins != that.coins)   return false;   if (items != that.items)   return false;   if (locked != that.locked)   return false;   return true; } 
+public void setIndicator(String indicatorName){   if (TextUtils.isEmpty(indicatorName)) {     return;   }   StringBuilder drawableClassName=new StringBuilder();   if (!indicatorName.contains(".")) {     String defaultPackageName=getClass().getPackage().getName();     drawableClassName.append(defaultPackageName).append(".indicators").append(".");   }   drawableClassName.append(indicatorName);   try {     Class<?> drawableClass=Class.forName(drawableClassName.toString());     Indicator indicator=(Indicator)drawableClass.newInstance();     setIndicator(indicator);   }  catch (  ClassNotFoundException e) {     Log.e(TAG,"Didn't find your class , check the name again !");   } catch (  InstantiationException e) {     e.printStackTrace();   } catch (  IllegalAccessException e) {     e.printStackTrace();   } } 
+private String classNameToCanonicalName(ClassName className){   List<String> names=new ArrayList<>();   names.add(className.packageName());   names.addAll(className.simpleNames());   return names.get(0).isEmpty() ? join(".",names.subList(1,names.size())) : join(".",names); } 
+@Test(expected=ConcurrentModificationException.class) public void iterableStreamWithStructureUpdate(){   java.util.List<Integer> list=List.list(1,2,3).toJavaList();   Stream<Integer> s1=Stream.iterableStream(list);   int x=s1.head();   list.remove(1);   Stream<Integer> s2=s1.tail()._1();   x=s2.head(); } 
+public static <A,B>F1W<A,B> lift(final F<A,B> f){   return new F1WFunc<>(f); } 
+public Stream<Character> show(final A a){   return f.f(a); } 
+public List<Character> showl(final A a){   return show(a).toList(); } 
+public Unit println(final A a){   print(a);   System.out.println();   return unit(); } 
+public Unit print(final A a){   final char[] buffer=new char[8192];   int c=0;   for (Stream<Character> cs=show(a); cs.isNotEmpty(); cs=cs.tail()._1()) {     buffer[c]=cs.head();     c++;     if (c == 8192) {       System.out.print(buffer);       c=0;     }   }   System.out.print(Array.copyOfRange(buffer,0,c));   return unit(); } 
+public void printlnE(final A a){   System.err.println(showS(a)); } 
+public static <A>Show<A> show(final F<A,Stream<Character>> f){   return new Show<>(f); } 
+public static <A>Show<V2<A>> v2Show(final Show<A> ea){   return streamShow(ea,"V2(",",",")").contramap(V2.toStream_()); } 
+public static <A>Show<V3<A>> v3Show(final Show<A> ea){   return streamShow(ea,"V3(",",",")").contramap(V3.toStream_()); } 
+public static <A>Show<V4<A>> v4Show(final Show<A> ea){   return streamShow(ea,"V4(",",",")").contramap(V4.toStream_()); } 
+public static <A>Show<V5<A>> v5Show(final Show<A> ea){   return streamShow(ea,"V5(",",",")").contramap(V5.toStream_()); } 
+public static <A>Show<V6<A>> v6Show(final Show<A> ea){   return streamShow(ea,"V6(",",",")").contramap(V6.toStream_()); } 
+public static <A>Show<V7<A>> v7Show(final Show<A> ea){   return streamShow(ea,"V7(",",",")").contramap(V7.toStream_()); } 
+public static <A>Show<V8<A>> v8Show(final Show<A> ea){   return streamShow(ea,"V8(",",",")").contramap(V8.toStream_()); } 
+public static <A,B,C>F2W<A,B,C> lift(final F2<A,B,C> f){   return new F2WFunc<>(f); } 
+public int hash(final A a){   return f.f(a); } 
+public static <A>Hash<A> hash(final F<A,Integer> f){   return new Hash<>(f); } 
+public static <A>Hash<P1<A>> p1Hash(final Hash<A> ha){   return ha.contramap(P1.__1()); } 
+public static <A>Hash<V2<A>> v2Hash(final Hash<A> ea){   return streamHash(ea).contramap(V2.toStream_()); } 
+public static <A>Hash<V3<A>> v3Hash(final Hash<A> ea){   return streamHash(ea).contramap(V3.toStream_()); } 
+public static <A>Hash<V4<A>> v4Hash(final Hash<A> ea){   return streamHash(ea).contramap(V4.toStream_()); } 
+public static <A>Hash<V5<A>> v5Hash(final Hash<A> ea){   return streamHash(ea).contramap(V5.toStream_()); } 
+public static <A>Hash<V6<A>> v6Hash(final Hash<A> ea){   return streamHash(ea).contramap(V6.toStream_()); } 
+public static <A>Hash<V7<A>> v7Hash(final Hash<A> ea){   return streamHash(ea).contramap(V7.toStream_()); } 
+public static <A>Hash<V8<A>> v8Hash(final Hash<A> ea){   return streamHash(ea).contramap(V8.toStream_()); } 
+public static <A>P1<A> softMemo(F0<A> f){   return new P1.SoftReferenceMemo<>(f); } 
+public <B>Monoid<B> xmap(final F<A,B> f,final F<B,A> g){   Monoid.Definition<A> def=this.def;   B zero=f.f(def.empty());   return monoidDef(new Definition<B>(){     @Override public B empty(){       return zero;     }     @Override public B append(    B a1,    B a2){       return f.f(def.append(g.f(a1),g.f(a2)));     }     @Override public F<B,B> prepend(    B b){       return dimap(def.prepend(g.f(b)),g,f);     }     @Override public B multiply(    int n,    B b){       return f.f(def.multiply(n,g.f(b)));     }     @Override public B sum(    F0<Stream<B>> as){       return f.f(def.sum(() -> as.f().map(g)));     }   } ); } 
+public A sum(final A a1,final A a2){   return def.append(a1,a2); } 
+public F<A,A> sum(final A a1){   return def.prepend(a1); } 
+public A zero(){   return def.empty(); } 
+public A multiply(final int n,final A a){   return def.multiply(n,a); } 
+public A sumRight(final List<A> as){   return as.foldRight(def::append,def.empty()); } 
+public A sumRight(final Stream<A> as){   return as.foldRight1(def::append,def.empty()); } 
+public A sumLeft(final List<A> as){   return as.foldLeft(def::append,def.empty()); } 
+public A sumLeft(final Stream<A> as){   return def.sum(() -> as); } 
+public A join(final Iterable<A> as,final A a){   final Stream<A> s=iterableStream(as);   F<A,A> prependA=def.prepend(a);   return s.isEmpty() ? def.empty() : s.foldLeft1((a1,a2) -> def.append(a1,prependA.f(a2))); } 
+public Monoid<A> dual(){   return monoidDef(def.dual()); } 
+public static <A>Monoid<A> monoidDef(Definition<A> def){   return new Monoid<>(def); } 
+public static <A>Monoid<A> monoidDef(AltDefinition<A> def){   return new Monoid<>(def); } 
+public static <A>Monoid<A> monoidDef(final Semigroup.Definition<A> s,final A zero){   return new Monoid<>(new Monoid.Definition<A>(){     @Override public A empty(){       return zero;     }     @Override public A sum(    F0<Stream<A>> as){       return s.sum(zero,as);     }     @Override public A sum(    A a,    F0<Stream<A>> as){       return s.sum(a,as);     }     @Override public A multiply(    int n,    A a){       return (n <= 0) ? zero : s.multiply1p(n - 1,a);     }     @Override public A multiply1p(    int n,    A a){       return s.multiply1p(n,a);     }     @Override public A append(    A a1,    A a2){       return s.append(a1,a2);     }     @Override public F<A,A> prepend(    A a){       return s.prepend(a);     }   } ); } 
+public static <A>Monoid<A> monoid(final F<A,F<A,A>> sum,final A zero){   return new Monoid<>(new AltDefinition<A>(){     @Override public F<A,A> prepend(    A a){       return sum.f(a);     }     @Override public A empty(){       return zero;     }   } ); } 
+public static <A>Monoid<A> monoid(final F2<A,A,A> sum,final A zero){   return new Monoid<>(new Definition<A>(){     @Override public A empty(){       return zero;     }     @Override public A append(    A a1,    A a2){       return sum.f(a1,a2);     }   } ); } 
+@Deprecated public static <A>Monoid<A> monoid(final Semigroup<A> s,final A zero){   return s.monoid(zero); } 
+public static <A,B>Monoid<F<A,B>> functionMonoid(final Monoid<B> mb){   Definition<B> mbDef=mb.def;   return monoidDef(new Definition<F<A,B>>(){     @Override public F<A,B> empty(){       return __ -> mbDef.empty();     }     @Override public F<A,B> append(    F<A,B> a1,    F<A,B> a2){       return a -> mbDef.append(a1.f(a),a2.f(a));     }   } ); } 
+public static <A>Monoid<List<A>> listMonoid(){   return monoidDef(new Definition<List<A>>(){     @Override public List<A> empty(){       return nil();     }     @Override public List<A> append(    List<A> a1,    List<A> a2){       return a1.append(a2);     }     @Override public List<A> sum(    F0<Stream<List<A>>> as){       return as.f().map(DList::listDList).foldLeft(DList::append,DList.<A>nil()).run();     }   } ); } 
+public static <A>Monoid<Option<A>> firstOptionMonoid(){   return monoidDef(new Definition<Option<A>>(){     @Override public Option<A> empty(){       return none();     }     @Override public Option<A> append(    Option<A> a1,    Option<A> a2){       return a1.orElse(a2);     }     @Override public F<Option<A>,Option<A>> prepend(    Option<A> a1){       return a1.isSome() ? __ -> a1 : identity();     }     @Override public Option<A> multiply(    int n,    Option<A> as){       return as;     }     @Override public Option<A> sum(    F0<Stream<Option<A>>> as){       return as.f().filter(Option.isSome_()).orHead(Option::none);     }   } ); } 
+public static <A>Monoid<Option<A>> lastOptionMonoid(){   return monoidDef(new Definition<Option<A>>(){     @Override public Option<A> empty(){       return none();     }     @Override public Option<A> append(    Option<A> a1,    Option<A> a2){       return a2.orElse(a1);     }     @Override public F<Option<A>,Option<A>> prepend(    Option<A> a1){       return a1.isNone() ? identity() : a2 -> a2.orElse(a1);     }     @Override public Option<A> multiply(    int n,    Option<A> as){       return as;     }   } ); } 
+public static <A>Monoid<Stream<A>> streamMonoid(){   return monoidDef(new Definition<Stream<A>>(){     @Override public Stream<A> empty(){       return Stream.nil();     }     @Override public Stream<A> append(    Stream<A> a1,    Stream<A> a2){       return a1.append(a2);     }     @Override public Stream<A> sum(    F0<Stream<Stream<A>>> as){       return Stream.join(as.f());     }   } ); } 
+@SuppressWarnings("unchecked") public static <A>Monoid<Array<A>> arrayMonoid(){   return monoidDef(new Definition<Array<A>>(){     @Override public Array<A> empty(){       return Array.empty();     }     @Override public Array<A> append(    Array<A> a1,    Array<A> a2){       return a1.append(a2);     }   } ); } 
+public static <A>Monoid<IO<A>> ioMonoid(final Monoid<A> ma){   Definition<A> maDef=ma.def;   return monoidDef(new Definition<IO<A>>(){     @Override public IO<A> empty(){       return () -> maDef.empty();     }     @Override public IO<A> append(    IO<A> a1,    IO<A> a2){       return () -> maDef.append(a1.run(),a2.run());     }   } ); } 
+public static <A>Monoid<Set<A>> setMonoid(final Ord<A> o){   return monoidDef(new Definition<Set<A>>(){     @Override public Set<A> empty(){       return Set.empty(o);     }     @Override public Set<A> append(    Set<A> a1,    Set<A> a2){       return a1.union(a2);     }   } ); } 
+@Deprecated public static <A>Monoid<A> ordMaxMonoid(final Ord<A> o,final A zero){   return o.maxMonoid(zero); } 
+public static double sum(final List<Double> doubles){   return doubles.foldLeft((x,y) -> x + y,0.0); } 
+public static double product(final List<Double> doubles){   return doubles.foldLeft((x,y) -> x * y,1.0); } 
+public static <X>X nullablefindFirst(final List<X> values,final F0<X> def){   return findFirst(values.map(Option.fromNull()),def); } 
+public static <A,B>B visitor(final List<F<A,Option<B>>> visitors,final F0<B> def,final A value){   return findFirst(visitors.map(Function.apply(value)),def); } 
+public static <A,B>B nullableVisitor(final List<F<A,B>> visitors,final F0<B> def,final A value){   return visitor(visitors.map(k -> compose(Option.fromNull(),k)),def,value); } 
+public Validation<E,Result<I,A>> parse(final I i){   return f.f(i); } 
+public <B,C>Parser<I,C,E> bind(final Parser<I,B,E> pb,final F<A,F<B,C>> f){   return pb.apply(map(f)); } 
+public <B,C,D>Parser<I,D,E> bind(final Parser<I,B,E> pb,final Parser<I,C,E> pc,final F<A,F<B,F<C,D>>> f){   return pc.apply(bind(pb,f)); } 
+public <B,C,D,E$>Parser<I,E$,E> bind(final Parser<I,B,E> pb,final Parser<I,C,E> pc,final Parser<I,D,E> pd,final F<A,F<B,F<C,F<D,E$>>>> f){   return pd.apply(bind(pb,pc,f)); } 
+public <B,C,D,E$,F$>Parser<I,F$,E> bind(final Parser<I,B,E> pb,final Parser<I,C,E> pc,final Parser<I,D,E> pd,final Parser<I,E$,E> pe,final F<A,F<B,F<C,F<D,F<E$,F$>>>>> f){   return pe.apply(bind(pb,pc,pd,f)); } 
+public <B,C,D,E$,F$,G>Parser<I,G,E> bind(final Parser<I,B,E> pb,final Parser<I,C,E> pc,final Parser<I,D,E> pd,final Parser<I,E$,E> pe,final Parser<I,F$,E> pf,final F<A,F<B,F<C,F<D,F<E$,F<F$,G>>>>>> f){   return pf.apply(bind(pb,pc,pd,pe,f)); } 
+public <B,C,D,E$,F$,G,H>Parser<I,H,E> bind(final Parser<I,B,E> pb,final Parser<I,C,E> pc,final Parser<I,D,E> pd,final Parser<I,E$,E> pe,final Parser<I,F$,E> pf,final Parser<I,G,E> pg,final F<A,F<B,F<C,F<D,F<E$,F<F$,F<G,H>>>>>>> f){   return pg.apply(bind(pb,pc,pd,pe,pf,f)); } 
+public <B,C,D,E$,F$,G,H,I$>Parser<I,I$,E> bind(final Parser<I,B,E> pb,final Parser<I,C,E> pc,final Parser<I,D,E> pd,final Parser<I,E$,E> pe,final Parser<I,F$,E> pf,final Parser<I,G,E> pg,final Parser<I,H,E> ph,final F<A,F<B,F<C,F<D,F<E$,F<F$,F<G,F<H,I$>>>>>>>> f){   return ph.apply(bind(pb,pc,pd,pe,pf,pg,f)); } 
+public <B>Parser<I,B,E> apply(final Parser<I,F<A,B>,E> p){   return p.bind(this::map); } 
+public Parser<I,Stream<A>,E> repeat(){   return repeat1().or(() -> value(Stream.nil())); } 
+public static <I,A,E>Parser<I,A,E> parser(final F<I,Validation<E,Result<I,A>>> f){   return new Parser<>(f); } 
+public static <I,E>Parser<Stream<I>,I,E> satisfy(final F0<E> missing,final F<I,E> sat,final F<I,Boolean> f){   return StreamParser.<I,E>element(missing).bind(x -> f.f(x) ? Parser.value(x) : Parser.fail(sat.f(x))); } 
+public static <E>Parser<Stream<Character>,Character,E> character(final F0<E> e){   return StreamParser.element(e); } 
+public static <E>Parser<Stream<Character>,Character,E> character(final F0<E> missing,final F<Character,E> sat,final char c){   return StreamParser.satisfy(missing,sat,x -> x == c); } 
+public static <E>Parser<Stream<Character>,Stream<Character>,E> characters(final F0<E> missing,final int n){   return n <= 0 ? Parser.value(Stream.nil()) : character(missing).bind(characters(missing,n - 1),Stream.cons_()); } 
+public static <E>Parser<Stream<Character>,Stream<Character>,E> characters(final F0<E> missing,final F<Character,E> sat,final Stream<Character> cs){   return cs.isEmpty() ? Parser.value(Stream.nil()) : character(missing,sat,cs.head()).bind(characters(missing,sat,cs.tail()._1()),Stream.cons_()); } 
+public static <E>Parser<Stream<Character>,Digit,E> digit(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isDigit).map(c1 -> Digit.fromChar(c1).some()); } 
+public static <E>Parser<Stream<Character>,Character,E> lower(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isLowerCase); } 
+public static <E>Parser<Stream<Character>,Character,E> upper(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isUpperCase); } 
+public static <E>Parser<Stream<Character>,Character,E> defined(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isDefined); } 
+public static <E>Parser<Stream<Character>,Character,E> highSurrogate(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isHighSurrogate); } 
+public static <E>Parser<Stream<Character>,Character,E> identifierIgnorable(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isIdentifierIgnorable); } 
+public static <E>Parser<Stream<Character>,Character,E> isoControl(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isISOControl); } 
+public static <E>Parser<Stream<Character>,Character,E> javaIdentifierPart(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isJavaIdentifierPart); } 
+public static <E>Parser<Stream<Character>,Character,E> javaIdentifierStart(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isJavaIdentifierStart); } 
+public static <E>Parser<Stream<Character>,Character,E> alpha(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isLetter); } 
+public static <E>Parser<Stream<Character>,Character,E> alphaNum(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isLetterOrDigit); } 
+public static <E>Parser<Stream<Character>,Character,E> lowSurrogate(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isLowSurrogate); } 
+public static <E>Parser<Stream<Character>,Character,E> mirrored(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isMirrored); } 
+public static <E>Parser<Stream<Character>,Character,E> space(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isSpaceChar); } 
+public static <E>Parser<Stream<Character>,Character,E> titleCase(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isTitleCase); } 
+public static <E>Parser<Stream<Character>,Character,E> unicodeIdentiferPart(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isUnicodeIdentifierPart); } 
+public static <E>Parser<Stream<Character>,Character,E> unicodeIdentiferStart(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isUnicodeIdentifierStart); } 
+public static <E>Parser<Stream<Character>,Character,E> whitespace(final F0<E> missing,final F<Character,E> sat){   return StreamParser.satisfy(missing,sat,Character::isWhitespace); } 
+public <J>Result<J,A> mapRest(final F<I,J> f){   return result(f.f(i),a); } 
+public <B>Result<I,B> mapValue(final F<A,B> f){   return result(i,f.f(a)); } 
+public Iterator<A> iterator(){   return new Iterator<A>(){     private boolean r;     public boolean hasNext(){       return !r;     }     public A next(){       if (r)       throw new NoSuchElementException();  else {         r=true;         return a;       }     }     public void remove(){       throw new UnsupportedOperationException();     }   } ; } 
+public static <A,I>Result<I,A> result(final I i,final A a){   return new Result<>(i,a); } 
+public static Error error(final String s){   throw new Error(s); } 
+public static <A,B>SynchronousQueue<B> mapJ(final F<A,B> f,final SynchronousQueue<A> as){   final SynchronousQueue<B> bs=new SynchronousQueue<>();   bs.addAll(iterableStream(as).map(f).toCollection());   return bs; } 
+public static <A,B>PriorityBlockingQueue<B> mapJ(final F<A,B> f,final PriorityBlockingQueue<A> as){   return new PriorityBlockingQueue<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>LinkedBlockingQueue<B> mapJ(final F<A,B> f,final LinkedBlockingQueue<A> as){   return new LinkedBlockingQueue<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>CopyOnWriteArraySet<B> mapJ(final F<A,B> f,final CopyOnWriteArraySet<A> as){   return new CopyOnWriteArraySet<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>CopyOnWriteArrayList<B> mapJ(final F<A,B> f,final CopyOnWriteArrayList<A> as){   return new CopyOnWriteArrayList<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>ConcurrentLinkedQueue<B> mapJ(final F<A,B> f,final ConcurrentLinkedQueue<A> as){   return new ConcurrentLinkedQueue<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>ArrayBlockingQueue<B> mapJ(final F<A,B> f,final ArrayBlockingQueue<A> as){   final ArrayBlockingQueue<B> bs=new ArrayBlockingQueue<>(as.size());   bs.addAll(iterableStream(as).map(f).toCollection());   return bs; } 
+public static <A,B>TreeSet<B> mapJ(final F<A,B> f,final TreeSet<A> as){   return new TreeSet<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>PriorityQueue<B> mapJ(final F<A,B> f,final PriorityQueue<A> as){   return new PriorityQueue<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>LinkedList<B> mapJ(final F<A,B> f,final LinkedList<A> as){   return new LinkedList<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B>ArrayList<B> mapJ(final F<A,B> f,final ArrayList<A> as){   return new ArrayList<>(iterableStream(as).map(f).toCollection()); } 
+public static <A,B,C>F2<Tree<A>,Tree<B>,Tree<C>> treeM(final F2<A,B,C> f){   return new F2<Tree<A>,Tree<B>,Tree<C>>(){     public Tree<C> f(    final Tree<A> as,    final Tree<B> bs){       final F2<Tree<A>,Tree<B>,Tree<C>> self=this;       return node(f.f(as.root(),bs.root()),P.lazy(() -> streamM(self).f(as.subForest()._1(),bs.subForest()._1())));     }   } ; } 
+public static <A,B,C>F2<Tree<A>,Tree<B>,Tree<C>> zipTreeM(final F2<A,B,C> f){   return new F2<Tree<A>,Tree<B>,Tree<C>>(){     public Tree<C> f(    final Tree<A> ta,    final Tree<B> tb){       final F2<Tree<A>,Tree<B>,Tree<C>> self=this;       return node(f.f(ta.root(),tb.root()),P.lazy(() -> zipStreamM(self).f(ta.subForest()._1(),tb.subForest()._1())));     }   } ; } 
+public A sum(final A a1,final A a2){   return def.append(a1,a2); } 
+public F<A,A> sum(final A a1){   return def.prepend(a1); } 
+public A multiply1p(int n,A a){   return def.multiply1p(n,a); } 
+public A sumNel(final NonEmptyList<A> as){   return as.foldLeft1(def::append); } 
+public A sumStream(A a,F0<Stream<A>> as){   return def.sum(a,as); } 
+public Semigroup<A> dual(){   return semigroupDef(def.dual()); } 
+public Monoid<Option<A>> lift(){   Definition<A> def=this.def;   return monoidDef(new Monoid.Definition<Option<A>>(){     @Override public Option<A> empty(){       return none();     }     @Override public Option<A> append(    Option<A> a1,    Option<A> a2){       return a1.liftM2(a1,def::append).orElse(a1).orElse(a2);     }     @Override public Option<A> multiply(    int n,    Option<A> oa){       return n > 0 ? oa.map(a -> def.multiply1p(n - 1,a)) : none();     }     @Override public Option<A> sum(    F0<Stream<Option<A>>> oas){       Stream<A> as=oas.f().bind(Option::toStream);       return as.uncons(none(),h -> tail -> some(def.sum(h,tail::_1)));     }   } ); } 
+public <B>Semigroup<B> xmap(final F<A,B> f,final F<B,A> g){   Definition<A> def=this.def;   return semigroupDef(new Definition<B>(){     @Override public B append(    B a1,    B a2){       return f.f(def.append(g.f(a1),g.f(a2)));     }     @Override public F<B,B> prepend(    B b){       return dimap(def.prepend(g.f(b)),g,f);     }     @Override public B multiply1p(    int n,    B b){       return f.f(def.multiply1p(n,g.f(b)));     }     @Override public B sum(    B b,    F0<Stream<B>> bs){       return f.f(def.sum(g.f(b),() -> bs.f().map(g)));     }   } ); } 
+public static <A>Semigroup<A> semigroupDef(final Definition<A> def){   return new Semigroup<>(def); } 
+public static <A>Semigroup<A> semigroupDef(final AltDefinition<A> def){   return new Semigroup<>(def); } 
+public static <A>Semigroup<A> semigroup(final F2<A,A,A> sum){   return new Semigroup<>(sum::f); } 
+public static <A>Semigroup<A> firstSemigroup(){   return semigroupDef(new Definition<A>(){     @Override public A append(    A a1,    A a2){       return a1;     }     @Override public F<A,A> prepend(    A a){       return constant(a);     }     @Override public A multiply1p(    int n,    A a){       return a;     }     @Override public A sum(    A a,    F0<Stream<A>> as){       return a;     }   } ); } 
+public static <A>Semigroup<A> lastSemigroup(){   return semigroupDef(new Definition<A>(){     @Override public A append(    A a1,    A a2){       return a2;     }     @Override public F<A,A> prepend(    A a){       return identity();     }     @Override public A multiply1p(    int n,    A a){       return a;     }   } ); } 
+public static <A>Semigroup<NonEmptyList<A>> nonEmptyListSemigroup(){   return semigroupDef(new Definition<NonEmptyList<A>>(){     @Override public NonEmptyList<A> append(    NonEmptyList<A> a1,    NonEmptyList<A> a2){       return a1.append(a2);     }     @Override public NonEmptyList<A> sum(    NonEmptyList<A> nea,    F0<Stream<NonEmptyList<A>>> neas){       List<A> tail=neas.f().map(nel -> listDList(nel.toList())).foldLeft(DList::append,DList.<A>nil()).run();       return nea.append(tail);     }   } ); } 
+public static <A>Semigroup<P1<A>> p1Semigroup(final Semigroup<A> sa){   Definition<A> def=sa.def;   return semigroupDef(new Definition<P1<A>>(){     @Override public P1<A> append(    P1<A> a1,    P1<A> a2){       return P.lazy(() -> def.append(a1._1(),a2._1()));     }     @Override public P1<A> multiply1p(    int n,    P1<A> ap1){       return P.lazy(() -> def.multiply1p(n,ap1._1()));     }     @Override public P1<A> sum(    P1<A> ap1,    F0<Stream<P1<A>>> as){       return P.lazy(() -> def.sum(ap1._1(),() -> as.f().map(P1.__1())));     }   } ); } 
+public Ordering compare(final A a1,final A a2){   return def.compare(a1,a2); } 
+public boolean eq(final A a1,final A a2){   return def.compare(a1,a2) == Ordering.EQ; } 
+public <B>Ord<B> contramap(final F<B,A> f){   Definition<A> selfDef=def;   return ordDef(new Definition<B>(){     @Override public F<B,Ordering> compare(    B b){       return compose(selfDef.compare(f.f(b)),f);     }     @Override public Ordering compare(    B b1,    B b2){       return selfDef.compare(f.f(b1),f.f(b2));     }   } ); } 
+public boolean isLessThan(final A a1,final A a2){   return def.compare(a1,a2) == Ordering.LT; } 
+public boolean isLessThanOrEqualTo(final A a1,final A a2){   return def.compare(a1,a2) != Ordering.GT; } 
+public boolean isGreaterThan(final A a1,final A a2){   return def.compare(a1,a2) == Ordering.GT; } 
+public F<A,Boolean> isLessThan(final A a){   return compose(o -> o == Ordering.GT,def.compare(a)); } 
+public F<A,Boolean> isGreaterThan(final A a){   return compose(o -> o == Ordering.LT,def.compare(a)); } 
+public A max(final A a1,final A a2){   return def.append(a1,a2); } 
+public static <A>Ord<A> ord(final F<A,F<A,Ordering>> f){   return new Ord<>(f::f); } 
+public static <A>Ord<A> ordDef(final Definition<A> def){   return new Ord<>(def); } 
+public static <A>Ord<A> ordDef(final AltDefinition<A> def){   return new Ord<>(def); } 
+public static <A>Ord<P1<A>> p1Ord(final Ord<A> oa){   return oa.contramap(P1.__1()); } 
+public static <A,B>Ord<P2<A,B>> p2Ord(final Ord<A> oa,final Ord<B> ob){   return ordDef((a,b) -> oa.eq(a._1(),b._1()) ? ob.compare(a._2(),b._2()) : oa.compare(a._1(),b._1())); } 
+public static <A,B,C>Ord<P3<A,B,C>> p3Ord(final Ord<A> oa,final Ord<B> ob,final Ord<C> oc){   return ordDef((a,b) -> oa.eq(a._1(),b._1()) ? p2Ord(ob,oc).compare(P.p(a._2(),a._3()),P.p(b._2(),b._3())) : oa.compare(a._1(),b._1())); } 
+public static <A extends Comparable<A>>Ord<A> comparableOrd(){   return ordDef((a1,a2) -> Ordering.fromInt(a1.compareTo(a2))); } 
+@Deprecated public static <A>Ord<A> hashOrd(){   return ordDef(a -> {     int aHash=a.hashCode();     return a2 -> Ordering.fromInt(Integer.valueOf(aHash).compareTo(a2.hashCode()));   } ); } 
+@Deprecated public static <A>Ord<A> hashEqualsOrd(){   return ordDef(a -> {     int aHash=a.hashCode();     return a2 -> {       final int a2Hash=a2.hashCode();       return aHash < a2Hash ? Ordering.LT : aHash == a2Hash && a.equals(a2) ? Ordering.EQ : Ordering.GT;     } ;   } ); } 
+public Iterator<A> iterator(){   return flatten().iterator(); } 
+public static <A>Tree<A> node(final A root,final P1<Stream<Tree<A>>> forest){   return new Tree<>(root,forest); } 
+public static <A>Tree<A> node(final A root,final Stream<Tree<A>> forest){   return new Tree<>(root,P.p(forest)); } 
+public static <A>Tree<A> node(final A root,final List<Tree<A>> forest){   return node(root,forest.toStream()); } 
+public Stream<A> flatten(){   final F2<Tree<A>,P1<Stream<A>>,Stream<A>> squish=new F2<Tree<A>,P1<Stream<A>>,Stream<A>>(){     public Stream<A> f(    final Tree<A> t,    final P1<Stream<A>> xs){       return cons(t.root(),t.subForest().map(Stream.<Tree<A>,Stream<A>>foldRight().f(F2Functions.curry(this)).f(xs._1())));     }   } ;   return squish.f(this,P.p(Stream.nil())); } 
+public Stream<Stream<A>> levels(){   final F<Stream<Tree<A>>,Stream<Tree<A>>> flatSubForests=Stream.<Tree<A>,Tree<A>>bind_().f(compose(P1.__1(),Tree.subForest_()));   final F<Stream<Tree<A>>,Stream<A>> roots=Stream.<Tree<A>,A>map_().f(Tree.root_());   return iterateWhile(flatSubForests,Stream.isNotEmpty_(),single(this)).map(roots); } 
+public <B>Tree<B> fmap(final F<A,B> f){   return node(f.f(root()),subForest().map(Stream.<Tree<A>,Tree<B>>map_().f(Tree.<A,B>fmap_().f(f)))); } 
+public <B>B foldMap(final F<A,B> f,final Monoid<B> m){   return m.sum(f.f(root()),m.sumRight(subForest()._1().map(foldMap_(f,m)).toList())); } 
+public Collection<A> toCollection(){   return flatten().toCollection(); } 
+public static <A,B>Tree<B> bottomUp(Tree<A> t,final F<P2<A,Stream<B>>,B> f){   final F<Tree<A>,Tree<B>> recursiveCall=a -> bottomUp(a,f);   final Stream<Tree<B>> tbs=t.subForest()._1().map(recursiveCall);   return node(f.f(P.p(t.root(),tbs.map(Tree.getRoot()))),tbs); } 
+public static <K,V>TreeMap<K,V> empty(final Ord<K> keyOrd){   return new TreeMap<>(Set.empty(TreeMap.ord(keyOrd))); } 
+public static <K,V>TreeMap<K,V> iterableTreeMap(final Ord<K> keyOrd,final Iterable<P2<K,V>> it){   TreeMap<K,V> tm=empty(keyOrd);   for (  final P2<K,V> p2 : it) {     tm=tm.set(p2._1(),p2._2());   }   return tm; } 
+public Option<V> get(final K k){   return tree.lookup(p(k,Option.none())).bind(P2::_2); } 
+public TreeMap<K,V> set(final K k,final V v){   return new TreeMap<>(tree.insert(p(k,Option.some(v)))); } 
+public TreeMap<K,V> delete(final K k){   return new TreeMap<>(tree.delete(p(k,Option.none()))); } 
+public int size(){   return tree.size(); } 
+public boolean isEmpty(){   return tree.isEmpty(); } 
+public List<V> values(){   return iterableList(join(tree.toList().map(compose(IterableW.wrap(),P2.__2())))); } 
+public List<K> keys(){   return tree.toList().map(P2.__1()); } 
+public boolean contains(final K k){   return tree.member(p(k,Option.none())); } 
+public Iterator<P2<K,V>> iterator(){   return join(tree.toStream().map(P2.map2_(IterableW.wrap())).map(P2.tuple(compose(IterableW.map(),P.p2())))).iterator(); } 
+public Map<K,V> toMutableMap(){   final F<K,P2<K,Option<V>>> fakePair=k -> p(k,Option.none());   final Comparator<K> comparator=tree.ord().contramap(fakePair).toComparator();   final Map<K,V> m=new java.util.TreeMap<>(comparator);   for (  final P2<K,V> e : this) {     m.put(e._1(),e._2());   }   return m; } 
+public static <K,V>TreeMap<K,V> fromMutableMap(final Ord<K> ord,final Map<K,V> m){   TreeMap<K,V> t=empty(ord);   for (  final Map.Entry<K,V> e : m.entrySet()) {     t=t.set(e.getKey(),e.getValue());   }   return t; } 
+public P2<Boolean,TreeMap<K,V>> update(final K k,final F<V,V> f){   final P2<Boolean,Set<P2<K,Option<V>>>> up=tree.update(p(k,Option.none()),compose(P2.tuple(P.p2()),P2.map2_(Option.<V,V>map().f(f))));   return p(up._1(),new TreeMap<>(up._2())); } 
+public TreeMap<K,V> update(final K k,final F<V,V> f,final V v){   final P2<Boolean,TreeMap<K,V>> up=update(k,f);   return up._1() ? up._2() : set(k,v); } 
+public P3<Set<V>,Option<V>,Set<V>> split(Ord<V> ord,final K k){   final F<Set<P2<K,Option<V>>>,Set<V>> getSome=F1Functions.mapSet(F1Functions.o(Option.fromSome(),P2.__2()),ord);   return tree.split(p(k,Option.none())).map1(getSome).map3(getSome).map2(F1Functions.o(Option.join(),F1Functions.mapOption(P2.__2()))); } 
+private static <K,V>TreeMap<K,V> treeMap(Ord<K> ord,Set<P2<K,Option<V>>> s){   TreeMap<K,V> empty=TreeMap.empty(ord);   TreeMap<K,V> tree=s.toList().foldLeft((tm,p2) -> {     Option<V> opt=p2._2();     if (opt.isSome()) {       return tm.set(p2._1(),opt.some());     }     return tm;   } ,empty);   return tree; } 
+public P3<TreeMap<K,V>,Option<V>,TreeMap<K,V>> splitLookup(final K k){   P3<Set<P2<K,Option<V>>>,Option<P2<K,Option<V>>>,Set<P2<K,Option<V>>>> p3=tree.split(p(k,get(k)));   Ord<K> o=tree.ord().contramap(k2 -> p(k2,Option.none()));   return p(treeMap(o,p3._1()),get(k),treeMap(o,p3._3())); } 
+@SuppressWarnings("unchecked") public <W>TreeMap<K,W> map(final F<V,W> f){   final F<P2<K,Option<V>>,P2<K,Option<W>>> g=compose(p2 -> p(p2._1(),p2._2()),P2.map2_(F1Functions.mapOption(f)));   final F<K,P2<K,Option<V>>> coord=flip(P.<K,Option<V>>p2()).f(Option.none());   final Ord<K> o=tree.ord().contramap(coord);   return new TreeMap<>(tree.map(TreeMap.ord(o),g)); } 
+public Option<P2<K,V>> min(){   return tree.min().map(p -> p(p._1(),p._2().some())); } 
+public Option<K> minKey(){   return tree.min().map(P2::_1); } 
+public Option<P2<K,V>> max(){   return tree.max().map(p -> p(p._1(),p._2().some())); } 
+public Option<K> maxKey(){   return tree.max().map(P2::_1); } 
+public TreeMap<K,V> union(TreeMap<K,V> t2){   TreeMap<K,V> result=t2;   for (  P2<K,V> p : this) {     result=result.set(p._1(),p._2());   }   return result; } 
+public TreeMap<K,V> union(Iterable<P2<K,V>> t2){   TreeMap<K,V> result=this;   for (  P2<K,V> p : t2) {     if (!this.contains(p._1())) {       result=result.set(p._1(),p._2());     }   }   return result; } 
+public static <A>DList<A> dlist(final F<List<A>,Trampoline<List<A>>> f){   return new DList<>(f); } 
+public List<A> run(){   return appendFn.f(List.nil()).run(); } 
+public java.util.List<A> toJavaList(){   return run().toJavaList(); } 
+public static <A>DList<A> nil(){   return new DList<>(Trampoline.pure()); } 
+public static <A>DList<A> single(A a){   return new DList<>((  List<A> tail) -> Trampoline.pure(tail.cons(a))); } 
+public DList<A> cons(A a){   return single(a).append(this); } 
+public DList<A> snoc(A a){   return this.append(single(a)); } 
+public DList<A> append(DList<A> other){   return new DList<>(kleisliTrampCompose(this.appendFn,other.appendFn)); } 
+public Iterator<K> iterator(){   return keys().iterator(); } 
+public HashMap(final Equal<K> e,final Hash<K> h){   m=new java.util.HashMap<>();   this.e=e;   this.h=h; } 
+public HashMap(final Equal<K> e,final Hash<K> h,final int initialCapacity){   m=new java.util.HashMap<>(initialCapacity);   this.e=e;   this.h=h; } 
+public HashMap(final Equal<K> e,final Hash<K> h,final int initialCapacity,final float loadFactor){   m=new java.util.HashMap<>(initialCapacity,loadFactor);   this.e=e;   this.h=h; } 
+public static <K,V>HashMap<K,V> hashMap(final Equal<K> e,final Hash<K> h){   return new HashMap<>(e,h); } 
+public boolean eq(final K k1,final K k2){   return e.eq(k1,k2); } 
+public int hash(final K k){   return h.hash(k); } 
+public Option<V> get(final K k){   return fromNull(m.get(new Key(k))); } 
+public void clear(){   m.clear(); } 
+public boolean contains(final K k){   return m.containsKey(new Key(k)); } 
+public List<K> keys(){   final List.Buffer<K> b=new List.Buffer<>();   for (  final Key k : m.keySet()) {     b.snoc(k.k);   }   return b.toList(); } 
+public List<V> values(){   return iterableList(m.values()); } 
+public boolean isEmpty(){   return m.isEmpty(); } 
+public int size(){   return m.size(); } 
+public void set(final K k,final V v){   if (v != null) {     m.put(new Key(k),v);   } } 
+public void delete(final K k){   m.remove(new Key(k)); } 
+public Option<V> getDelete(final K k){   return fromNull(m.remove(new Key(k))); } 
+public Collection<P2<K,V>> toCollection(){   return toList().toCollection(); } 
+public static <K,V>HashMap<K,V> iterableHashMap(final Equal<K> equal,final Hash<K> hash,final Iterable<P2<K,V>> entries){   final HashMap<K,V> map=new HashMap<>(equal,hash);   for (  P2<K,V> entry : entries) {     map.set(entry._1(),entry._2());   }   return map; } 
+public static <A>Zipper<A> zipper(final Stream<A> left,final A focus,final Stream<A> right){   return new Zipper<>(left,focus,right); } 
+public static <A>Zipper<A> zipper(final P3<Stream<A>,A,Stream<A>> p){   return new Zipper<>(p._1(),p._2(),p._3()); } 
+public static <A>Ord<Zipper<A>> ord(final Ord<A> o){   final Ord<Stream<A>> so=Ord.streamOrd(o);   return Ord.p3Ord(so,o,so).contramap(Zipper.p_()); } 
+public static <A>Equal<Zipper<A>> eq(final Equal<A> e){   final Equal<Stream<A>> se=Equal.streamEqual(e);   return Equal.p3Equal(se,e,se).contramap(Zipper.p_()); } 
+public static <A>Show<Zipper<A>> show(final Show<A> s){   final Show<Stream<A>> ss=Show.streamShow(s);   return Show.p3Show(ss,s,ss).contramap(Zipper.p_()); } 
+public <B>Zipper<B> map(final F<A,B> f){   return zipper(left.map(f),f.f(focus),right.map(f)); } 
+public <B>B foldRight(final F<A,F<B,B>> f,final B z){   return left.foldLeft(flip(f),right.cons(focus).foldRight(compose(Function.<P1<B>,B,B>andThen().f(P1.__1()),f),z)); } 
+@SuppressWarnings("IfMayBeConditional") public static <A>Option<Zipper<A>> fromStream(final Stream<A> a){   if (a.isEmpty())   return none();  else   return some(zipper(Stream.nil(),a.head(),a.tail()._1())); } 
+public static <A>Option<Zipper<A>> fromStreamEnd(final Stream<A> a){   if (a.isEmpty())   return none();  else {     final Stream<A> xs=a.reverse();     return some(zipper(xs.tail()._1(),xs.head(),Stream.nil()));   } } 
+public Option<Zipper<A>> next(){   return right.isEmpty() ? Option.none() : some(tryNext()); } 
+public Zipper<A> tryNext(){   if (right.isEmpty())   throw new Error("Tried next at the end of a zipper.");  else   return zipper(left.cons(focus),right.head(),right.tail()._1()); } 
+public Option<Zipper<A>> previous(){   return left.isEmpty() ? Option.none() : some(tryPrevious()); } 
+public Zipper<A> tryPrevious(){   if (left.isEmpty())   throw new Error("Tried previous at the beginning of a zipper.");  else   return zipper(left.tail()._1(),left.head(),right.cons(focus)); } 
+public Zipper<A> insertLeft(final A a){   return zipper(left,a,right.cons(focus)); } 
+public Zipper<A> insertRight(final A a){   return zipper(left.cons(focus),a,right); } 
+public Option<Zipper<A>> deleteLeft(){   return left.isEmpty() && right.isEmpty() ? Option.none() : some(zipper(left.isEmpty() ? left : left.tail()._1(),left.isEmpty() ? right.head() : left.head(),left.isEmpty() ? right.tail()._1() : right)); } 
+public Option<Zipper<A>> deleteRight(){   return left.isEmpty() && right.isEmpty() ? Option.none() : some(zipper(right.isEmpty() ? left.tail()._1() : left,right.isEmpty() ? left.head() : right.head(),right.isEmpty() ? right : right.tail()._1())); } 
+public boolean atStart(){   return left.isEmpty(); } 
+public boolean atEnd(){   return right.isEmpty(); } 
+public <B>Zipper<B> cobind(final F<Zipper<A>,B> f){   return positions().map(f); } 
+public Zipper<P2<A,Boolean>> zipWithFocus(){   return zipper(left.zip(repeat(false)),P.p(focus,true),right.zip(repeat(false))); } 
+public Option<Zipper<A>> move(final int n){   final int ll=left.length();   final int rl=right.length();   Option<Zipper<A>> p=some(this);   if (n < 0 || n >= length())   return none();  else   if (ll >= n)   for (int i=ll - n; i > 0; i--)   p=p.bind(Zipper.previous_());  else   if (rl >= n)   for (int i=rl - n; i > 0; i--)   p=p.bind(Zipper.next_());   return p; } 
+public Option<Zipper<A>> find(final F<A,Boolean> p){   if (p.f(focus()))   return some(this);  else {     final Zipper<Zipper<A>> ps=positions();     return ps.lefts().interleave(ps.rights()).find(zipper -> p.f(zipper.focus()));   } } 
+public int index(){   return left.length(); } 
+public Zipper<A> cycleNext(){   if (left.isEmpty() && right.isEmpty())   return this;  else   if (right.isEmpty()) {     final Stream<A> xs=left.reverse();     return zipper(Stream.nil(),xs.head(),xs.tail()._1().snoc(P.p(focus)));   }  else   return tryNext(); } 
+public Zipper<A> cyclePrevious(){   if (left.isEmpty() && right.isEmpty())   return this;  else   if (left.isEmpty()) {     final Stream<A> xs=right.reverse();     return zipper(xs.tail()._1().snoc(P.p(focus)),xs.head(),Stream.nil());   }  else   return tryPrevious(); } 
+public Option<Zipper<A>> deleteLeftCycle(){   if (left.isEmpty() && right.isEmpty())   return none();  else   if (left.isNotEmpty())   return some(zipper(left.tail()._1(),left.head(),right));  else {     final Stream<A> xs=right.reverse();     return some(zipper(xs.tail()._1(),xs.head(),Stream.nil()));   } } 
+public Option<Zipper<A>> deleteRightCycle(){   if (left.isEmpty() && right.isEmpty())   return none();  else   if (right.isNotEmpty())   return some(zipper(left,right.head(),right.tail()._1()));  else {     final Stream<A> xs=left.reverse();     return some(zipper(Stream.nil(),xs.head(),xs.tail()._1()));   } } 
+public Stream<A> toStream(){   return left.reverse().snoc(P.p(focus)).append(right); } 
+public Iterator<Zipper<A>> iterator(){   return positions().toStream().iterator(); } 
+public static <A>Seq<A> single(final A a){   return new Seq<>(Seq.<A>mkTree().single(a)); } 
+public static <A>Seq<A> iterableSeq(final Iterable<A> i){   Seq<A> s=empty();   for (  final A a : i) {     s=s.snoc(a);   }   return s; } 
+public Seq<A> cons(final A a){   return new Seq<>(ftree.cons(a)); } 
+public Seq<A> snoc(final A a){   return new Seq<>(ftree.snoc(a)); } 
+public A head(){   return ftree.head(); } 
+public A last(){   return ftree.last(); } 
+public Seq<A> tail(){   return (length() == 1) ? empty() : new Seq<>(ftree.tail()); } 
+public Seq<A> init(){   return (length() == 1) ? empty() : new Seq<>(ftree.init()); } 
+public Stream<A> toStream(){   return ftree.foldLeft((b,a) -> b.cons(a),Stream.<A>nil()).reverse(); } 
+public List<A> toList(){   final Buffer<A> buf=Buffer.empty();   for (  final A a : this) {     buf.snoc(a);   }   return buf.toList(); } 
+public java.util.List<A> toJavaList(){   return new AbstractList<A>(){     @Override public A get(    int i){       return index(i);     }     @Override public Iterator<A> iterator(){       return Seq.this.iterator();     }     @Override public int size(){       return length();     }   } ; } 
+public Iterator<A> iterator(){   return new Iterator<A>(){     private FingerTree<Integer,A> ftree=Seq.this.ftree;     public boolean hasNext(){       return !ftree.isEmpty();     }     public A next(){       if (ftree.isEmpty())       throw new NoSuchElementException();  else {         final A a=ftree.head();         ftree=ftree.tail();         return a;       }     }     public void remove(){       throw new UnsupportedOperationException();     }   } ; } 
+public Seq<A> append(final Seq<A> as){   return new Seq<>(ftree.append(as.ftree)); } 
+public boolean isEmpty(){   return ftree.isEmpty(); } 
+public Seq<A> insert(int index,A a){   final P2<Seq<A>,Seq<A>> p=split(index);   return p._1().append(single(a)).append(p._2()); } 
+public boolean isNotEmpty(){   return !ftree.isEmpty(); } 
+public int length(){   return ftree.measure(); } 
+public P2<Seq<A>,Seq<A>> split(final int i){   final P2<FingerTree<Integer,A>,FingerTree<Integer,A>> lr=ftree.split(index -> index > i);   return P.p(new Seq<>(lr._1()),new Seq<>(lr._2())); } 
+public A index(final int i){   checkBounds(i);   return ftree.lookup(Function.identity(),i)._2(); } 
+public Seq<A> update(final int i,final A a){   checkBounds(i);   final P3<FingerTree<Integer,A>,A,FingerTree<Integer,A>> lxr=ftree.split1(index -> index > i);   return new Seq<>(lxr._1().append(lxr._3().cons(a))); } 
+public Seq<A> delete(final int i){   checkBounds(i);   final P3<FingerTree<Integer,A>,A,FingerTree<Integer,A>> lxr=ftree.split1(index -> index > i);   return new Seq<>(lxr._1().append(lxr._3())); } 
+public Seq<A> take(final int n){   return split(n)._1(); } 
+public Seq<A> drop(final int n){   return split(n)._2(); } 
+public final Iterator<A> iterator(){   return toCollection().iterator(); } 
+public final boolean isFail(){   return e.isLeft(); } 
+public final boolean isSuccess(){   return e.isRight(); } 
+public final E fail(){   if (isFail())   return e.left().value();  else   throw error("Validation: fail on success value"); } 
+public final T success(){   if (isSuccess())   return e.right().value();  else   throw error("Validation: success on fail value"); } 
+public final <X>X validation(final F<E,X> fail,final F<T,X> success){   return e.either(fail,success); } 
+public final T successE(final F0<String> err){   return e.right().valueE(err); } 
+public final T successE(final String err){   return e.right().valueE(p(err)); } 
+public final T orSuccess(final F0<T> t){   return e.right().orValue(t); } 
+public final T orSuccess(final T t){   return e.right().orValue(p(t)); } 
+public final T on(final F<E,T> f){   return e.right().on(f); } 
+public final Unit foreach(final F<T,Unit> f){   return e.right().foreach(f); } 
+public final void foreachDoEffect(final Effect1<T> f){   e.right().foreachDoEffect(f); } 
+@SuppressWarnings("unchecked") public final <A>Validation<E,A> map(final F<T,A> f){   return isFail() ? Validation.fail(fail()) : Validation.success(f.f(success())); } 
+@SuppressWarnings("unchecked") public final <A>Validation<E,A> bind(final F<T,Validation<E,A>> f){   return isSuccess() ? f.f(success()) : Validation.fail(fail()); } 
+public static <E,A>Validation<E,List<A>> sequence(final Semigroup<E> s,final List<Validation<E,A>> list){   if (list.exists(Validation::isFail)) {     return Validation.fail(list.filter(Validation::isFail).map(v -> v.fail()).foldLeft1((F2<E,E,E>)s::sum));   }  else {     return success(list.foldLeft((    List<A> acc,    Validation<E,A> v) -> acc.cons(v.success()),List.nil()).reverse());   } } 
+public final <A>Option<Validation<A,T>> filter(final F<T,Boolean> f){   return e.right().<A>filter(f).map(Validation.validation()); } 
+public final <A>Validation<E,A> apply(final Validation<E,F<T,A>> v){   return v.bind(this::map); } 
+public final boolean forall(final F<T,Boolean> f){   return e.right().forall(f); } 
+public final boolean exists(final F<T,Boolean> f){   return e.right().exists(f); } 
+public final List<T> toList(){   return e.right().toList(); } 
+public final Option<T> toOption(){   return e.right().toOption(); } 
+public final Array<T> toArray(){   return e.right().toArray(); } 
+public final Stream<T> toStream(){   return e.right().toStream(); } 
+@SuppressWarnings("unchecked") public final <A>Validation<E,A> accumapply(final Semigroup<E> s,final Validation<E,F<T,A>> v){   return isFail() ? Validation.fail(v.isFail() ? s.sum(v.fail(),fail()) : fail()) : v.isFail() ? Validation.fail(v.fail()) : Validation.success(v.success().f(success())); } 
+public final <A,B>Validation<E,B> accumulate(final Semigroup<E> s,final Validation<E,A> va,final F<T,F<A,B>> f){   return va.accumapply(s,map(f)); } 
+public final <A,B>Validation<E,B> accumulate(final Semigroup<E> s,final Validation<E,A> va,final F2<T,A,B> f){   return va.accumapply(s,map(curry(f))); } 
+public final <A,B,C>Validation<E,C> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final F<T,F<A,F<B,C>>> f){   return vb.accumapply(s,accumulate(s,va,f)); } 
+public final <A,B,C>Validation<E,C> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final F3<T,A,B,C> f){   return vb.accumapply(s,accumulate(s,va,curry(f))); } 
+public final <A,B,C,D>Validation<E,D> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final F<T,F<A,F<B,F<C,D>>>> f){   return vc.accumapply(s,accumulate(s,va,vb,f)); } 
+public final <A,B,C,D>Validation<E,D> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final F4<T,A,B,C,D> f){   return vc.accumapply(s,accumulate(s,va,vb,curry(f))); } 
+public final <A,B,C,D,E$>Validation<E,E$> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final F<T,F<A,F<B,F<C,F<D,E$>>>>> f){   return vd.accumapply(s,accumulate(s,va,vb,vc,f)); } 
+public final <A,B,C,D,E$>Validation<E,E$> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final F5<T,A,B,C,D,E$> f){   return vd.accumapply(s,accumulate(s,va,vb,vc,curry(f))); } 
+public final <A,B,C,D,E$,F$>Validation<E,F$> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final Validation<E,E$> ve,final F<T,F<A,F<B,F<C,F<D,F<E$,F$>>>>>> f){   return ve.accumapply(s,accumulate(s,va,vb,vc,vd,f)); } 
+public final <A,B,C,D,E$,F$>Validation<E,F$> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final Validation<E,E$> ve,final F6<T,A,B,C,D,E$,F$> f){   return ve.accumapply(s,accumulate(s,va,vb,vc,vd,curry(f))); } 
+public final <A,B,C,D,E$,F$,G>Validation<E,G> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final Validation<E,E$> ve,final Validation<E,F$> vf,final F<T,F<A,F<B,F<C,F<D,F<E$,F<F$,G>>>>>>> f){   return vf.accumapply(s,accumulate(s,va,vb,vc,vd,ve,f)); } 
+public final <A,B,C,D,E$,F$,G>Validation<E,G> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final Validation<E,E$> ve,final Validation<E,F$> vf,final F7<T,A,B,C,D,E$,F$,G> f){   return vf.accumapply(s,accumulate(s,va,vb,vc,vd,ve,curry(f))); } 
+public final <A,B,C,D,E$,F$,G,H>Validation<E,H> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final Validation<E,E$> ve,final Validation<E,F$> vf,final Validation<E,G> vg,final F<T,F<A,F<B,F<C,F<D,F<E$,F<F$,F<G,H>>>>>>>> f){   return vg.accumapply(s,accumulate(s,va,vb,vc,vd,ve,vf,f)); } 
+public final <A,B,C,D,E$,F$,G,H>Validation<E,H> accumulate(final Semigroup<E> s,final Validation<E,A> va,final Validation<E,B> vb,final Validation<E,C> vc,final Validation<E,D> vd,final Validation<E,E$> ve,final Validation<E,F$> vf,final Validation<E,G> vg,final F8<T,A,B,C,D,E$,F$,G,H> f){   return vg.accumapply(s,accumulate(s,va,vb,vc,vd,ve,vf,curry(f))); } 
+public final Iterator<T> iterator(){   return toEither().right().iterator(); } 
+public static <A,E>Validation<List<E>,List<A>> sequenceNonCumulative(List<Validation<E,A>> list){   if (list.exists(Validation::isFail)) {     F2<List<E>,Validation<E,A>,List<E>> f=(acc,v) -> acc.cons(v.fail());     return fail(list.filter(Validation::isFail).foldLeft(f,List.nil()).reverse());   }  else {     F2<List<A>,Validation<E,A>,List<A>> f=(acc,v) -> acc.cons(v.success());     return success(list.filter(Validation::isSuccess).foldLeft(f,List.nil()).reverse());   } } 
+public E failE(final F0<String> err){   return v.toEither().left().valueE(err); } 
+public E orFail(final F0<E> e){   return v.toEither().left().orValue(e); } 
+public E on(final F<T,E> f){   return v.toEither().left().on(f); } 
+public Unit foreach(final F<E,Unit> f){   return v.toEither().left().foreach(f); } 
+public void foreachDoEffect(final Effect1<E> f){   v.toEither().left().foreachDoEffect(f); } 
+public <A>Validation<A,T> map(final F<E,A> f){   return Validation.validation(v.toEither().left().map(f)); } 
+public <A>Validation<A,T> bind(final F<E,Validation<A,T>> f){   return v.isFail() ? f.f(v.fail()) : Validation.success(v.success()); } 
+public <A>Option<Validation<E,A>> filter(final F<E,Boolean> f){   return v.toEither().left().<A>filter(f).map(Validation.validation()); } 
+public <A>Validation<A,T> apply(final Validation<F<E,A>,T> v){   return v.f().bind(this::map); } 
+public boolean forall(final F<E,Boolean> f){   return v.toEither().left().forall(f); } 
+public boolean exists(final F<E,Boolean> f){   return v.toEither().left().exists(f); } 
+public List<E> toList(){   return v.toEither().left().toList(); } 
+public Option<E> toOption(){   return v.toEither().left().toOption(); } 
+public Array<E> toArray(){   return v.toEither().left().toArray(); } 
+public Stream<E> toStream(){   return v.toEither().left().toStream(); } 
+public Iterator<E> iterator(){   return v.toEither().left().iterator(); } 
+@SuppressWarnings("unchecked") public final Validation<NonEmptyList<E>,T> nel(){   return isSuccess() ? Validation.success(success()) : Validation.fail(NonEmptyList.nel(fail())); } 
+public static <E,T>Validation<E,T> validation(final Either<E,T> e){   return new Validation<>(e); } 
+public static <E,T>Validation<E,T> condition(final boolean c,final E e,final T t){   return c ? Validation.success(t) : Validation.fail(e); } 
+public static Validation<NumberFormatException,Byte> parseByte(final String s){   try {     return success(Byte.parseByte(s));   }  catch (  NumberFormatException e) {     return fail(e);   } } 
+public static Validation<NumberFormatException,Double> parseDouble(final String s){   try {     return success(Double.parseDouble(s));   }  catch (  NumberFormatException e) {     return fail(e);   } } 
+public static Validation<NumberFormatException,Float> parseFloat(final String s){   try {     return success(Float.parseFloat(s));   }  catch (  NumberFormatException e) {     return fail(e);   } } 
+public static Validation<NumberFormatException,Integer> parseInt(final String s){   try {     return success(Integer.parseInt(s));   }  catch (  NumberFormatException e) {     return fail(e);   } } 
+public static Validation<NumberFormatException,Long> parseLong(final String s){   try {     return success(Long.parseLong(s));   }  catch (  NumberFormatException e) {     return fail(e);   } } 
+public static Validation<NumberFormatException,Short> parseShort(final String s){   try {     return success(Short.parseShort(s));   }  catch (  NumberFormatException e) {     return fail(e);   } } 
+public static <A,B>P2<List<A>,List<B>> partition(List<Validation<A,B>> list){   return p(list.filter(Validation::isFail).map(v -> v.fail()),list.filter(Validation::isSuccess).map(v -> v.success())); } 
+public final Iterator<A> iterator(){   return toCollection().iterator(); } 
+public static <S,T>PIso<S,T,S,T> pId(){   return new PIso<S,T,S,T>(){     @Override public S get(    final S s){       return s;     }     @Override public T reverseGet(    final T t){       return t;     }     @Override public PIso<T,S,T,S> reverse(){       final PIso<S,T,S,T> self=this;       return new PIso<T,S,T,S>(){         @Override public T get(        final T t){           return t;         }         @Override public S reverseGet(        final S s){           return s;         }         @Override public PIso<S,T,S,T> reverse(){           return self;         }       } ;     }   } ; } 
+public static <S>Iso<S,S> id(){   return new Iso<>(PIso.pId()); } 
+@Override public <B>B match(final F<Empty<V,A>,B> empty,final F<Single<V,A>,B> single,final F<Deep<V,A>,B> deep){   return single.f(this); } 
+@Override public <B>B match(final F<Empty<V,A>,B> empty,final F<Single<V,A>,B> single,final F<Deep<V,A>,B> deep){   return deep.f(this); } 
+public V measure(final A a){   return measure.f(a); } 
+public V sum(final V a,final V b){   return m.sum(a,b); } 
+public V zero(){   return m.zero(); } 
+public Measured<V,Node<V,A>> nodeMeasured(){   return new Measured<>(m,Node::measure); } 
+public Measured<V,Digit<V,A>> digitMeasured(){   return new Measured<>(m,Digit::measure); } 
+public FingerTree<V,A> single(final A a){   return new Single<>(m,a); } 
+public FingerTree<V,A> deep(final Digit<V,A> prefix,final FingerTree<V,Node<V,A>> middle,final Digit<V,A> suffix){   return deep(m.sum(prefix.measure(),m.sum(middle.measure(),suffix.measure())),prefix,middle,suffix); } 
+public FingerTree<V,A> deep(final V v,final Digit<V,A> prefix,final FingerTree<V,Node<V,A>> middle,final Digit<V,A> suffix){   return new Deep<>(m,v,prefix,middle,suffix); } 
+public One<V,A> one(final A a){   return new One<>(m,a); } 
+public Two<V,A> two(final A a,final A b){   return new Two<>(m,v(a,b)); } 
+public Three<V,A> three(final A a,final A b,final A c){   return new Three<>(m,v(a,b,c)); } 
+public Four<V,A> four(final A a,final A b,final A c,final A d){   return new Four<>(m,v(a,b,c,d)); } 
+public Node2<V,A> node2(final A a,final A b){   return new Node2<>(m,v(a,b)); } 
+public Node3<V,A> node3(final A a,final A b,final A c){   return new Node3<>(m,v(a,b,c)); } 
+public Node2<V,A> node2(final V2<A> v){   return new Node2<>(m,v); } 
+public Node3<V,A> node3(final V3<A> v){   return new Node3<>(m,v); } 
+@Override public <B>B match(final F<Empty<V,A>,B> empty,final F<Single<V,A>,B> single,final F<Deep<V,A>,B> deep){   return empty.f(this); } 
+public static <A>IterableW<A> wrap(final Iterable<A> a){   return new IterableW<>(a); } 
+public static <A,B,C>IterableW<C> bind(final Iterable<A> a,final Iterable<B> b,final F<A,F<B,C>> f){   return wrap(b).apply(wrap(a).map(f)); } 
+public static <A,T extends Iterable<A>>IterableW<IterableW<A>> sequence(final Iterable<T> as){   final Stream<T> ts=iterableStream(as);   return ts.isEmpty() ? iterable(wrap(Option.none())) : wrap(ts.head()).bind(a -> sequence(ts.tail().map(IterableW.wrap())._1()).bind(as2 -> iterable(wrap(Stream.cons(a,() -> iterableStream(as2)))))); } 
+public static <A,T extends Iterable<A>>IterableW<A> join(final Iterable<T> as){   final F<T,T> id=identity();   return wrap(as).bind(id); } 
+public <B>B foldLeft(final F<B,F<A,B>> f,final B z){   B p=z;   for (  final A x : this) {     p=f.f(p).f(x);   }   return p; } 
+public Iterator<A> iterator(){   return i.iterator(); } 
+public List<A> toStandardList(){   return new List<A>(){     public int size(){       return iterableStream(IterableW.this).length();     }     public boolean isEmpty(){       return iterableStream(IterableW.this).isEmpty();     }     @SuppressWarnings("unchecked") public boolean contains(    final Object o){       return iterableStream(IterableW.this).exists(Equal.<A>anyEqual().eq((A)o));     }     public Iterator<A> iterator(){       return IterableW.this.iterator();     }     public Object[] toArray(){       return Array.iterableArray(iterableStream(IterableW.this)).array();     }     @SuppressWarnings("SuspiciousToArrayCall") public <T>T[] toArray(    final T[] a){       return iterableStream(IterableW.this).toCollection().toArray(a);     }     public boolean add(    final A a){       return false;     }     public boolean remove(    final Object o){       return false;     }     public boolean containsAll(    final Collection<?> c){       return iterableStream(IterableW.this).toCollection().containsAll(c);     }     public boolean addAll(    final Collection<? extends A> c){       return false;     }     public boolean addAll(    final int index,    final Collection<? extends A> c){       return false;     }     public boolean removeAll(    final Collection<?> c){       return false;     }     public boolean retainAll(    final Collection<?> c){       return false;     }     public void clear(){       throw new UnsupportedOperationException("Modifying an immutable List.");     }     public A get(    final int index){       return iterableStream(IterableW.this).index(index);     }     public A set(    final int index,    final A element){       throw new UnsupportedOperationException("Modifying an immutable List.");     }     public void add(    final int index,    final A element){       throw new UnsupportedOperationException("Modifying an immutable List.");     }     public A remove(    final int index){       throw new UnsupportedOperationException("Modifying an immutable List.");     }     public int indexOf(    final Object o){       int i=-1;       for (      final A a : IterableW.this) {         i++;         if (a.equals(o))         return i;       }       return i;     }     public int lastIndexOf(    final Object o){       int i=-1;       int last=-1;       for (      final A a : IterableW.this) {         i++;         if (a.equals(o))         last=i;       }       return last;     }     public ListIterator<A> listIterator(){       return toListIterator(toZipper());     }     public ListIterator<A> listIterator(    final int index){       return toListIterator(toZipper().bind(Zipper.<A>move().f(index)));     }     public List<A> subList(    final int fromIndex,    final int toIndex){       return wrap(iterableStream(IterableW.this).drop(fromIndex).take(toIndex - fromIndex)).toStandardList();     }     private ListIterator<A> toListIterator(    final Option<Zipper<A>> z){       return new ListIterator<A>(){         private Option<Zipper<A>> pz=z;         public boolean hasNext(){           return pz.isSome() && !pz.some().atEnd();         }         public A next(){           if (pz.isSome())           pz=pz.some().next();  else           throw new NoSuchElementException();           if (pz.isSome())           return pz.some().focus();  else           throw new NoSuchElementException();         }         public boolean hasPrevious(){           return pz.isSome() && !pz.some().atStart();         }         public A previous(){           pz=pz.some().previous();           return pz.some().focus();         }         public int nextIndex(){           return pz.some().index() + (pz.some().atEnd() ? 0 : 1);         }         public int previousIndex(){           return pz.some().index() - (pz.some().atStart() ? 0 : 1);         }         public void remove(){           throw new UnsupportedOperationException("Remove on immutable ListIterator");         }         public void set(        final A a){           throw new UnsupportedOperationException("Set on immutable ListIterator");         }         public void add(        final A a){           throw new UnsupportedOperationException("Add on immutable ListIterator");         }       } ;     }   } ; } 
+public final LeftProjection<A,B> left(){   return new LeftProjection<>(this); } 
+public final RightProjection<A,B> right(){   return new RightProjection<>(this); } 
+public static <K,A>PriorityQueue<K,A> priorityQueue(Equal<K> e,FingerTree<K,P2<K,A>> ft){   return new PriorityQueue<>(e,ft); } 
+public <B>PriorityQueue<K,B> map(F<A,B> f){   return priorityQueue(equal,ftree.map(P2.map2_(f),FingerTree.measured(ftree.measured().monoid(),P2.__1()))); } 
+public PriorityQueue<K,A> filterValues(F<A,Boolean> f){   return priorityQueue(equal,ftree.filter(p2 -> f.f(p2._2()))); } 
+public PriorityQueue<K,A> filterKeys(F<K,Boolean> f){   return priorityQueue(equal,ftree.filter(p2 -> f.f(p2._1()))); } 
+public boolean isEmpty(){   return ftree.isEmpty(); } 
+public List<P2<K,A>> topN(){   return toStream().uncons(List.nil(),top -> tail -> List.cons(top,tail._1().takeWhile(compose(equal.eq(top._1()),P2.__1())).toList())); } 
+public PriorityQueue<K,A> enqueue(K k,A a){   return priorityQueue(equal,ftree.snoc(P.p(k,a))); } 
+public PriorityQueue<K,A> enqueue(List<P2<K,A>> list){   return list.foldLeft((pq,p) -> pq.enqueue(p._1(),p._2()),this); } 
+public boolean contains(final K k){   return !ftree.split(equal.eq(k))._2().isEmpty(); } 
+public PriorityQueue<K,A> enqueue(Iterable<P2<K,A>> it){   PriorityQueue<K,A> result=this;   for (  P2<K,A> p : it) {     result=result.enqueue(p);   }   return result; } 
+public PriorityQueue<K,A> enqueue(P2<K,A> p){   return enqueue(p._1(),p._2()); } 
+public <B>B unqueue(B empty,F2<P2<K,A>,PriorityQueue<K,A>,B> topDequeue){   K top=ftree.measure();   P2<FingerTree<K,P2<K,A>>,FingerTree<K,P2<K,A>>> p=ftree.split(equal.eq(top));   return p._2().uncons(empty,(head,tail) -> topDequeue.f(head,priorityQueue(equal,p._1().append(tail)))); } 
+public PriorityQueue<K,A> dequeue(int n){   int i=n;   PriorityQueue<K,A> result=this;   while (i > 0) {     i--;     result=result.dequeue();   }   return result; } 
+public boolean isLessThan(Ord<K> ok,K k){   return top().option(true,p -> ok.isLessThan(p._1(),k)); } 
+public List<P2<K,A>> toList(){   return toStream().toList(); } 
+public static <E>Input<E> empty(){   return new Input<E>(){     @Override public <Z>Z apply(    final F0<Z> empty,    final F0<F<E,Z>> el,    final F0<Z> eof){       return empty.f();     }   } ; } 
+public static <E>Input<E> eof(){   return new Input<E>(){     @Override public <Z>Z apply(    final F0<Z> empty,    final F0<F<E,Z>> el,    final F0<Z> eof){       return eof.f();     }   } ; } 
+public static <E>Input<E> el(final E element){   return new Input<E>(){     @Override public <Z>Z apply(    final F0<Z> empty,    final F0<F<E,Z>> el,    final F0<Z> eof){       return el.f().f(element);     }   } ; } 
+public static <E,A>IterV<E,A> cont(final F<Input<E>,IterV<E,A>> f){   return new IterV<E,A>(){     @Override public <Z>Z fold(    final F<P2<A,Input<E>>,Z> done,    final F<F<Input<E>,IterV<E,A>>,Z> cont){       return cont.f(f);     }   } ; } 
+public static <E,A>IterV<E,A> done(final A a,final Input<E> i){   final P2<A,Input<E>> p=P.p(a,i);   return new IterV<E,A>(){     @Override public <Z>Z fold(    final F<P2<A,Input<E>>,Z> done,    final F<F<Input<E>,IterV<E,A>>,Z> cont){       return done.f(p);     }   } ; } 
+public final <B>IterV<E,B> bind(final F<A,IterV<E,B>> f){   final F<P2<A,Input<E>>,IterV<E,B>> done=xe -> {     final Input<E> e=xe._2();     final F<P2<B,Input<E>>,IterV<E,B>> done1=y_ -> {       final B y=y_._1();       return done(y,e);     } ;     final F<F<Input<E>,IterV<E,B>>,IterV<E,B>> cont=k -> k.f(e);     final A x=xe._1();     return f.f(x).fold(done1,cont);   } ;   final F<F<Input<E>,IterV<E,A>>,IterV<E,B>> cont=k -> cont(e -> k.f(e).bind(f));   return this.fold(done,cont); } 
+public static <E>IterV<E,Integer> length(){   final F<Integer,F<Input<E>,IterV<E,Integer>>> step=new F<Integer,F<Input<E>,IterV<E,Integer>>>(){     final F<Integer,F<Input<E>,IterV<E,Integer>>> step=this;     @Override public F<Input<E>,IterV<E,Integer>> f(    final Integer acc){       final F0<IterV<E,Integer>> empty=() -> cont(step.f(acc));       final F0<F<E,IterV<E,Integer>>> el=() -> P.p(cont(step.f(acc + 1))).constant();       final F0<IterV<E,Integer>> eof=() -> done(acc,Input.<E>eof());       return s -> s.apply(empty,el,eof);     }   } ;   return cont(step.f(0)); } 
+public static <E>IterV<E,Unit> drop(final int n){   final F<Input<E>,IterV<E,Unit>> step=new F<Input<E>,IterV<E,Unit>>(){     final F<Input<E>,IterV<E,Unit>> step=this;     final F0<IterV<E,Unit>> empty=() -> cont(step);     final F0<F<E,IterV<E,Unit>>> el=() -> P.p(IterV.<E>drop(n - 1)).constant();     final F0<IterV<E,Unit>> eof=() -> done(Unit.unit(),Input.<E>eof());     @Override public IterV<E,Unit> f(    final Input<E> s){       return s.apply(empty,el,eof);     }   } ;   return n == 0 ? done(Unit.unit(),Input.empty()) : cont(step); } 
+public static <E>IterV<E,Option<E>> head(){   final F<Input<E>,IterV<E,Option<E>>> step=new F<Input<E>,IterV<E,Option<E>>>(){     final F<Input<E>,IterV<E,Option<E>>> step=this;     final F0<IterV<E,Option<E>>> empty=() -> cont(step);     final F0<F<E,IterV<E,Option<E>>>> el=() -> e -> done(Option.some(e),Input.<E>empty());     final F0<IterV<E,Option<E>>> eof=() -> done(Option.<E>none(),Input.<E>eof());     @Override public IterV<E,Option<E>> f(    final Input<E> s){       return s.apply(empty,el,eof);     }   } ;   return cont(step); } 
+public static <E>IterV<E,Option<E>> peek(){   final F<Input<E>,IterV<E,Option<E>>> step=new F<Input<E>,IterV<E,Option<E>>>(){     final F<Input<E>,IterV<E,Option<E>>> step=this;     final F0<IterV<E,Option<E>>> empty=() -> cont(step);     final F0<F<E,IterV<E,Option<E>>>> el=() -> e -> done(Option.some(e),Input.el(e));     final F0<IterV<E,Option<E>>> eof=() -> done(Option.<E>none(),Input.<E>eof());     @Override public IterV<E,Option<E>> f(    final Input<E> s){       return s.apply(empty,el,eof);     }   } ;   return cont(step); } 
+public static <E>IterV<E,List<E>> list(){   final F<List<E>,F<Input<E>,IterV<E,List<E>>>> step=new F<List<E>,F<Input<E>,IterV<E,List<E>>>>(){     final F<List<E>,F<Input<E>,IterV<E,List<E>>>> step=this;     @Override public F<Input<E>,IterV<E,List<E>>> f(    final List<E> acc){       final F0<IterV<E,List<E>>> empty=() -> cont(step.f(acc));       final F0<F<E,IterV<E,List<E>>>> el=() -> e -> cont(step.f(acc.cons(e)));       final F0<IterV<E,List<E>>> eof=() -> done(acc,Input.<E>eof());       return s -> s.apply(empty,el,eof);     }   } ;   return cont(step.f(List.nil())); } 
+public final Iterator<A> iterator(){   return toCollection().iterator(); } 
+public <B>B match(final F<P2<K,V>,B> f,final F<HashArrayMappedTrie<K,V>,B> g){   return either.either(f,g); } 
+public Stream<Boolean> toStream(){   return Stream.fromString(Long.toBinaryString(value)).map(BitSet::toBoolean).dropWhile(b -> !b); } 
+public BitSet range(final int highIndex,final int lowIndex){   int max=Math.max(lowIndex,highIndex);   int min=Math.min(lowIndex,highIndex);   return new BitSet(max == min ? 0L : (value << (64 - max)) >>> (64 - max + min)); } 
+public static <K,V>HashArrayMappedTrie<K,V> empty(final Equal<K> e,final Hash<K> h){   return new HashArrayMappedTrie<>(BitSet.empty(),Seq.empty(),e,h); } 
+public boolean isEmpty(){   return bitSet.isEmpty(); } 
+private static <K,V>HashArrayMappedTrie<K,V> hamt(final BitSet bs,final Seq<Node<K,V>> s,final Equal<K> e,final Hash<K> h){   return new HashArrayMappedTrie<>(bs,s,e,h); } 
+public Option<V> find(final K k,final int lowIndex,final int highIndex){   BitSet bs1=longBitSet(hash.hash(k)).range(lowIndex,highIndex);   int i=(int)bs1.longValue();   boolean b=bitSet.isSet(i);   final int index=bitSet.bitsToRight(i);   if (!b) {     return none();   }  else {     final Node<K,V> oldNode=seq.index(index);     return oldNode.match(n -> equal.eq(n._1(),k) ? some(n._2()) : none(),hamt -> hamt.find(k,lowIndex + BITS_IN_INDEX,highIndex + BITS_IN_INDEX));   } } 
+public HashArrayMappedTrie<K,V> set(final List<P2<K,V>> list){   return list.foldLeft(h -> p -> h.set(p._1(),p._2()),this); } 
+private HashArrayMappedTrie<K,V> set(final K k,final V v,final int lowIndex,final int highIndex){   final BitSet bs1=longBitSet(hash.hash(k)).range(lowIndex,highIndex);   final int i=(int)bs1.longValue();   final boolean b=bitSet.isSet(i);   final int index=bitSet.bitsToRight(i);   if (!b) {     final Node<K,V> sn1=Node.p2Node(p(k,v));     return hamt(bitSet.set(i),seq.insert(index,sn1),equal,hash);   }  else {     final Node<K,V> oldNode=seq.index(index);     final Node<K,V> newNode=oldNode.match(n -> {       if (equal.eq(n._1(),k)) {         return Node.p2Node(p(k,v));       }  else {         final HashArrayMappedTrie<K,V> e=HashArrayMappedTrie.empty(equal,hash);         final HashArrayMappedTrie<K,V> h1=e.set(n._1(),n._2(),lowIndex + BITS_IN_INDEX,highIndex + BITS_IN_INDEX);         final HashArrayMappedTrie<K,V> h2=h1.set(k,v,lowIndex + BITS_IN_INDEX,highIndex + BITS_IN_INDEX);         return Node.hamtNode(h2);       }     } ,hamt -> Node.hamtNode(hamt.set(k,v,lowIndex + BITS_IN_INDEX,highIndex + BITS_IN_INDEX)));     return hamt(bitSet,seq.update(index,newNode),equal,hash);   } } 
+public Stream<P2<K,V>> toStream(){   return seq.toStream().bind(Node::toStream); } 
+public List<P2<K,V>> toList(Ord<K> o){   return toStream().sort(Ord.p2Ord1(o)).toList(); } 
+public List<P2<K,V>> toList(){   return toStream().toList(); } 
+public <B>B foldLeftOnNode(F2<B,Node<K,V>,B> f,B b){   return seq.foldLeft(f,b); } 
+public int length(){   return seq.foldLeft((acc,node) -> node.match(p2 -> acc + 1,hamt -> acc + hamt.length()),0); } 
+public Option<A> successor(final A a){   return successor.f(a); } 
+public Option<A> predecessor(final A a){   return predecessor.f(a); } 
+public F<Long,Option<A>> plus(final A a){   return plus.f(a); } 
+public Option<A> plus(final A a,final long l){   return plus.f(a).f(l); } 
+public <B>Enumerator<B> xmap(final F<A,B> f,final F<B,A> g){   final F<Option<A>,Option<B>> of=o -> o.map(f);   return enumerator(compose(compose(of,successor),g),compose(compose(of,predecessor),g),max.map(f),min.map(f),order.contramap(g),compose(compose(Function.<Long,Option<A>,Option<B>>compose().f(of),plus),g)); } 
+public static <A>Enumerator<A> enumerator(final F<A,Option<A>> successor,final F<A,Option<A>> predecessor,final Option<A> max,final Option<A> min,final Ord<A> order,final F<A,F<Long,Option<A>>> plus){   return new Enumerator<>(successor,predecessor,max,min,order,plus); } 
+public static <A>Enumerator<A> enumerator(final F<A,Option<A>> successor,final F<A,Option<A>> predecessor,final Option<A> max,final Option<A> min,final Ord<A> order){   return new Enumerator<>(successor,predecessor,max,min,order,curry((a,l) -> {     if (l == 0L)     return some(a);  else     if (l < 0L) {       A aa=a;       for (long x=l; x < 0; x++) {         final Option<A> s=predecessor.f(aa);         if (s.isNone())         return none();  else         aa=s.some();       }       return some(aa);     }  else {       A aa=a;       for (long x=l; x > 0; x--) {         final Option<A> s=successor.f(aa);         if (s.isNone())         return none();  else         aa=s.some();       }       return some(aa);     }   } )); } 
+public Iterator<A> iterator(){   return toCollection().iterator(); } 
+public NonEmptyList<A> cons(final A a){   return nel(a,tail.cons(head)); } 
+public NonEmptyList<A> snoc(final A a){   return nel(head,tail.snoc(a)); } 
+public int length(){   return 1 + tail.length(); } 
+public NonEmptyList<A> append(final List<A> as){   return nel(head,tail.append(as)); } 
+public NonEmptyList<A> append(final NonEmptyList<A> as){   final List.Buffer<A> b=new List.Buffer<>();   b.append(tail);   b.snoc(as.head);   b.append(as.tail);   final List<A> bb=b.toList();   return nel(head,bb); } 
+public final A foldRight1(final F<A,F<A,A>> f){   return reverse().foldLeft1(flip(f)); } 
+public final A foldRight1(final F2<A,A,A> f){   return reverse().foldLeft1(flip(f)); } 
+public final A foldLeft1(final F2<A,A,A> f){   A x=head;   for (List<A> xs=tail; !xs.isEmpty(); xs=xs.tail()) {     x=f.f(x,xs.head());   }   return x; } 
+public <B>NonEmptyList<B> map(final F<A,B> f){   return nel(f.f(head),tail.map(f)); } 
+public <B>NonEmptyList<B> bind(final F<A,NonEmptyList<B>> f){   final List.Buffer<B> b=new List.Buffer<>();   final NonEmptyList<B> p=f.f(head);   b.snoc(p.head);   b.append(p.tail);   tail.foreachDoEffect(a -> {     final NonEmptyList<B> p1=f.f(a);     b.snoc(p1.head);     b.append(p1.tail);   } );   final List<B> bb=b.toList();   return nel(bb.head(),bb.tail()); } 
+public NonEmptyList<NonEmptyList<A>> sublists(){   return fromList(somes(toList().toStream().substreams().map(F1Functions.o(NonEmptyList::fromList,Conversions.Stream_List())).toList())).some(); } 
+public NonEmptyList<NonEmptyList<A>> tails(){   return fromList(somes(toList().tails().map(NonEmptyList::fromList))).some(); } 
+public <B>NonEmptyList<B> mapTails(final F<NonEmptyList<A>,B> f){   return tails().map(f); } 
+public NonEmptyList<A> intersperse(final A a){   final List<A> list=toList().intersperse(a);   return nel(list.head(),list.tail()); } 
+public NonEmptyList<A> reverse(){   final List<A> list=toList().reverse();   return nel(list.head(),list.tail()); } 
+public NonEmptyList<A> sort(final Ord<A> o){   final List<A> list=toList().sort(o);   return nel(list.head(),list.tail()); } 
+public <B>NonEmptyList<P2<A,B>> zip(final NonEmptyList<B> bs){   final List<P2<A,B>> list=toList().zip(bs.toList());   return nel(list.head(),list.tail()); } 
+public NonEmptyList<P2<A,Integer>> zipIndex(){   final List<P2<A,Integer>> list=toList().zipIndex();   return nel(list.head(),list.tail()); } 
+public <B,C>NonEmptyList<C> zipWith(final List<B> bs,final F<A,F<B,C>> f){   final List<C> list=toList().zipWith(bs,f);   return nel(list.head(),list.tail()); } 
+public <B,C>NonEmptyList<C> zipWith(final List<B> bs,final F2<A,B,C> f){   final List<C> list=toList().zipWith(bs,f);   return nel(list.head(),list.tail()); } 
+public static <A,B>P2<NonEmptyList<A>,NonEmptyList<B>> unzip(final NonEmptyList<P2<A,B>> xs){   final P2<List<A>,List<B>> p=List.unzip(xs.toList());   return P.p(nel(p._1().head(),p._1().tail()),nel(p._2().head(),p._2().tail())); } 
+public List<A> toList(){   return tail.cons(head); } 
+public Collection<A> toCollection(){   return toList().toCollection(); } 
+public static <A>NonEmptyList<A> nel(final A head,final List<A> tail){   return new NonEmptyList<>(head,tail); } 
+public static <A>Option<NonEmptyList<A>> fromList(final List<A> as){   return as.isEmpty() ? Option.none() : some(nel(as.head(),as.tail())); } 
+public static <A>NonEmptyList<A> join(final NonEmptyList<NonEmptyList<A>> o){   return o.bind(identity()); } 
+public Iterator<A> iterator(){   return toCollection().iterator(); } 
+@SuppressWarnings("unchecked") public <X>Either<X,A> toEither(final F0<X> x){   return a.length == 0 ? Either.left(x.f()) : Either.right((A)a[0]); } 
+@SuppressWarnings("unchecked") public List<A> toList(){   List<A> x=List.nil();   for (int i=a.length - 1; i >= 0; i--) {     x=x.cons((A)a[i]);   }   return x; } 
+@SuppressWarnings("unchecked") public <B>Array<B> map(final F<A,B> f){   final Object[] bs=new Object[a.length];   for (int i=0; i < a.length; i++) {     bs[i]=f.f((A)a[i]);   }   return new Array<>(bs); } 
+@SuppressWarnings("unchecked") public Array<A> filter(final F<A,Boolean> f){   List<A> x=List.nil();   for (int i=a.length - 1; i >= 0; i--) {     if (f.f((A)a[i]))     x=x.cons((A)a[i]);   }   return x.toArray(); } 
+@SuppressWarnings("unchecked") public Unit foreach(final F<A,Unit> f){   for (  final Object x : a) {     f.f((A)x);   }   return unit(); } 
+@SuppressWarnings("unchecked") public void foreachDoEffect(final Effect1<A> f){   for (  final Object x : a) {     f.f((A)x);   } } 
+@SuppressWarnings("unchecked") public <B>B foldRight(final F<A,F<B,B>> f,final B b){   B x=b;   for (int i=a.length - 1; i >= 0; i--)   x=f.f((A)a[i]).f(x);   return x; } 
+@SuppressWarnings("unchecked") public <B>B foldLeft(final F<B,F<A,B>> f,final B b){   B x=b;   for (  final Object aa : a)   x=f.f(x).f((A)aa);   return x; } 
+@SuppressWarnings("unchecked") public <B>Array<B> scanLeft(final F<B,F<A,B>> f,final B b){   final Object[] bs=new Object[a.length];   B x=b;   for (int i=0; i < a.length; i++) {     x=f.f(x).f((A)a[i]);     bs[i]=x;   }   return new Array<>(bs); } 
+@SuppressWarnings("unchecked") public Array<A> scanLeft1(final F<A,F<A,A>> f){   final Object[] bs=new Object[a.length];   A x=get(0);   bs[0]=x;   for (int i=1; i < a.length; i++) {     x=f.f(x).f((A)a[i]);     bs[i]=x;   }   return new Array<>(bs); } 
+@SuppressWarnings("unchecked") public <B>Array<B> scanRight(final F<A,F<B,B>> f,final B b){   final Object[] bs=new Object[a.length];   B x=b;   for (int i=a.length - 1; i >= 0; i--) {     x=f.f((A)a[i]).f(x);     bs[i]=x;   }   return new Array<>(bs); } 
+@SuppressWarnings("unchecked") public Array<A> scanRight1(final F<A,F<A,A>> f){   final Object[] bs=new Object[a.length];   A x=get(length() - 1);   bs[length() - 1]=x;   for (int i=a.length - 2; i >= 0; i--) {     x=f.f((A)a[i]).f(x);     bs[i]=x;   }   return new Array<>(bs); } 
+@SuppressWarnings("unchecked") public <B>Array<B> bind(final F<A,Array<B>> f){   List<Array<B>> x=List.nil();   int len=0;   for (int i=a.length - 1; i >= 0; i--) {     final Array<B> bs=f.f((A)a[i]);     len=len + bs.length();     x=x.cons(bs);   }   final Object[] bs=new Object[len];   x.foreach(new F<Array<B>,Unit>(){     private int i;     public Unit f(    final Array<B> x){       arraycopy(x.a,0,bs,i,x.a.length);       i=i + x.a.length;       return unit();     }   } );   return new Array<>(bs); } 
+public <B,C>Array<C> bind(final Array<B> sb,final F<A,F<B,C>> f){   return sb.apply(map(f)); } 
+public <B>Array<B> apply(final Array<F<A,B>> lf){   return lf.bind(f -> map(f)); } 
+public Array<A> reverse(){   final Object[] x=new Object[a.length];   for (int i=0; i < a.length; i++) {     x[a.length - 1 - i]=a[i];   }   return new Array<>(x); } 
+public Array<A> append(final Array<A> aas){   final Object[] x=new Object[a.length + aas.a.length];   arraycopy(a,0,x,0,a.length);   arraycopy(aas.a,0,x,a.length,aas.a.length);   return new Array<>(x); } 
+public static <A>Array<A> empty(){   return new Array<>(new Object[0]); } 
+static <A>Array<A> mkArray(final Object[] a){   return new Array<>(a); } 
+public static <A>Array<A> single(final A a){   return new Array<>(new Object[]{a}); } 
+public static <A>Array<A> join(final Array<Array<A>> o){   final F<Array<A>,Array<A>> id=identity();   return o.bind(id); } 
+@SuppressWarnings("unchecked") public boolean forall(final F<A,Boolean> f){   for (  final Object x : a)   if (!f.f((A)x))   return false;   return true; } 
+@SuppressWarnings("unchecked") public boolean exists(final F<A,Boolean> f){   for (  final Object x : a)   if (f.f((A)x))   return true;   return false; } 
+@SuppressWarnings("unchecked") public Option<A> find(final F<A,Boolean> f){   for (  final Object x : a)   if (f.f((A)x))   return some((A)x);   return none(); } 
+public static Array<Integer> range(final int from,final int to){   if (from >= to)   return empty();  else {     final Array<Integer> a=new Array<>(new Integer[to - from]);     for (int i=from; i < to; i++)     a.set(i - from,i);     return a;   } } 
+public <B,C>Array<C> zipWith(final Array<B> bs,final F<A,F<B,C>> f){   final int len=min(a.length,bs.length());   final Array<C> x=new Array<>(new Object[len]);   for (int i=0; i < len; i++) {     x.set(i,f.f(get(i)).f(bs.get(i)));   }   return x; } 
+@SuppressWarnings("unchecked") public java.util.List<A> asJavaList(){   return Collections.unmodifiableList(Arrays.asList((A[])a)); } 
+public ArrayList<A> toJavaList(){   return new ArrayList<>(asJavaList()); } 
+@SafeVarargs public static <A>Array<A> arrayArray(final A... as){   return new Array<>(as); } 
+@SuppressWarnings("unchecked") public static <A,B>P2<Array<A>,Array<B>> unzip(final Array<P2<A,B>> xs){   final int len=xs.length();   final Array<A> aa=new Array<>(new Object[len]);   final Array<B> ab=new Array<>(new Object[len]);   for (int i=len - 1; i >= 0; i--) {     final P2<A,B> p=xs.get(i);     aa.set(i,p._1());     ab.set(i,p._2());   }   return p(aa,ab); } 
+public Iterator<A> iterator(){   return a.iterator(); } 
+public A get(final int index){   return a.get(index); } 
+public int length(){   return a.length(); } 
+public boolean isEmpty(){   return a.isEmpty(); } 
+public boolean isNotEmpty(){   return a.isNotEmpty(); } 
+public Option<A> toOption(){   return a.toOption(); } 
+public <X>Either<X,A> toEither(final F0<X> x){   return a.toEither(x); } 
+public List<A> toList(){   return a.toList(); } 
+public Stream<A> toStream(){   return a.toStream(); } 
+public <B>Array<B> map(final F<A,B> f){   return a.map(f); } 
+public Array<A> filter(final F<A,Boolean> f){   return a.filter(f); } 
+public Unit foreach(final F<A,Unit> f){   return a.foreach(f); } 
+public <B>B foldRight(final F<A,F<B,B>> f,final B b){   return a.foldRight(f,b); } 
+public <B>B foldLeft(final F<B,F<A,B>> f,final B b){   return a.foldLeft(f,b); } 
+public <B>Array<B> bind(final F<A,Array<B>> f){   return a.bind(f); } 
+public <B>Array<B> sequence(final Array<B> bs){   return a.sequence(bs); } 
+public <B>Array<B> apply(final Array<F<A,B>> lf){   return a.apply(lf); } 
+public Array<A> reverse(){   return a.reverse(); } 
+public Array<A> append(final Array<A> aas){   return a.append(aas); } 
+public Collection<A> toCollection(){   return a.toCollection(); } 
+public Iterator<A> iterator(){   return toCollection().iterator(); } 
+public HashSet(final Equal<A> e,final Hash<A> h){   m=new HashMap<>(e,h); } 
+public HashSet(final Equal<A> e,final Hash<A> h,final int initialCapacity){   m=new HashMap<>(e,h,initialCapacity); } 
+public HashSet(final Equal<A> e,final Hash<A> h,final int initialCapacity,final float loadFactor){   m=new HashMap<>(e,h,initialCapacity,loadFactor); } 
+public boolean eq(final A a1,final A a2){   return m.eq(a1,a2); } 
+public int hash(final A a){   return m.hash(a); } 
+public static <A>HashSet<A> empty(final Equal<A> e,final Hash<A> h){   return new HashSet<>(e,h); } 
+public static <A>HashSet<A> iterableHashSet(final Equal<A> e,final Hash<A> h,final Iterable<A> it){   final HashSet<A> hs=empty(e,h);   for (  A a : it) {     hs.set(a);   }   return hs; } 
+public boolean contains(final A a){   return m.contains(a); } 
+public void set(final A a){   m.set(a,unit()); } 
+public void clear(){   m.clear(); } 
+public boolean isEmpty(){   return m.isEmpty(); } 
+public int size(){   return m.size(); } 
+public boolean delete(final A a){   return m.getDelete(a).isSome(); } 
+public List<A> toList(){   return m.keys(); } 
+public Collection<A> toCollection(){   return toList().toCollection(); } 
+public Iterator<TreeZipper<A>> iterator(){   return positions().toTree().iterator(); } 
+public static <A>TreeZipper<A> treeZipper(final Tree<A> tree,final Stream<Tree<A>> lefts,final Stream<Tree<A>> rights,final Stream<P3<Stream<Tree<A>>,A,Stream<Tree<A>>>> parents){   return new TreeZipper<>(tree,lefts,rights,parents); } 
+public static <A>Equal<TreeZipper<A>> eq(final Equal<A> e){   return p4Equal(treeEqual(e),streamEqual(treeEqual(e)),streamEqual(treeEqual(e)),streamEqual(p3Equal(streamEqual(treeEqual(e)),e,streamEqual(treeEqual(e))))).contramap(TreeZipper.p_()); } 
+public static <A>Show<TreeZipper<A>> show(final Show<A> s){   return p4Show(treeShow(s),streamShow(treeShow(s)),streamShow(treeShow(s)),streamShow(p3Show(streamShow(treeShow(s)),s,streamShow(treeShow(s))))).contramap(TreeZipper.p_()); } 
+public Option<TreeZipper<A>> parent(){   if (parents.isEmpty())   return none();  else {     final P3<Stream<Tree<A>>,A,Stream<Tree<A>>> p=parents.head();     return some(treeZipper(node(p._2(),combChildren(lefts,tree,rights)),p._1(),p._3(),parents.tail()._1()));   } } 
+public TreeZipper<A> root(){   return parent().option(this,TreeZipper.root_()); } 
+public Option<TreeZipper<A>> left(){   return lefts.isEmpty() ? Option.none() : some(treeZipper(lefts.head(),lefts.tail()._1(),rights.cons(tree),parents)); } 
+public Option<TreeZipper<A>> right(){   return rights.isEmpty() ? Option.none() : some(treeZipper(rights.head(),lefts.cons(tree),rights.tail()._1(),parents)); } 
+public Option<TreeZipper<A>> firstChild(){   final Stream<Tree<A>> ts=tree.subForest()._1();   return ts.isEmpty() ? Option.none() : some(treeZipper(ts.head(),Stream.nil(),ts.tail()._1(),downParents())); } 
+public Option<TreeZipper<A>> lastChild(){   final Stream<Tree<A>> ts=tree.subForest()._1().reverse();   return ts.isEmpty() ? Option.none() : some(treeZipper(ts.head(),ts.tail()._1(),Stream.nil(),downParents())); } 
+public Option<TreeZipper<A>> getChild(final int n){   Option<TreeZipper<A>> r=none();   for (  final P2<Stream<Tree<A>>,Stream<Tree<A>>> lr : splitChildren(Stream.nil(),tree.subForest()._1(),n)) {     r=some(treeZipper(lr._1().head(),lr._1().tail()._1(),lr._2(),downParents()));   }   return r; } 
+public Option<TreeZipper<A>> findChild(final F<Tree<A>,Boolean> p){   Option<TreeZipper<A>> r=none();   final F2<Stream<Tree<A>>,Stream<Tree<A>>,Option<P3<Stream<Tree<A>>,Tree<A>,Stream<Tree<A>>>>> split=new F2<Stream<Tree<A>>,Stream<Tree<A>>,Option<P3<Stream<Tree<A>>,Tree<A>,Stream<Tree<A>>>>>(){     public Option<P3<Stream<Tree<A>>,Tree<A>,Stream<Tree<A>>>> f(    final Stream<Tree<A>> acc,    final Stream<Tree<A>> xs){       return xs.isNotEmpty() ? p.f(xs.head()) ? some(P.p(acc,xs.head(),xs.tail()._1())) : f(acc.cons(xs.head()),xs.tail()._1()) : Option.none();     }   } ;   Stream<Tree<A>> subforest=tree.subForest()._1();   if (subforest.isNotEmpty()) {     for (    final P3<Stream<Tree<A>>,Tree<A>,Stream<Tree<A>>> ltr : split.f(Stream.nil(),subforest)) {       r=some(treeZipper(ltr._2(),ltr._1(),ltr._3(),downParents()));     }   }   return r; } 
+public static <A>TreeZipper<A> fromTree(final Tree<A> t){   return treeZipper(t,Stream.nil(),Stream.nil(),TreeZipper.lp3nil()); } 
+public static <A>Option<TreeZipper<A>> fromForest(final Stream<Tree<A>> ts){   return ts.isNotEmpty() ? some(treeZipper(ts.head(),Stream.nil(),ts.tail()._1(),TreeZipper.lp3nil())) : Option.none(); } 
+public boolean isRoot(){   return parents.isEmpty(); } 
+public boolean isFirst(){   return lefts.isEmpty(); } 
+public boolean isLast(){   return rights.isEmpty(); } 
+public boolean isLeaf(){   return tree.subForest()._1().isEmpty(); } 
+public TreeZipper<A> modifyTree(final F<Tree<A>,Tree<A>> f){   return setTree(f.f(tree)); } 
+public TreeZipper<A> modifyLabel(final F<A,A> f){   return setLabel(f.f(getLabel())); } 
+public A getLabel(){   return tree.root(); } 
+public TreeZipper<A> insertLeft(final Tree<A> t){   return treeZipper(t,lefts,rights.cons(tree),parents); } 
+public TreeZipper<A> insertRight(final Tree<A> t){   return treeZipper(t,lefts.cons(tree),rights,parents); } 
+public TreeZipper<A> insertDownFirst(final Tree<A> t){   return treeZipper(t,Stream.nil(),tree.subForest()._1(),downParents()); } 
+public TreeZipper<A> insertDownLast(final Tree<A> t){   return treeZipper(t,tree.subForest()._1().reverse(),Stream.nil(),downParents()); } 
+public Option<TreeZipper<A>> insertDownAt(final int n,final Tree<A> t){   Option<TreeZipper<A>> r=none();   for (  final P2<Stream<Tree<A>>,Stream<Tree<A>>> lr : splitChildren(Stream.nil(),tree.subForest()._1(),n)) {     r=some(treeZipper(t,lr._1(),lr._2(),downParents()));   }   return r; } 
+public Option<TreeZipper<A>> delete(){   Option<TreeZipper<A>> r=none();   if (rights.isNotEmpty())   r=some(treeZipper(rights.head(),lefts,rights.tail()._1(),parents));  else   if (lefts.isNotEmpty())   r=some(treeZipper(lefts.head(),lefts.tail()._1(),rights,parents));  else   for (  final TreeZipper<A> loc : parent())   r=some(loc.modifyTree(t -> node(t.root(),Stream.nil())));   return r; } 
+public <B>TreeZipper<B> map(final F<A,B> f){   final F<Tree<A>,Tree<B>> g=Tree.<A,B>fmap_().f(f);   final F<Stream<Tree<A>>,Stream<Tree<B>>> h=Stream.<Tree<A>,Tree<B>>map_().f(g);   return treeZipper(tree.fmap(f),lefts.map(g),rights.map(g),parents.map(p -> p.map1(h).map2(f).map3(h))); } 
+public TreeZipper<TreeZipper<A>> positions(){   final Tree<TreeZipper<A>> t=unfoldTree(TreeZipper.<A>dwn()).f(this);   final Stream<Tree<TreeZipper<A>>> l=uf(TreeZipper.left_());   final Stream<Tree<TreeZipper<A>>> r=uf(TreeZipper.right_());   final Stream<P3<Stream<Tree<TreeZipper<A>>>,TreeZipper<A>,Stream<Tree<TreeZipper<A>>>>> p=unfold(o -> {     Option<P2<P3<Stream<Tree<TreeZipper<A>>>,TreeZipper<A>,Stream<Tree<TreeZipper<A>>>>,Option<TreeZipper<A>>>> r1=none();     for (    final TreeZipper<A> z : o) {       r1=some(P.p(P.p(z.uf(TreeZipper.left_()),z,z.uf(TreeZipper.right_())),z.parent()));     }     return r1;   } ,parent());   return treeZipper(t,l,r,p); } 
+public <B>TreeZipper<B> cobind(final F<TreeZipper<A>,B> f){   return positions().map(f); } 
+public static Option<Natural> natural(final BigInteger i){   return i.compareTo(BigInteger.ZERO) < 0 ? Option.none() : Option.some(new Natural(i)); } 
+public static Option<Natural> natural(final long i){   return natural(BigInteger.valueOf(i)); } 
+public Natural add(final Natural n){   return natural(n.value.add(value)).some(); } 
+public Option<Natural> subtract(final Natural n){   return natural(value.subtract(n.value)); } 
+public Natural multiply(final Natural n){   return natural(n.value.multiply(value)).some(); } 
+public Natural divide(final Natural n){   return natural(value.divide(n.value)).some(); } 
+public Natural mod(final Natural n){   return natural(value.mod(n.value)).some(); } 
+public V2<Natural> divmod(final Natural n){   final BigInteger[] x=value.divideAndRemainder(n.value);   return V.v(natural(x[0]).some(),natural(x[1]).some()); } 
+public long longValue(){   return value.longValue(); } 
+public float floatValue(){   return value.floatValue(); } 
+public double doubleValue(){   return value.doubleValue(); } 
+public int intValue(){   return value.intValue(); } 
+public static <S,A>State<S,List<A>> sequence(List<State<S,A>> list){   return list.foldLeft((acc,ts) -> acc.flatMap(as -> ts.map(a -> cons(a,as))),State.<S,List<A>>constant(List.nil())).map(as -> as.reverse()); } 
+public static <S,A,B>State<S,List<B>> traverse(List<A> list,F<A,State<S,B>> f){   return list.foldLeft((acc,a) -> acc.flatMap(bs -> f.f(a).map(b -> cons(b,bs))),State.<S,List<B>>constant(List.nil())).map(bs -> bs.reverse()); } 
+public static LazyString str(final String s){   return new LazyString(Stream.unfold(o -> {     final String s2=o._1();     final int n=o._2();     final Option<P2<Character,P2<String,Integer>>> none=none();     return s2.length() <= n ? none : some(p(s2.charAt(n),p(s2,n + 1)));   } ,p(s,0))); } 
+public static LazyString fromStream(final Stream<Character> s){   return new LazyString(s); } 
+public int length(){   return s.length(); } 
+public char charAt(final int index){   return s.index(index); } 
+public CharSequence subSequence(final int start,final int end){   return fromStream(s.drop(start).take(end - start)); } 
+public String toStringEager(){   final StringBuilder builder=new StringBuilder(length() + 16);   s.foreachDoEffect(c -> builder.append(c.charValue()));   return builder.toString(); } 
+public LazyString append(final LazyString cs){   return fromStream(s.append(cs.s)); } 
+public boolean contains(final LazyString cs){   return or(s.tails().map(compose(startsWith().f(cs),fromStream))); } 
+public boolean endsWith(final LazyString cs){   return reverse().startsWith(cs.reverse()); } 
+public boolean startsWith(final LazyString cs){   return cs.isEmpty() || !isEmpty() && charEqual.eq(head(),cs.head()) && tail().startsWith(cs.tail()); } 
+public char head(){   return s.head(); } 
+public LazyString tail(){   return fromStream(s.tail()._1()); } 
+public boolean isEmpty(){   return s.isEmpty(); } 
+public LazyString reverse(){   return fromStream(s.reverse()); } 
+public Option<Integer> indexOf(final char c){   return s.indexOf(charEqual.eq(c)); } 
+public Option<Integer> indexOf(final LazyString cs){   return s.substreams().indexOf(eqS.eq(cs.s)); } 
+public boolean matches(final String regex){   return Pattern.matches(regex,this); } 
+public Stream<LazyString> split(final F<Character,Boolean> p){   final Stream<Character> findIt=s.dropWhile(p);   final P2<Stream<Character>,Stream<Character>> ws=findIt.split(p);   return findIt.isEmpty() ? Stream.nil() : Stream.cons(fromStream(ws._1()),() -> fromStream(ws._2()).split(p)); } 
+public static LazyString unlines(final Stream<LazyString> str){   return fromStream(join(str.intersperse(str("\n")).map(toStream))); } 
+public static LazyString unwords(final Stream<LazyString> str){   return fromStream(join(str.intersperse(str(" ")).map(toStream))); } 
+public static HEq<HZero,HZero,HTrue> eq(final HZero a,final HZero b){   return new HEq<HZero,HZero,HTrue>(hTrue()); } 
+public static <N extends HNat<N>>HEq<HZero,HSucc<N>,HFalse> eq(final HZero a,final HSucc<N> b){   return new HEq<HZero,HSucc<N>,HFalse>(hFalse()); } 
+public static <N extends HNat<N>>HEq<HSucc<N>,HZero,HFalse> eq(final HSucc<N> a,final HZero b){   return new HEq<HSucc<N>,HZero,HFalse>(hFalse()); } 
+public static <N extends HNat<N>,NN extends HNat<NN>,B extends HBool,E extends HEq<N,NN,B>>HEq<HSucc<N>,HSucc<NN>,B> eq(final HSucc<N> a,final HSucc<NN> b,final E e){   return new HEq<HSucc<N>,HSucc<NN>,B>(e.v()); } 
+public static <N extends HNat<N>>HAdd<HZero,HSucc<N>,HSucc<N>> add(final HZero a,final HSucc<N> b){   return new HAdd<HZero,HSucc<N>,HSucc<N>>(b); } 
+public static <N extends HNat<N>>HAdd<HSucc<N>,HZero,HSucc<N>> add(final HSucc<N> a,final HZero b){   return new HAdd<HSucc<N>,HZero,HSucc<N>>(a); } 
+public static <N extends HNat<N>,M extends HNat<M>,R extends HNat<R>,H extends HAdd<N,HSucc<M>,R>>HAdd<HSucc<N>,HSucc<M>,HSucc<R>> add(final HSucc<N> a,final HSucc<M> b,final H h){   return new HAdd<HSucc<N>,HSucc<M>,HSucc<R>>(HNat.hSucc(h.sum())); } 
+public static <A>V3<A> cons(final P1<A> head,final V2<A> tail){   return new V3<>(head,tail); } 
+public <B>V3<B> apply(final V3<F<A,B>> vf){   return new V3<>(head.apply(vf.head()),tail.apply(vf.tail())); } 
+public <B,C>V3<C> zipWith(final F<A,F<B,C>> f,final V3<B> bs){   return bs.apply(map(f)); } 
+public Iterator<A> iterator(){   return toStream().iterator(); } 
+public NonEmptyList<A> toNonEmptyList(){   return NonEmptyList.nel(head()._1(),tail().toNonEmptyList().toList()); } 
+public Stream<A> toStream(){   return Stream.cons(head()._1(),() -> tail().toStream()); } 
+public <B>V3<B> map(final F<A,B> f){   return new V3<>(head().map(f),tail().map(f)); } 
+public Iterator<A> iterator(){   return toStream().iterator(); } 
+public <B>V2<B> map(final F<A,B> f){   return p(inner.split(f,f)); } 
+public <B>V2<B> apply(final V2<F<A,B>> vf){   return p(inner.split(vf._1(),vf._2())); } 
+public <B,C>V2<C> zipWith(final F<A,F<B,C>> f,final V2<B> bs){   return bs.apply(map(f)); } 
+public static <A>V5<A> cons(final P1<A> head,final V4<A> tail){   return new V5<>(head,tail); } 
+public Iterator<A> iterator(){   return toStream().iterator(); } 
+public NonEmptyList<A> toNonEmptyList(){   return NonEmptyList.nel(_1(),tail.toNonEmptyList().toList()); } 
+public Stream<A> toStream(){   return Stream.cons(head._1(),tail::toStream); } 
+public <B>V5<B> map(final F<A,B> f){   return new V5<>(head.map(f),tail.map(f)); } 
+public <B>V5<B> apply(final V5<F<A,B>> vf){   return new V5<>(head.apply(vf.head()),tail.apply(vf.tail())); } 
+public <B,C>V5<C> zipWith(final F<A,F<B,C>> f,final V5<B> bs){   return bs.apply(map(f)); } 
+public static <A>V4<A> cons(final P1<A> head,final V3<A> tail){   return new V4<>(head,tail); } 
+public Iterator<A> iterator(){   return toStream().iterator(); } 
+public NonEmptyList<A> toNonEmptyList(){   return NonEmptyList.nel(_1(),tail.toNonEmptyList().toList()); } 
+public Stream<A> toStream(){   return Stream.cons(head._1(),tail::toStream); } 
+public <B>V4<B> map(final F<A,B> f){   return new V4<>(head.map(f),tail.map(f)); } 
+public <B>V4<B> apply(final V4<F<A,B>> vf){   return new V4<>(head.apply(vf.head()),tail.apply(vf.tail())); } 
+public <B,C>V4<C> zipWith(final F<A,F<B,C>> f,final V4<B> bs){   return bs.apply(map(f)); } 
+public static <A>V8<A> cons(final P1<A> head,final V7<A> tail){   return new V8<>(head,tail); } 
+public Iterator<A> iterator(){   return toStream().iterator(); } 
+public NonEmptyList<A> toNonEmptyList(){   return NonEmptyList.nel(_1(),tail.toNonEmptyList().toList()); } 
+public Stream<A> toStream(){   return Stream.cons(head._1(),tail::toStream); } 
+public <B>V8<B> map(final F<A,B> f){   return new V8<>(head.map(f),tail.map(f)); } 
+public <B>V8<B> apply(final V8<F<A,B>> vf){   return new V8<>(head.apply(vf.head()),tail.apply(vf.tail())); } 
+public <B,C>V8<C> zipWith(final F<A,F<B,C>> f,final V8<B> bs){   return bs.apply(map(f)); } 
+public static <A>V7<A> cons(final P1<A> head,final V6<A> tail){   return new V7<>(head,tail); } 
+public Iterator<A> iterator(){   return toStream().iterator(); } 
+public NonEmptyList<A> toNonEmptyList(){   return NonEmptyList.nel(_1(),tail.toNonEmptyList().toList()); } 
+public Stream<A> toStream(){   return Stream.cons(head._1(),tail::toStream); } 
+public <B>V7<B> map(final F<A,B> f){   return new V7<>(head.map(f),tail.map(f)); } 
+public <B>V7<B> apply(final V7<F<A,B>> vf){   return new V7<>(head.apply(vf.head()),tail.apply(vf.tail())); } 
+public <B,C>V7<C> zipWith(final F<A,F<B,C>> f,final V7<B> bs){   return bs.apply(map(f)); } 
+public static <A>V6<A> cons(final P1<A> head,final V5<A> tail){   return new V6<>(head,tail); } 
+public Iterator<A> iterator(){   return toStream().iterator(); } 
+public NonEmptyList<A> toNonEmptyList(){   return NonEmptyList.nel(_1(),tail.toNonEmptyList().toList()); } 
+public Stream<A> toStream(){   return Stream.cons(head._1(),tail::toStream); } 
+public <B>V6<B> map(final F<A,B> f){   return new V6<>(head.map(f),tail.map(f)); } 
+public <B>V6<B> apply(final V6<F<A,B>> vf){   return new V6<>(head.apply(vf.head()),tail.apply(vf.tail())); } 
+public <B,C>V6<C> zipWith(final F<A,F<B,C>> f,final V6<B> bs){   return bs.apply(map(f)); } 
+public static <A>Set<A> empty(final Ord<A> ord){   return new Empty<>(ord); } 
+public final boolean member(final A x){   return !isEmpty() && (ord.isLessThan(x,head()) ? l().member(x) : ord.eq(head(),x) || r().member(x)); } 
+public final Set<A> insert(final A x){   return ins(x).makeBlack(); } 
+public final Iterator<A> iterator(){   return toStream().iterator(); } 
+public final <B>Set<B> map(final Ord<B> o,final F<A,B> f){   return iterableSet(o,toStream().map(f)); } 
+public final <B>B foldMap(final F<A,B> f,final Monoid<B> m){   return isEmpty() ? m.zero() : m.sum(m.sum(l().foldMap(f,m),f.f(head())),r().foldMap(f,m)); } 
+public final <B>B foldMapRight(final F<A,B> f,final Monoid<B> m){   return isEmpty() ? m.zero() : m.sum(m.sum(r().foldMapRight(f,m),f.f(head())),l().foldMapRight(f,m)); } 
+public final java.util.HashSet<A> toJavaHashSet(){   return new java.util.HashSet<>(toStream().toCollection()); } 
+public final java.util.TreeSet<A> toJavaTreeSet(){   return new java.util.TreeSet<>(toStream().toCollection()); } 
+public final java.util.List<A> toJavaList(){   return new java.util.ArrayList<>(toStream().toCollection()); } 
+public final Stream<A> toStream(){   if (isEmpty()) {     return Stream.nil();   }  else   if (l().isEmpty()) {     return Stream.cons(head(),() -> r().toStream());   }  else {     return l().toStream().append(Stream.cons(head(),() -> r().toStream()));   } } 
+public final Stream<A> toStreamReverse(){   if (isEmpty()) {     return Stream.nil();   }  else   if (r().isEmpty()) {     return Stream.cons(head(),() -> l().toStreamReverse());   }  else {     return r().toStreamReverse().append(Stream.cons(head(),() -> l().toStreamReverse()));   } } 
+public final Set<A> union(final Set<A> s){   return iterableSet(ord,s.toStream().append(toStream())); } 
+public final Set<A> filter(final F<A,Boolean> f){   return iterableSet(ord,toStream().filter(f)); } 
+public final Set<A> intersect(final Set<A> s){   return filter(Set.<A>member().f(s)); } 
+public final Set<A> minus(final Set<A> s){   return filter(compose(not,Set.<A>member().f(s))); } 
+public final P3<Set<A>,Option<A>,Set<A>> split(final A a){   if (isEmpty())   return P.p(empty(ord),Option.none(),empty(ord));  else {     final A h=head();     final Ordering i=ord.compare(a,h);     if (i == LT) {       final P3<Set<A>,Option<A>,Set<A>> lg=l().split(a);       return P.p(lg._1(),lg._2(),lg._3().insert(h).union(r()));     }  else     if (i == GT) {       final P3<Set<A>,Option<A>,Set<A>> lg=r().split(a);       return P.p(lg._1().insert(h).union(l()),lg._2(),lg._3());     }  else     return P.p(l(),some(h),r());   } } 
+public final Option<A> lookup(final A a){   Set<A> s=this;   while (true)   if (s.isEmpty())   return none();  else {     final A h=s.head();     final Ordering i=ord.compare(a,h);     if (i == LT)     s=s.l();  else     if (i == GT)     s=s.r();  else     return some(h);   } } 
+public final Option<A> lookupLT(final A a){   Set<A> s=this;   Option<A> r=none();   while (true)   if (s.isEmpty())   return r;  else {     final A h=s.head();     final Ordering i=ord.compare(a,h);     if (i == GT) {       r=some(h);       s=s.r();     }  else     s=s.l();   } } 
+public final Option<A> lookupGT(final A a){   Set<A> s=this;   Option<A> r=none();   while (true)   if (s.isEmpty())   return r;  else {     final A h=s.head();     final Ordering i=ord.compare(a,h);     if (i == LT) {       r=some(h);       s=s.l();     }  else     s=s.r();   } } 
+public final Option<A> lookupLE(final A a){   Set<A> s=this;   Option<A> r=none();   while (true)   if (s.isEmpty())   return r;  else {     final A h=s.head();     final Ordering i=ord.compare(a,h);     if (i == LT)     s=s.l();  else     if (i == GT) {       r=some(h);       s=s.r();     }  else     return some(h);   } } 
+public final Option<A> lookupGE(final A a){   Set<A> s=this;   Option<A> r=none();   while (true)   if (s.isEmpty())   return r;  else {     final A h=s.head();     final Ordering i=ord.compare(a,h);     if (i == LT) {       r=some(h);       s=s.l();     }  else     if (i == GT)     s=s.r();  else     return some(h);   } } 
+public final boolean subsetOf(final Set<A> s){   if (isEmpty() || s.isEmpty())   return isEmpty();  else {     final P3<Set<A>,Option<A>,Set<A>> find=s.split(head());     return find._2().isSome() && l().subsetOf(find._1()) && r().subsetOf(find._3());   } } 
+public static <A>Set<A> join(final Ord<A> o,final Set<Set<A>> s){   final F<Set<A>,Set<A>> id=identity();   return s.foldMap(id,Monoid.setMonoid(o)); } 
+public static <A>Set<A> iterableSet(final Ord<A> o,final Iterable<A> as){   Set<A> s=empty(o);   for (  final A a : as)   s=s.insert(a);   return s; } 
+public boolean eq(final A a1,final A a2){   return def.equal(a1,a2); } 
+public boolean notEq(final A a1,final A a2){   return !def.equal(a1,a2); } 
+public F<A,Boolean> eq(final A a){   return def.equal(a); } 
+public <B>Equal<B> contramap(final F<B,A> f){   Definition<A> eaDef=def;   return equalDef(new Definition<B>(){     @Override public F<B,Boolean> equal(    B b){       return compose(eaDef.equal(f.f(b)),f);     }     @Override public boolean equal(    B b1,    B b2){       return eaDef.equal(f.f(b1),f.f(b2));     }   } ); } 
+public static <A>Equal<A> equal(final F<A,F<A,Boolean>> f){   return new Equal<>(f::f); } 
+public static <A>Equal<A> equalDef(final Definition<A> definition){   return new Equal<>(definition); } 
+public static <A>Equal<A> equalDef(final AltDefinition<A> definition){   return new Equal<>(definition); } 
+public static <A>Equal<P1<A>> p1Equal(final Equal<A> ea){   return ea.contramap(P1.__1()); } 
+public static <A,B>Equal<P2<A,B>> p2Equal(final Equal<A> ea,final Equal<B> eb){   Definition<A> eaDef=ea.def;   Definition<B> ebDef=eb.def;   return equalDef((p1,p2) -> eaDef.equal(p1._1(),p2._1()) && ebDef.equal(p1._2(),p2._2())); } 
+public static <A,B,C>Equal<P3<A,B,C>> p3Equal(final Equal<A> ea,final Equal<B> eb,final Equal<C> ec){   Definition<A> eaDef=ea.def;   Definition<B> ebDef=eb.def;   Definition<C> ecDef=ec.def;   return equalDef((p1,p2) -> eaDef.equal(p1._1(),p2._1()) && ebDef.equal(p1._2(),p2._2()) && ecDef.equal(p1._3(),p2._3())); } 
+public static <A,B,C,D>Equal<P4<A,B,C,D>> p4Equal(final Equal<A> ea,final Equal<B> eb,final Equal<C> ec,final Equal<D> ed){   Definition<A> eaDef=ea.def;   Definition<B> ebDef=eb.def;   Definition<C> ecDef=ec.def;   Definition<D> edDef=ed.def;   return equalDef((p1,p2) -> eaDef.equal(p1._1(),p2._1()) && ebDef.equal(p1._2(),p2._2()) && ecDef.equal(p1._3(),p2._3())&& edDef.equal(p1._4(),p2._4())); } 
+public static <A,B,C,D,E>Equal<P5<A,B,C,D,E>> p5Equal(final Equal<A> ea,final Equal<B> eb,final Equal<C> ec,final Equal<D> ed,final Equal<E> ee){   Definition<A> eaDef=ea.def;   Definition<B> ebDef=eb.def;   Definition<C> ecDef=ec.def;   Definition<D> edDef=ed.def;   Definition<E> eeDef=ee.def;   return equalDef((p1,p2) -> eaDef.equal(p1._1(),p2._1()) && ebDef.equal(p1._2(),p2._2()) && ecDef.equal(p1._3(),p2._3())&& edDef.equal(p1._4(),p2._4())&& eeDef.equal(p1._5(),p2._5())); } 
+public static <A,B,C,D,E,F$>Equal<P6<A,B,C,D,E,F$>> p6Equal(final Equal<A> ea,final Equal<B> eb,final Equal<C> ec,final Equal<D> ed,final Equal<E> ee,final Equal<F$> ef){   Definition<A> eaDef=ea.def;   Definition<B> ebDef=eb.def;   Definition<C> ecDef=ec.def;   Definition<D> edDef=ed.def;   Definition<E> eeDef=ee.def;   Definition<F$> efDef=ef.def;   return equalDef((p1,p2) -> eaDef.equal(p1._1(),p2._1()) && ebDef.equal(p1._2(),p2._2()) && ecDef.equal(p1._3(),p2._3())&& edDef.equal(p1._4(),p2._4())&& eeDef.equal(p1._5(),p2._5())&& efDef.equal(p1._6(),p2._6())); } 
+public static <A,B,C,D,E,F$,G>Equal<P7<A,B,C,D,E,F$,G>> p7Equal(final Equal<A> ea,final Equal<B> eb,final Equal<C> ec,final Equal<D> ed,final Equal<E> ee,final Equal<F$> ef,final Equal<G> eg){   Definition<A> eaDef=ea.def;   Definition<B> ebDef=eb.def;   Definition<C> ecDef=ec.def;   Definition<D> edDef=ed.def;   Definition<E> eeDef=ee.def;   Definition<F$> efDef=ef.def;   Definition<G> egDef=eg.def;   return equalDef((p1,p2) -> eaDef.equal(p1._1(),p2._1()) && ebDef.equal(p1._2(),p2._2()) && ecDef.equal(p1._3(),p2._3())&& edDef.equal(p1._4(),p2._4())&& eeDef.equal(p1._5(),p2._5())&& efDef.equal(p1._6(),p2._6())&& egDef.equal(p1._7(),p2._7())); } 
+public static <A,B,C,D,E,F$,G,H>Equal<P8<A,B,C,D,E,F$,G,H>> p8Equal(final Equal<A> ea,final Equal<B> eb,final Equal<C> ec,final Equal<D> ed,final Equal<E> ee,final Equal<F$> ef,final Equal<G> eg,final Equal<H> eh){   Definition<A> eaDef=ea.def;   Definition<B> ebDef=eb.def;   Definition<C> ecDef=ec.def;   Definition<D> edDef=ed.def;   Definition<E> eeDef=ee.def;   Definition<F$> efDef=ef.def;   Definition<G> egDef=eg.def;   Definition<H> ehDef=eh.def;   return equalDef((p1,p2) -> eaDef.equal(p1._1(),p2._1()) && ebDef.equal(p1._2(),p2._2()) && ecDef.equal(p1._3(),p2._3())&& edDef.equal(p1._4(),p2._4())&& eeDef.equal(p1._5(),p2._5())&& efDef.equal(p1._6(),p2._6())&& egDef.equal(p1._7(),p2._7())&& ehDef.equal(p1._8(),p2._8())); } 
+public static <A>Equal<V2<A>> v2Equal(final Equal<A> ea){   return streamEqual(ea).contramap(V2.toStream_()); } 
+public static <A>Equal<V3<A>> v3Equal(final Equal<A> ea){   return streamEqual(ea).contramap(V3.toStream_()); } 
+public static <A>Equal<V4<A>> v4Equal(final Equal<A> ea){   return streamEqual(ea).contramap(V4.toStream_()); } 
+public static <A>Equal<V5<A>> v5Equal(final Equal<A> ea){   return streamEqual(ea).contramap(V5.toStream_()); } 
+public static <A>Equal<V6<A>> v6Equal(final Equal<A> ea){   return streamEqual(ea).contramap(V6.toStream_()); } 
+public static <A>Equal<V7<A>> v7Equal(final Equal<A> ea){   return streamEqual(ea).contramap(V7.toStream_()); } 
+public static <A>Equal<V8<A>> v8Equal(final Equal<A> ea){   return streamEqual(ea).contramap(V8.toStream_()); } 
+public static <E,L extends HList<L>>Equal<HList.HCons<E,L>> hListEqual(final Equal<E> e,final Equal<L> l){   Definition<E> eDef=e.def;   Definition<L> lDef=l.def;   return equalDef((c1,c2) -> eDef.equal(c1.head(),c2.head()) && lDef.equal(c1.tail(),c2.tail())); } 
+public static <A>Equal<Set<A>> setEqual(final Equal<A> e){   return streamEqual(e).contramap(Set::toStream); } 
+@SuppressWarnings("unchecked") public static <A>boolean equals0(final java.lang.Class<? super A> clazz,final A self,final Object other,final Equal<A> equal){   return self == other || clazz.isInstance(other) && equal.eq(self,(A)other); } 
+@SuppressWarnings("unchecked") public static <A>boolean equals0(final java.lang.Class<? super A> clazz,final A self,final Object other,final F0<Equal<A>> equal){   return self == other || clazz.isInstance(other) && equal.f().eq(self,(A)other); } 
+public static <A,B,C>F<B,F<B,C>> on(final F<A,F<A,C>> a,final F<B,A> f){   return compose(compose(Function.<B,A,C>andThen().f(f),a),f); } 
+public static <A,B>F<B,A> join(final F<B,F<B,A>> f){   return bind(f,Function.identity()); } 
+public static <A>Strategy<A> strategy(final F<P1<A>,P1<A>> f){   return new Strategy<>(f); } 
+public P1<A> par(final P1<A> a){   return f().f(a); } 
+public static <A>List<P1<A>> mergeAll(final List<Future<A>> xs){   return xs.map(Strategy.obtain()); } 
+public P1<List<A>> parList(final List<P1<A>> ps){   return P1.sequence(ps.map(f())); } 
+public <B>P1<List<A>> parMap(final F<B,A> f,final List<B> bs){   return P1.sequence(bs.map(concurry(f))); } 
+public <B>P1<Array<A>> parMap(final F<B,A> f,final Array<B> bs){   return P1.sequence(bs.map(concurry(f))); } 
+public static <A,B>P1<List<B>> parFlatMap(final Strategy<List<B>> s,final F<A,List<B>> f,final List<A> as){   return P1.map_(List.<B>join()).f(s.parMap(f,as)); } 
+public static <A,B>P1<Array<B>> parFlatMap(final Strategy<Array<B>> s,final F<A,Array<B>> f,final Array<A> as){   return P1.map_(Array.<B>join()).f(s.parMap(f,as)); } 
+public static <A>P1<List<A>> parListChunk(final Strategy<List<A>> s,final int chunkLength,final List<P1<A>> as){   return P1.map_(List.<A>join()).f(s.parList(as.partition(chunkLength).map(P1.sequenceList()))); } 
+public <B,C>P1<List<A>> parZipWith(final F2<B,C,A> f,final List<B> bs,final List<C> cs){   return P1.sequence(bs.zipWith(cs,concurry(f))); } 
+public <B,C>P1<Array<A>> parZipWith(final F2<B,C,A> f,final Array<B> bs,final Array<C> cs){   return P1.sequence(bs.zipWith(cs,concurry(f))); } 
+public static ParModule parModule(final Strategy<Unit> u){   return new ParModule(u); } 
+public <A,B>Promise<List<B>> mapM(final List<A> as,final F<A,Promise<B>> f){   return sequence(as.map(f)); } 
+public <A,B>Promise<Stream<B>> mapM(final Stream<A> as,final F<A,Promise<B>> f){   return sequence(as.map(f)); } 
+public <A,B>Promise<P1<B>> mapM(final P1<A> a,final F<A,Promise<B>> f){   return sequence(a.map(f)); } 
+public <A,B>Promise<NonEmptyList<B>> parMap(final NonEmptyList<A> as,final F<A,B> f){   return mapM(as.toList(),promise(f)).fmap(list -> NonEmptyList.fromList(list).some()); } 
+public <A,B>Promise<Array<B>> parMap(final Array<A> as,final F<A,B> f){   return parMap(as.toStream(),f).fmap(Stream::toArray); } 
+public <A,B>Promise<Zipper<B>> parMap(final Zipper<A> za,final F<A,B> f){   return parMap(za.rights(),f).apply(promise(f).f(za.focus()).apply(parMap(za.lefts(),f).fmap(curry(Zipper.zipper())))); } 
+public <A,B>Promise<Tree<B>> parMap(final Tree<A> ta,final F<A,B> f){   return mapM(ta.subForest(),this.<Tree<A>,Tree<B>>mapStream().f(this.<A,B>parMapTree().f(f))).apply(promise(f).f(ta.root()).fmap(Tree.node())); } 
+public <A,B>Promise<TreeZipper<B>> parMap(final TreeZipper<A> za,final F<A,B> f){   final F<Tree<A>,Tree<B>> tf=Tree.<A,B>fmap_().f(f);   final P4<Tree<A>,Stream<Tree<A>>,Stream<Tree<A>>,Stream<P3<Stream<Tree<A>>,A,Stream<Tree<A>>>>> p=za.p();   return mapM(p._4(),p3 -> parMap(p3._3(),tf).apply(promise(f).f(p3._2()).apply(parMap(p3._1(),tf).fmap(P.p3())))).apply(parMap(za.rights(),tf).apply(parMap(za.lefts(),tf).apply(parMap(p._1(),f).fmap(TreeZipper.treeZipper())))); } 
+public <A,B,C>Promise<List<C>> parZipWith(final List<A> as,final List<B> bs,final F<A,F<B,C>> f){   return sequence(as.zipWith(bs,promise(uncurryF2(f)))); } 
+public <A,B,C>Promise<Stream<C>> parZipWith(final Stream<A> as,final Stream<B> bs,final F<A,F<B,C>> f){   return sequence(as.zipWith(bs,promise(uncurryF2(f)))); } 
+public <A,B,C>Promise<Array<C>> parZipWith(final Array<A> as,final Array<B> bs,final F<A,F<B,C>> f){   return parZipWith(as.toStream(),bs.toStream(),f).fmap(Stream::toArray); } 
+public <A,B>Promise<B> parFoldMap(final Stream<A> as,final F<A,B> map,final Monoid<B> reduce){   return as.isEmpty() ? promise(p(reduce.zero())) : as.map(promise(map)).foldLeft1(liftM2(reduce.sum())); } 
+public <A,B>Promise<Zipper<B>> parExtend(final Zipper<A> za,final F<Zipper<A>,B> f){   return parMap(za.positions(),f); } 
+public <A,B>Promise<Tree<B>> parExtend(final Tree<A> ta,final F<Tree<A>,B> f){   return parMap(ta.cojoin(),f); } 
+public <A,B>Promise<TreeZipper<B>> parExtend(final TreeZipper<A> za,final F<TreeZipper<A>,B> f){   return parMap(za.positions(),f); } 
+public <A,B>Promise<NonEmptyList<B>> parExtend(final NonEmptyList<A> as,final F<NonEmptyList<A>,B> f){   return parMap(as.tails(),f); } 
+public static <A>Promise<A> promise(final Strategy<Unit> s,final P1<A> a){   final Promise<A> p=mkPromise(s);   p.actor.act(p(Either.left(a),p));   return p; } 
+public void to(final Actor<A> a){   actor.act(p(Either.right(a),this)); } 
+public static <A>Promise<A> join(final Promise<Promise<A>> p){   final F<Promise<A>,Promise<A>> id=identity();   return p.bind(id); } 
+public <B>Promise<B> bind(final F<A,Promise<B>> f){   final Promise<B> r=mkPromise(s);   final Actor<B> ab=actor(s,new Effect1<B>(){     public void f(    final B b){       r.actor.act(p(Either.left(p(b)),r));     }   } );   to(ab.promise().contramap(f));   return r; } 
+public <B>Promise<B> apply(final Promise<F<A,B>> pf){   return pf.bind(this::fmap); } 
+public <B,C>Promise<C> bind(final Promise<B> pb,final F<A,F<B,C>> f){   return pb.apply(fmap(f)); } 
+public static <A,B>F<List<A>,Promise<B>> foldRight(final Strategy<Unit> s,final F<A,F<B,B>> f,final B b){   return new F<List<A>,Promise<B>>(){     public Promise<B> f(    final List<A> as){       return as.isEmpty() ? promise(s,p(b)) : liftM2(f).f(promise(s,p(as.head()))).f(join(s,P1.curry(this).f(as.tail())));     }   } ; } 
+public static <A,B>F<Stream<A>,Promise<B>> foldRightS(final Strategy<Unit> s,final F<A,F<P1<B>,B>> f,final B b){   return new F<Stream<A>,Promise<B>>(){     public Promise<B> f(    final Stream<A> as){       return as.isEmpty() ? promise(s,p(b)) : liftM2(f).f(promise(s,p(as.head()))).f(Promise.join(s,P.lazy(() -> f(as.tail()._1()).fmap(P.p1()))));     }   } ; } 
+public A claim(){   try {     l.await();   }  catch (  InterruptedException e) {     throw new Error(e);   }   return v.some(); } 
+public Option<A> claim(final long timeout,final TimeUnit unit){   try {     if (l.await(timeout,unit))     return v;   }  catch (  InterruptedException e) {     throw new Error(e);   }   return none(); } 
+public boolean isFulfilled(){   return v.isSome(); } 
+public <B>Stream<B> sequenceW(final Stream<F<Promise<A>,B>> fs){   return fs.isEmpty() ? Stream.nil() : Stream.cons(fs.head().f(this),() -> sequenceW(fs.tail()._1())); } 
+public static <T>Actor<T> queueActor(final Strategy<Unit> s,final Effect1<T> ea){   return actor(Strategy.seqStrategy(),new Effect1<T>(){     final AtomicBoolean suspended=new AtomicBoolean(true);     final ConcurrentLinkedQueue<T> mbox=new ConcurrentLinkedQueue<>();     final P1<Unit> processor=new P1<Unit>(){       @Override public Unit _1(){         T a=mbox.poll();         if (a != null) {           ea.f(a);           s.par(this);         }  else {           suspended.set(true);           work();         }         return Unit.unit();       }     } ;     @Override public void f(    T a){       mbox.offer(a);       work();     }     void work(){       if (!mbox.isEmpty() && suspended.compareAndSet(true,false)) {         s.par(processor);       }     }   } ); } 
+public static <A>Actor<A> actor(final Strategy<Unit> s,final Effect1<A> e){   return new Actor<>(s,P1.curry(Effect.f(e))); } 
+public static <A>Actor<A> actor(final Strategy<Unit> s,final F<A,P1<Unit>> e){   return new Actor<>(s,e); } 
+public P1<Unit> act(final A a){   return f.f(a); } 
+public static <A,B>Callable<B> bind(final Callable<A> a,final F<A,Callable<B>> f){   return () -> f.f(a.call()).call(); } 
+public static <A>Callable<List<A>> sequence(final List<Callable<A>> as){   return as.foldRight(Callables.liftM2(List.cons()),callable(List.nil())); } 
+public static <A>Callable<A> fromEither(final F0<Either<Exception,A>> e){   return () -> {     final Either<Exception,A> e1=e.f();     if (e1.isLeft())     throw e1.left().value();  else     return e1.right().value();   } ; } 
+public static <A>Callable<A> fromOption(final F0<Option<A>> o){   return () -> {     final Option<A> o1=o.f();     if (o1.isSome())     return o1.some();  else     throw new Exception("No value.");   } ; } 
+public static <A>Callable<A> normalise(final Callable<A> a){   try {     return callable(a.call());   }  catch (  Exception e) {     return callable(e);   } } 
+public static Connector driverManager(final String url){   return new Connector(){     public Connection connect() throws SQLException {       return DriverManager.getConnection(url);     }   } ; } 
+public static DbState reader(final String url){   return new DbState(driverManager(url),rollback); } 
+public static DbState writer(final String url){   return new DbState(driverManager(url),commit); } 
+public static DbState reader(final Connector pc){   return new DbState(pc,rollback); } 
+public static DbState writer(final Connector pc){   return new DbState(pc,commit); } 
+public <A>A run(final DB<A> dba) throws SQLException {   try (Connection c=pc.connect()){     c.setAutoCommit(false);     final A a;     try {       a=dba.run(c);     }  catch (    RuntimeException|SQLException e) {       try {         c.rollback();       }  catch (      Exception re) {         e.addSuppressed(re);       }       throw e;     }     terminal.run(c);     return a;   }  } 
+public static <A>Trampoline<A> pure(final A a){   return new Pure<>(a); } 
+public static <A>Trampoline<A> suspend(final P1<Trampoline<A>> a){   return new Suspend<>(a); } 
+public static <A>Gen<PriorityQueue<Integer,A>> arbUniqueQueue(Gen<A> aa){   Gen<Set<Integer>> as=arbSet(Ord.intOrd,arbInteger);   Gen<List<Integer>> ints=(as.map(si -> si.toList()));   Gen<List<P2<Integer,A>>> alp=(ints.bind(li -> aa.map(s -> li.map(i -> P.p(i,s)))));   return (alp.map(l -> PriorityQueue.<A>emptyInt().enqueue(l))); } 
+public A gen(final int i,final Rand r){   return f.f(i).f(r); } 
+public <B>Gen<B> map(final F<A,B> f){   return new Gen<>(i -> r -> f.f(gen(i,r))); } 
+public Unit foreach(final Integer i,final Rand r,final F<A,Unit> f){   return f.f(this.f.f(i).f(r)); } 
+public void foreachDoEffect(final Integer i,final Rand r,final Effect1<A> f){   f.f(this.f.f(i).f(r)); } 
+public <B>Gen<B> bind(final F<A,Gen<B>> f){   return new Gen<>(i -> r -> f.f(gen(i,r)).f.f(i).f(r)); } 
+public <B,C>Gen<C> bind(final Gen<B> gb,final F<A,F<B,C>> f){   return gb.apply(map(f)); } 
+public <B,C,D>Gen<D> bind(final Gen<B> gb,final Gen<C> gc,final F<A,F<B,F<C,D>>> f){   return gc.apply(bind(gb,f)); } 
+public <B,C,D,E>Gen<E> bind(final Gen<B> gb,final Gen<C> gc,final Gen<D> gd,final F<A,F<B,F<C,F<D,E>>>> f){   return gd.apply(bind(gb,gc,f)); } 
+public <B,C,D,E,F$>Gen<F$> bind(final Gen<B> gb,final Gen<C> gc,final Gen<D> gd,final Gen<E> ge,final F<A,F<B,F<C,F<D,F<E,F$>>>>> f){   return ge.apply(bind(gb,gc,gd,f)); } 
+public <B,C,D,E,F$,G>Gen<G> bind(final Gen<B> gb,final Gen<C> gc,final Gen<D> gd,final Gen<E> ge,final Gen<F$> gf,final F<A,F<B,F<C,F<D,F<E,F<F$,G>>>>>> f){   return gf.apply(bind(gb,gc,gd,ge,f)); } 
+public <B,C,D,E,F$,G,H>Gen<H> bind(final Gen<B> gb,final Gen<C> gc,final Gen<D> gd,final Gen<E> ge,final Gen<F$> gf,final Gen<G> gg,final F<A,F<B,F<C,F<D,F<E,F<F$,F<G,H>>>>>>> f){   return gg.apply(bind(gb,gc,gd,ge,gf,f)); } 
+public <B,C,D,E,F$,G,H,I>Gen<I> bind(final Gen<B> gb,final Gen<C> gc,final Gen<D> gd,final Gen<E> ge,final Gen<F$> gf,final Gen<G> gg,final Gen<H> gh,final F<A,F<B,F<C,F<D,F<E,F<F$,F<G,F<H,I>>>>>>>> f){   return gh.apply(bind(gb,gc,gd,ge,gf,gg,f)); } 
+public <B>Gen<B> apply(final Gen<F<A,B>> gf){   return gf.bind(f1 -> map(f1)); } 
+public Gen<A> resize(final int s){   return new Gen<>(i -> r -> f.f(s).f(r)); } 
+public static <A>Gen<A> gen(final F<Integer,F<Rand,A>> f){   return new Gen<>(f); } 
+public static <A>Gen<A> parameterised(final F<Integer,F<Rand,Gen<A>>> f){   return new Gen<>(curry((i,r) -> f.f(i).f(r).gen(i,r))); } 
+public static <A>Gen<A> value(final A a){   return new Gen<>(i -> r -> a); } 
+public static <A>Gen<A> fail(){   return new Gen<>(i -> r -> {     throw error("Failing generator");   } ); } 
+public static <T>Arg<T> arg(final T value,final int shrinks){   return new Arg<>(value,shrinks); } 
+@SuppressWarnings("unchecked") public static <A>Gen<A> variant(final long n,final Gen<A> g){   final LongGen p=new LongGen(n,g);   final Gen<?> gx=variantMemo.get(p);   if (gx == null) {     final Gen<A> t=gen(i -> r -> g.gen(i,r.reseed(n)));     variantMemo.put(p,t);     return t;   }  else   return gen(i -> r -> (A)gx.gen(i,r)); } 
+public Result prop(final int i,final Rand r){   return f.f(i).f(r); } 
+public Property and(final Property p){   return fromGen(gen().bind(p.gen(),res1 -> res2 -> res1.isException() || res1.isFalsified() ? res1 : res2.isException() || res2.isFalsified() ? res2 : res1.isProven() || res1.isUnfalsified() ? res2 : res2.isProven() || res2.isUnfalsified() ? res1 : noResult())); } 
+public Property or(final Property p){   return fromGen(gen().bind(p.gen(),res1 -> res2 -> res1.isException() || res1.isFalsified() ? res1 : res2.isException() || res2.isFalsified() ? res2 : res1.isProven() || res1.isUnfalsified() ? res1 : res2.isProven() || res2.isUnfalsified() ? res2 : noResult())); } 
+public Property sequence(final Property p){   return fromGen(gen().bind(p.gen(),res1 -> res2 -> res1.isException() || res1.isProven() || res1.isUnfalsified() ? res1 : res2.isException() || res2.isProven() || res2.isUnfalsified() ? res2 : res1.isFalsified() ? res2 : res2.isFalsified() ? res1 : noResult())); } 
+@SuppressWarnings("ThrowableResultOfMethodCallIgnored") public CheckResult check(final Rand r,final int minSuccessful,final int maxDiscarded,final int minSize,final int maxSize){   int s=0;   int d=0;   float sz=minSize;   CheckResult res;   while (true) {     final float size=s == 0 && d == 0 ? minSize : sz + (maxSize - sz) / (minSuccessful - s);     try {       final Result x=f.f(round(size)).f(r);       if (x.isNoResult())       if (d + 1 >= maxDiscarded) {         res=exhausted(s,d + 1);         break;       }  else {         sz=size;         d++;       }  else       if (x.isProven()) {         res=proven(x.args().some(),s + 1,d);         break;       }  else       if (x.isUnfalsified())       if (s + 1 >= minSuccessful) {         res=passed(s + 1,d);         break;       }  else {         sz=size;         s++;       }  else       if (x.isFalsified()) {         res=falsified(x.args().some(),s,d);         break;       }  else       if (x.isException()) {         res=propException(x.args().some(),x.exception().some(),s,d);         break;       }     }  catch (    final Throwable t) {       res=genException(t,s,d);       break;     }   }   return res; } 
+public static Property implies(final boolean b,final F0<Property> p){   return b ? p.f() : new Property(i -> r -> noResult()); } 
+public static Property prop(final F<Integer,F<Rand,Result>> f){   return new Property(f); } 
+public static Property prop(final Result r){   return new Property(integer -> x -> r); } 
+public static <T>List<P2<String,CheckResult>> check(final List<java.lang.Class<T>> c,final Rand r,final String... categories){   return join(c.map(c1 -> check(c1,r,categories))); } 
+public static <T>List<P2<String,CheckResult>> check(final List<java.lang.Class<T>> c,final Rand r,final List<String> categories){   return check(c,r,categories.toArray().array(String[].class)); } 
+public static <T>List<P2<String,CheckResult>> check(final java.lang.Class<T> c,final Rand r,final List<String> categories){   return check(c,r,categories.toArray().array(String[].class)); } 
+public static void main(final String... args){   if (args.length == 0) {     System.err.println("<class> [category]*");     exit(441);   }  else {     try {       check(forName(args[0]),array(args).toList().tail()).foreachDoEffect(r -> {         summary.print(r._2());         out.println(" (" + r._1() + ')');       } );     }  catch (    ClassNotFoundException e) {       e.printStackTrace();       exit(144);     }   } } 
+public static CheckResult passed(final int succeeded,final int discarded){   return new CheckResult(R.Passed,Option.none(),Option.none(),succeeded,discarded); } 
+public static CheckResult proven(final List<Arg<?>> args,final int succeeded,final int discarded){   return new CheckResult(R.Proven,some(args),Option.none(),succeeded,discarded); } 
+public static CheckResult falsified(final List<Arg<?>> args,final int succeeded,final int discarded){   return new CheckResult(R.Falsified,some(args),Option.none(),succeeded,discarded); } 
+public static CheckResult exhausted(final int succeeded,final int discarded){   return new CheckResult(R.Exhausted,Option.none(),Option.none(),succeeded,discarded); } 
+public static CheckResult propException(final List<Arg<?>> args,final Throwable ex,final int succeeded,final int discarded){   return new CheckResult(R.PropException,some(args),some(ex),succeeded,discarded); } 
+public static CheckResult genException(final Throwable ex,final int succeeded,final int discarded){   return new CheckResult(R.GenException,Option.none(),some(ex),succeeded,discarded); } 
+public static Show<CheckResult> summary(final Show<Arg<?>> sa){   return showS(new F<CheckResult,String>(){     private String test(    final CheckResult r){       return r.succeeded() == 1 ? "test" : "tests";     }     private String arguments(    final CheckResult r){       final List<Arg<?>> args=r.args().some();       return args.length() == 1 ? "argument: " + sa.showS(args.head()) : "arguments: " + listShow(sa).showS(args);     }     @SuppressWarnings("ThrowableResultOfMethodCallIgnored") public String f(    final CheckResult r){       if (r.isProven())       return "OK, property proven with " + arguments(r);  else       if (r.isPassed())       return "OK, passed " + r.succeeded() + ' '+ test(r)+ (r.discarded() > 0 ? " (" + r.discarded() + " discarded)" : "")+ '.';  else       if (r.isFalsified())       return "Falsified after " + r.succeeded() + " passed "+ test(r)+ " with "+ arguments(r);  else       if (r.isExhausted())       return "Gave up after " + r.succeeded() + " passed "+ test(r)+ " and "+ r.discarded()+ " discarded tests.";  else       if (r.isPropException()) {         final StringWriter sw=new StringWriter();         final PrintWriter pw=new PrintWriter(sw);         r.exception().some().printStackTrace(pw);         return "Exception on property evaluation with " + arguments(r) + Strings.lineSeparator+ sw;       }  else       if (r.isGenException()) {         final StringWriter sw=new StringWriter();         final PrintWriter pw=new PrintWriter(sw);         r.exception().some().printStackTrace(pw);         return "Exception on argument generation " + Strings.lineSeparator + sw;       }  else       throw decons(r.getClass());     }   } ); } 
+public static Show<CheckResult> summaryEx(final Show<Arg<?>> sa){   return showS(new F<CheckResult,String>(){     public String f(    final CheckResult r){       final String s=summary(sa).showS(r);       if (r.isProven() || r.isPassed() || r.isExhausted())       return s;  else       if (r.isFalsified() || r.isPropException() || r.isGenException())       throw new Error(s);  else       throw decons(r.getClass());     }   } ); } 
+public static <A,B>Gen<F<A,B>> arbF(final Cogen<A> c,final Gen<B> a){   return promote(new F<A,Gen<B>>(){     public Gen<B> f(    final A x){       return c.cogen(x,a);     }   } ); } 
+public static <A>Gen<LcgRng> arbLcgRng(){   return Arbitrary.arbLong.map(LcgRng::new); } 
+public static <A,B>Gen<F<A,B>> arbFInvariant(final Gen<B> a){   return a.map(Function.constant()); } 
+public static <A,B,C>Gen<F2<A,B,C>> arbF2Invariant(final Gen<C> a){   return a.map(compose(Function.uncurryF2(),compose(Function.constant(),Function.constant()))); } 
+public static <A,B,C,D>Gen<F3<A,B,C,D>> arbF3Invariant(final Gen<D> a){   return a.map(compose(Function.uncurryF3(),compose(Function.constant(),compose(Function.constant(),Function.constant())))); } 
+public static <A,B,C,D,E>Gen<F4<A,B,C,D,E>> arbF4Invariant(final Gen<E> a){   return a.map(compose(Function.uncurryF4(),compose(Function.constant(),compose(Function.constant(),compose(Function.constant(),Function.constant()))))); } 
+public static <A,B,C,D,E,F$>Gen<F5<A,B,C,D,E,F$>> arbF5Invariant(final Gen<F$> a){   return a.map(compose(Function.uncurryF5(),compose(Function.constant(),compose(Function.constant(),compose(Function.constant(),compose(Function.constant(),Function.constant())))))); } 
+public static <A,B,C,D,E,F$,G>Gen<F6<A,B,C,D,E,F$,G>> arbF6Invariant(final Gen<G> a){   return a.map(compose(Function.<A,B,C,D,E,F$,G>uncurryF6(),compose(Function.<A,F<B,F<C,F<D,F<E,F<F$,G>>>>>>constant(),compose(Function.<B,F<C,F<D,F<E,F<F$,G>>>>>constant(),compose(Function.<C,F<D,F<E,F<F$,G>>>>constant(),compose(Function.<D,F<E,F<F$,G>>>constant(),compose(Function.<E,F<F$,G>>constant(),Function.<F$,G>constant()))))))); } 
+public static <A,B,C,D,E,F$,G,H>Gen<F7<A,B,C,D,E,F$,G,H>> arbF7Invariant(final Gen<H> a){   return a.map(compose(Function.<A,B,C,D,E,F$,G,H>uncurryF7(),compose(Function.<A,F<B,F<C,F<D,F<E,F<F$,F<G,H>>>>>>>constant(),compose(Function.<B,F<C,F<D,F<E,F<F$,F<G,H>>>>>>constant(),compose(Function.<C,F<D,F<E,F<F$,F<G,H>>>>>constant(),compose(Function.<D,F<E,F<F$,F<G,H>>>>constant(),compose(Function.<E,F<F$,F<G,H>>>constant(),compose(Function.<F$,F<G,H>>constant(),Function.<G,H>constant())))))))); } 
+public static <A,B,C,D,E,F$,G,H,I>Gen<F8<A,B,C,D,E,F$,G,H,I>> arbF8Invariant(final Gen<I> a){   return a.map(compose(Function.<A,B,C,D,E,F$,G,H,I>uncurryF8(),compose(Function.<A,F<B,F<C,F<D,F<E,F<F$,F<G,F<H,I>>>>>>>>constant(),compose(Function.<B,F<C,F<D,F<E,F<F$,F<G,F<H,I>>>>>>>constant(),compose(Function.<C,F<D,F<E,F<F$,F<G,F<H,I>>>>>>constant(),compose(Function.<D,F<E,F<F$,F<G,F<H,I>>>>>constant(),compose(Function.<E,F<F$,F<G,F<H,I>>>>constant(),compose(Function.<F$,F<G,F<H,I>>>constant(),compose(Function.<G,F<H,I>>constant(),Function.<H,I>constant()))))))))); } 
+@SuppressWarnings("unchecked") public static <A,B>Gen<Either<A,B>> arbEither(final Gen<A> aa,final Gen<B> ab){   final Gen<Either<A,B>> left=aa.map(Either::left);   final Gen<Either<A,B>> right=ab.map(Either::right);   return oneOf(list(left,right)); } 
+public static <A,B>Gen<Validation<A,B>> arbValidation(final Gen<A> aa,final Gen<B> ab){   return arbBoolean.bind(bool -> bool ? ab.map(Validation::<A,B>success) : aa.map(Validation::<A,B>fail)); } 
+public static Gen<Throwable> arbThrowable(final Gen<String> as){   return as.map(Throwable::new); } 
+public static <A extends Enum<A>>Gen<A> arbEnumValue(final Class<A> clazz){   return elements(clazz.getEnumConstants()); } 
+public Result provenAsUnfalsified(){   return isProven() ? unfalsified(args.some()) : this; } 
+public Result addArg(final Arg<?> a){   final F<Arg<?>,F<List<Arg<?>>,List<Arg<?>>>> cons=List.cons();   return new Result(args.map(cons.f(a)),r,t); } 
+public static Result noResult(final Option<Result> r){   return r.orSome(Result::noResult); } 
+public static Result noResult(){   return new Result(Option.none(),R.NoResult,Option.none()); } 
+public static Result unfalsified(final List<Arg<?>> args){   return new Result(some(args),R.Unfalsified,Option.none()); } 
+public static Result falsified(final List<Arg<?>> args){   return new Result(some(args),R.Falsified,Option.none()); } 
+public static Result proven(final List<Arg<?>> args){   return new Result(some(args),R.Proven,Option.none()); } 
+public static Result exception(final List<Arg<?>> args,final Throwable t){   return new Result(some(args),R.Exception,some(t)); } 
+public int choose(final long seed,final int from,final int to){   return f.f(some(seed)).f(from).f(to); } 
+public int choose(final int from,final int to){   return f.f(Option.none()).f(from).f(to); } 
+public double choose(final long seed,final double from,final double to){   return g.f(some(seed)).f(from).f(to); } 
+public double choose(final double from,final double to){   return g.f(Option.none()).f(from).f(to); } 
+public Stream<A> shrink(final A a){   return f.f(a); } 
+public static <A>Shrink<A> shrink(final F<A,Stream<A>> f){   return new Shrink<>(f); } 
+public void setFixedHeight(boolean fixedHeight){   mSizeCalculator.setFixedHeight(fixedHeight); } 
+public void setMaxRowHeight(int maxRowHeight){   mSizeCalculator.setMaxRowHeight(maxRowHeight); } 
+private int preFillGrid(Direction direction,int dy,int emptyTop,RecyclerView.Recycler recycler,RecyclerView.State state){   int newFirstVisiblePosition=firstChildPositionForRow(mFirstVisibleRow);   SparseArray<View> viewCache=new SparseArray<>(getChildCount());   int startLeftOffset=getPaddingLeft();   int startTopOffset=getPaddingTop() + emptyTop;   if (getChildCount() != 0) {     startTopOffset=getDecoratedTop(getChildAt(0));     if (mFirstVisiblePosition != newFirstVisiblePosition) { switch (direction) { case UP:         double previousTopRowHeight=sizeForChildAtPosition(mFirstVisiblePosition - 1).getHeight();       startTopOffset-=previousTopRowHeight;     break; case DOWN:   double topRowHeight=sizeForChildAtPosition(mFirstVisiblePosition).getHeight(); startTopOffset+=topRowHeight; break; } } for (int i=0; i < getChildCount(); i++) { int position=mFirstVisiblePosition + i; final View child=getChildAt(i); viewCache.put(position,child); } for (int i=0; i < viewCache.size(); i++) { final View cachedView=viewCache.valueAt(i); detachView(cachedView); } } mFirstVisiblePosition=newFirstVisiblePosition; int leftOffset=startLeftOffset; int topOffset=startTopOffset + mPendingScrollPositionOffset; int nextPosition=mFirstVisiblePosition; int currentRow=0; while (nextPosition >= 0 && nextPosition < state.getItemCount()) { boolean isViewCached=true; View view=viewCache.get(nextPosition); if (view == null) { view=recycler.getViewForPosition(nextPosition); isViewCached=false; } if (mIsFirstViewHeader && nextPosition == HEADER_POSITION) { measureChildWithMargins(view,0,0); mHeaderViewSize=new Size(view.getMeasuredWidth(),view.getMeasuredHeight()); } Size viewSize=sizeForChildAtPosition(nextPosition); if ((leftOffset + viewSize.getWidth()) > getContentWidth()) { if (currentRow + 1 == mRowsLimit) break; currentRow++; leftOffset=startLeftOffset; Size previousViewSize=sizeForChildAtPosition(nextPosition - 1); topOffset+=previousViewSize.getHeight(); } boolean isAtEndOfContent; switch (direction) { case DOWN: isAtEndOfContent=topOffset >= getContentHeight() + dy; break; default : isAtEndOfContent=topOffset >= getContentHeight(); break; } if (isAtEndOfContent) break; if (isViewCached) { attachView(view); viewCache.remove(nextPosition); }  else { addView(view); measureChildWithMargins(view,0,0); int right=leftOffset + viewSize.getWidth(); int bottom=topOffset + viewSize.getHeight(); layoutDecorated(view,leftOffset,topOffset,right,bottom); } leftOffset+=viewSize.getWidth(); nextPosition++; } for (int i=0; i < viewCache.size(); i++) { final View removingView=viewCache.valueAt(i); recycler.recycleView(removingView); } int pixelsFilled=0; if (getChildCount() > 0) { pixelsFilled=getChildAt(getChildCount() - 1).getBottom(); } return pixelsFilled; } 

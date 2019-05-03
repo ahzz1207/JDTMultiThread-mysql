@@ -1,0 +1,809 @@
+AVLoadingIndicatorView setIndicator
+Indicator setColor
+HashMap < ValueAnimator , AnimatorUpdateListener > put
+TagView isInputAvailable TagView endInput TagView getText OnTagChangeListener onAppend
+TagView getText
+ArrayList new TagView getText List < String > add List < String > size List < String > toArray
+IllegalStateException new TagView new TagView setOnClickListener
+TagView new TagView setOnClickListener
+List length
+Object getClass
+StringBuilder new String contains Class getPackage Package getName StringBuilder append StringBuilder append StringBuilder append StringBuilder append StringBuilder toString Class forName Class < newInstance InstantiationException printStackTrace IllegalAccessException printStackTrace
+ArrayList new ClassName packageName List < String > add ClassName simpleNames List < String > addAll List < String > get String isEmpty List < String > size List < String > subList
+Stream head List < Integer > remove Stream tail Stream head
+F1WFunc new
+F f
+Stream toList
+PrintStream println
+Stream isNotEmpty Stream tail Stream head PrintStream print PrintStream print
+PrintStream println
+Show new
+Show < Stream > contramap
+Show < Stream > contramap
+Show < Stream > contramap
+Show < Stream > contramap
+Show < Stream > contramap
+Show < Stream > contramap
+Show < Stream > contramap
+F2WFunc new
+F f
+Hash new
+Hash < A > contramap
+Hash < Stream > contramap
+Hash < Stream > contramap
+Hash < Stream > contramap
+Hash < Stream > contramap
+Hash < Stream > contramap
+Hash < Stream > contramap
+Hash < Stream > contramap
+P1 new
+Definition < A > empty F f F f F f Definition < A > append F f F f Definition < A > prepend F f Definition < A > multiply F f Definition < A > sum F f Definition < B > new
+Definition < A > append
+Definition < A > prepend
+Definition < A > empty
+Definition < A > multiply
+Definition < A > empty List foldRight
+Definition < A > empty Stream foldRight1
+Definition < A > empty List foldLeft
+Definition < A > sum
+Definition < A > prepend Stream isEmpty Definition < A > empty Stream foldLeft1
+Definition < A > dual
+Monoid new
+Monoid new
+Definition new Monoid new
+F f AltDefinition < A > new Monoid new
+F2 f Definition < A > new Monoid new
+Semigroup monoid
+Definition < F > new
+List append F0 f Definition < List > new
+Option orElse Option isSome F0 f Definition < Option > new
+Option orElse Option isNone Definition < Option > new
+Stream append F0 f Definition < Stream > new
+Array append Definition < Array > new
+Definition < IO > new
+Set union Definition < Set > new
+Ord maxMonoid
+List foldLeft
+List foldLeft
+List map
+List map
+List map
+F f
+Parser < I , B , E > apply
+Parser < I , C , E > apply
+Parser < I , D , E > apply
+Parser < I , E$ , E > apply
+Parser < I , F$ , E > apply
+Parser < I , G , E > apply
+Parser < I , H , E > apply
+Parser < I , F , E > bind
+Parser < I , Stream , E > or
+Parser new
+StreamParser element
+StreamParser element
+StreamParser satisfy
+Parser value
+Stream isEmpty Parser value Stream head Stream tail
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+StreamParser satisfy
+F f
+F f
+NoSuchElementException new UnsupportedOperationException new Iterator < A > new
+Result new
+Error new
+SynchronousQueue new SynchronousQueue < B > addAll
+PriorityBlockingQueue new
+LinkedBlockingQueue new
+CopyOnWriteArraySet new
+CopyOnWriteArrayList new
+ConcurrentLinkedQueue new
+ArrayBlockingQueue < A > size ArrayBlockingQueue new ArrayBlockingQueue < B > addAll
+TreeSet new
+PriorityQueue new
+LinkedList new
+ArrayList new
+Tree root Tree root F2 f F2 new
+Tree root Tree root F2 f F2 new
+Definition < A > append
+Definition < A > prepend
+Definition < A > multiply1p
+NonEmptyList foldLeft1
+Definition < A > sum
+Definition < A > dual
+Monoid new
+F f F f Definition < A > append F f F f Definition < A > prepend F f Definition < A > multiply1p F f F f Definition < A > sum F f Definition < B > new
+Semigroup new
+Semigroup new
+Semigroup new
+Definition < A > new
+Definition < A > new
+NonEmptyList append F0 f NonEmptyList append Definition < NonEmptyList > new
+Definition < P1 > new
+Definition < A > compare
+Definition < A > compare
+F f Definition < A > compare F f F f Definition < A > compare Definition < B > new
+Definition < A > compare
+Definition < A > compare
+Definition < A > compare
+Definition < A > compare
+Definition < A > compare
+Definition < A > append
+Ord new
+Ord new
+Ord new
+Ord < A > contramap
+A _1 A _1 Ord < A > eq A _2 A _2 Ord < B > compare A _1 A _1 Ord < A > compare
+A _1 A _1 Ord < A > eq A _2 A _3 A _2 A _3 Ord < P2 > compare A _1 A _1 Ord < A > compare
+A compareTo
+A hashCode
+A hashCode
+Stream iterator
+Tree new
+Tree new
+List toStream
+Tree < A > root Tree < A > subForest P1 _1 P1 map F2 new F2 f
+Tree subForest_ Tree root_
+F f Tree fmap_ P1 map
+F f P1 _1 Monoid sumRight Monoid sum
+Stream toCollection
+Tree < A > subForest P1 _1 Tree < A > root Tree getRoot Stream map F f
+TreeMap ord TreeMap new
+P2 _1 P2 _2 TreeMap < K , V > set
+Set lookup
+Set insert TreeMap new
+Set delete TreeMap new
+Set size
+Set isEmpty
+Set toList
+Set toList
+Set member
+Set toStream
+Set ord TreeMap new P2 _1 P2 _2 Map < K , V > put
+Map < K , V > entrySet Entry < K , V > getKey Entry < K , V > getValue TreeMap < K , V > set
+Set update P2 _1 P2 _2 TreeMap new
+P2 _1 P2 _2
+Set split
+TreeMap empty Set toList
+Set split Set ord P3 _1 P3 _3
+Set ord TreeMap ord Set map TreeMap new
+Set min
+Set min
+Set max
+Set max
+P2 _1 P2 _2 TreeMap < K , V > set
+P2 _1 TreeMap < K , V > contains P2 _1 P2 _2 TreeMap < K , V > set
+DList new
+F f
+List toJavaList
+DList new
+DList new
+DList < A > append
+DList < A > append
+DList new
+List iterator
+HashMap new
+HashMap new
+HashMap new
+HashMap new
+Equal eq
+Hash hash
+HashMap < K , V > Key new HashMap < HashMap < K , V > Key , V > get
+HashMap < HashMap < K , V > Key , V > clear
+HashMap < K , V > Key new HashMap < HashMap < K , V > Key , V > containsKey
+List new HashMap < HashMap < K , V > Key , V > keySet
+HashMap < HashMap < K , V > Key , V > values
+HashMap < HashMap < K , V > Key , V > isEmpty
+HashMap < HashMap < K , V > Key , V > size
+HashMap < K , V > Key new HashMap < HashMap < K , V > Key , V > put
+HashMap < K , V > Key new HashMap < HashMap < K , V > Key , V > remove
+HashMap < K , V > Key new HashMap < HashMap < K , V > Key , V > remove
+List toCollection
+HashMap new P2 _1 P2 _2 HashMap < K , V > set
+Zipper new
+P3 _1 P3 _2 P3 _3 Zipper new
+Zipper p_
+Zipper p_
+Zipper p_
+Stream map F f Stream map
+Stream cons Stream foldLeft
+Stream isEmpty Stream head Stream tail
+Stream isEmpty Stream reverse Stream tail Stream head
+Stream isEmpty
+Stream isEmpty Error new Stream cons Stream head Stream tail
+Stream isEmpty
+Stream isEmpty Error new Stream tail Stream head Stream cons
+Stream cons
+Stream cons
+Stream isEmpty Stream isEmpty Stream isEmpty Stream tail Stream isEmpty Stream head Stream head Stream isEmpty Stream tail
+Stream isEmpty Stream isEmpty Stream isEmpty Stream tail Stream isEmpty Stream head Stream head Stream isEmpty Stream tail
+Stream isEmpty
+Stream isEmpty
+Zipper < Zipper < A > map
+Stream zip Stream zip
+Stream length Stream length Zipper previous_ Option bind Zipper next_ Option bind
+F f Zipper < Zipper < A > lefts Zipper < Zipper < A > rights Stream interleave
+Stream length
+Stream isEmpty Stream isEmpty Stream isEmpty Stream reverse Stream head Stream tail
+Stream isEmpty Stream isEmpty Stream isEmpty Stream reverse Stream tail Stream head
+Stream isEmpty Stream isEmpty Stream isNotEmpty Stream tail Stream head Stream reverse Stream tail Stream head
+Stream isEmpty Stream isEmpty Stream isNotEmpty Stream head Stream tail Stream reverse Stream head Stream tail
+Stream reverse
+Zipper < Zipper < A > toStream Stream iterator
+Seq mkTree Seq new
+Seq < A > snoc
+FingerTree cons Seq new
+FingerTree snoc Seq new
+FingerTree head
+FingerTree last
+FingerTree tail Seq new
+FingerTree init Seq new
+FingerTree foldLeft
+Buffer snoc Buffer toList
+Seq < A > iterator AbstractList < A > new
+FingerTree isEmpty FingerTree isEmpty NoSuchElementException new FingerTree head FingerTree tail UnsupportedOperationException new Iterator < A > new
+FingerTree append Seq new
+FingerTree isEmpty
+P2 _1 P2 _2
+FingerTree isEmpty
+FingerTree measure
+FingerTree split P2 _1 Seq new P2 _2 Seq new
+FingerTree lookup
+FingerTree split1 P3 _1 P3 _3 Seq new
+FingerTree split1 P3 _1 P3 _3 Seq new
+P2 _1
+P2 _2
+Collection < A > iterator
+Either isLeft
+Either isRight
+Either left
+Either right
+Either either
+Either right
+Either right
+Either right
+Either right
+Either right
+Either right
+Either right
+Validation fail F f Validation success
+F f Validation fail
+List exists List filter Validation fail List foldLeft
+Either right Validation validation
+Validation < E , F > bind
+Either right
+Either right
+Either right
+Either right
+Either right
+Either right
+Validation < E , F > isFail Validation < E , F > fail Semigroup sum Validation fail Validation < E , F > isFail Validation < E , F > fail Validation fail Validation < E , F > success Validation success
+Validation < E , A > accumapply
+Validation < E , A > accumapply
+Validation < E , B > accumapply
+Validation < E , B > accumapply
+Validation < E , C > accumapply
+Validation < E , C > accumapply
+Validation < E , D > accumapply
+Validation < E , D > accumapply
+Validation < E , E$ > accumapply
+Validation < E , E$ > accumapply
+Validation < E , F$ > accumapply
+Validation < E , F$ > accumapply
+Validation < E , G > accumapply
+Validation < E , G > accumapply
+Either right
+List exists List filter List filter
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left Validation validation
+Validation < E , T > isFail Validation < E , T > fail F f Validation < E , T > success Validation success
+Validation < E , T > toEither Either left Validation validation
+Validation < F , T > f
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation < E , T > toEither Either left
+Validation success Validation fail
+Validation new
+Validation success Validation fail
+Byte parseByte
+Double parseDouble
+Float parseFloat
+Integer parseInt
+Long parseLong
+Short parseShort
+List filter List filter
+Collection < A > iterator
+PIso < T , S , T , S > new PIso < S , T , S , T > new
+Iso new
+F f
+F f
+F f
+Monoid sum
+Monoid zero
+Measured new
+Measured new
+Single new
+Digit measure FingerTree measure Digit measure Measured sum Measured sum
+Deep new
+One new
+Two new
+Three new
+Four new
+Node2 new
+Node3 new
+Node2 new
+Node3 new
+F f
+IterableW new
+IterableW < A > map IterableW < A > apply
+Stream isEmpty Stream head
+IterableW < A > bind
+F f
+Iterable < A > iterator
+IterableW < A > iterator UnsupportedOperationException new UnsupportedOperationException new UnsupportedOperationException new UnsupportedOperationException new A equals A equals Option bind Option isSome Option some Option isSome Option some NoSuchElementException new Option isSome Option some NoSuchElementException new Option isSome Option some Option some Option some Option some Option some Option some Option some UnsupportedOperationException new UnsupportedOperationException new UnsupportedOperationException new ListIterator < A > new List < A > new
+LeftProjection new
+RightProjection new
+PriorityQueue new
+FingerTree measured FingerTree map
+FingerTree filter
+FingerTree filter
+FingerTree isEmpty
+Stream uncons
+FingerTree snoc
+List foldLeft
+Equal eq FingerTree split
+PriorityQueue < K , A > enqueue
+P2 _1 P2 _2
+FingerTree measure Equal eq FingerTree split P2 _2
+PriorityQueue < K , A > dequeue
+Option option
+Stream toList
+F0 f Input < E > new
+F0 f Input < E > new
+F0 f Input < E > new
+F f IterV < E , A > new
+F f IterV < E , A > new
+IterV < E , A > fold
+F new F f
+Input < E > apply F new Input empty
+Input < E > apply F new
+Input < E > apply F new
+F new F f
+Collection < A > iterator
+Either either
+Long toBinaryString
+Math max Math min BitSet new
+HashArrayMappedTrie new
+BitSet isEmpty
+HashArrayMappedTrie new
+Hash hash BitSet longValue BitSet isSet BitSet bitsToRight Seq index Node match
+List foldLeft
+Hash hash BitSet longValue BitSet isSet BitSet bitsToRight BitSet set Seq insert Seq index Node match Seq update
+Seq toStream
+Stream sort
+Stream toList
+Seq foldLeft
+Seq foldLeft
+F f
+F f
+F f
+F f
+Option map Option map Ord contramap
+Enumerator new
+Enumerator new
+Collection < A > iterator
+List cons
+List snoc
+List length
+List append
+List new
+NonEmptyList < A > foldLeft1
+NonEmptyList < A > foldLeft1
+List isEmpty List tail List head F2 f
+F f List map
+List new F f List foreachDoEffect List head List tail
+List toStream
+List tails
+NonEmptyList < NonEmptyList < A > map
+List intersperse List head List tail
+List reverse List head List tail
+List sort List head List tail
+NonEmptyList < B > toList List zip List head List tail
+List zipIndex List head List tail
+List zipWith List head List tail
+List zipWith List head List tail
+NonEmptyList < P2 > toList P2 _1 P2 _1 P2 _2 P2 _2
+List cons
+List toCollection
+NonEmptyList new
+List isEmpty List head List tail
+NonEmptyList < NonEmptyList < A > bind
+Collection < A > iterator
+F0 f
+List cons
+F f Array new
+F f List cons List toArray
+F f
+Effect1 f
+F f
+F f
+F f Array new
+F f Array new
+F f Array new
+F f Array new
+F f Array < B > length List cons F new List foreach Array new
+Array < B > apply
+Array < F > bind
+Array new
+Array new
+Array new
+Array new
+Array new
+Array < Array < A > bind
+F f
+F f
+F f
+Array new Array < Integer > set
+Array < B > length Array new F f Array < B > get Array < C > set
+Arrays asList Collections unmodifiableList
+ArrayList new
+Array new
+Array < P2 > length Array new Array new Array < P2 > get P2 _1 Array < A > set P2 _2 Array < B > set
+Array < A > iterator
+Array < A > get
+Array < A > length
+Array < A > isEmpty
+Array < A > isNotEmpty
+Array < A > toOption
+Array < A > toEither
+Array < A > toList
+Array < A > toStream
+Array < A > map
+Array < A > filter
+Array < A > foreach
+Array < A > foldRight
+Array < A > foldLeft
+Array < A > bind
+Array < A > sequence
+Array < A > apply
+Array < A > reverse
+Array < A > append
+Array < A > toCollection
+Collection < A > iterator
+HashMap new
+HashMap new
+HashMap new
+HashMap eq
+HashMap hash
+HashSet new
+HashSet < A > set
+HashMap contains
+HashMap set
+HashMap clear
+HashMap isEmpty
+HashMap size
+HashMap getDelete
+HashMap keys
+List toCollection
+TreeZipper < TreeZipper < A > toTree Tree iterator
+TreeZipper new
+TreeZipper p_
+TreeZipper p_
+Stream isEmpty Stream head P3 _2 P3 _1 P3 _3 Stream tail
+TreeZipper root_ Option option
+Stream isEmpty Stream head Stream tail Stream cons
+Stream isEmpty Stream head Stream cons Stream tail
+Tree subForest Stream isEmpty Stream head Stream tail
+Tree subForest Stream isEmpty Stream head Stream tail
+Tree subForest P2 _1 P2 _1 P2 _2
+Stream isNotEmpty Stream head F f Stream head Stream tail Stream head Stream cons Stream tail F2 new Tree subForest Stream isNotEmpty F2 f P3 _2 P3 _1 P3 _3
+TreeZipper lp3nil
+Stream isNotEmpty Stream head Stream tail TreeZipper lp3nil
+Stream isEmpty
+Stream isEmpty
+Stream isEmpty
+Tree subForest
+F f
+F f
+Tree root
+Stream cons
+Stream cons
+Tree subForest
+Tree subForest
+Tree subForest P2 _1 P2 _2
+Stream isNotEmpty Stream head Stream tail Stream isNotEmpty Stream head Stream tail TreeZipper < A > modifyTree
+Tree fmap Stream map Stream map Stream map
+TreeZipper dwn TreeZipper left_ TreeZipper right_
+TreeZipper < TreeZipper < A > map
+BigInteger compareTo Natural new
+BigInteger valueOf
+BigInteger add Option some
+BigInteger subtract
+BigInteger multiply Option some
+BigInteger divide Option some
+BigInteger mod Option some
+BigInteger divideAndRemainder Option some Option some
+BigInteger longValue
+BigInteger floatValue
+BigInteger doubleValue
+BigInteger intValue
+State constant List foldLeft
+State constant List foldLeft
+LazyString new
+LazyString new
+Stream length
+Stream index
+Stream drop
+StringBuilder new Stream foreachDoEffect StringBuilder toString
+Stream append
+Stream tails F f
+LazyString reverse LazyString startsWith
+LazyString isEmpty LazyString head LazyString tail LazyString startsWith
+Stream head
+Stream tail
+Stream isEmpty
+Stream reverse
+Stream indexOf
+Stream substreams Equal eq
+Pattern matches
+Stream dropWhile Stream split Stream isEmpty P2 _1
+Stream intersperse
+Stream intersperse
+HEq < HZero , HZero , HTrue > new
+HEq < HZero , HSucc < N > , HFalse > new
+HEq < HSucc < N > , HZero , HFalse > new
+E v HEq < HSucc < N > , HSucc < NN > , B > new
+HAdd < HZero , HSucc < N > , HSucc < N > new
+HAdd < HSucc < N > , HZero , HSucc < N > new
+H sum HNat hSucc HAdd < HSucc < N > , HSucc < M > , HSucc < R > new
+V3 new
+V3 < F > head P1 apply V3 < F > tail V2 apply V3 new
+V3 < B > apply
+Stream iterator
+P1 _1 V2 toNonEmptyList
+P1 _1
+P1 map V2 map V3 new
+Stream iterator
+P2 split
+V2 < F > _1 V2 < F > _2 P2 split
+V2 < B > apply
+V5 new
+Stream iterator
+V4 toNonEmptyList
+P1 _1
+P1 map V4 map V5 new
+V5 < F > head P1 apply V5 < F > tail V4 apply V5 new
+V5 < B > apply
+V4 new
+Stream iterator
+V3 toNonEmptyList
+P1 _1
+P1 map V3 map V4 new
+V4 < F > head P1 apply V4 < F > tail V3 apply V4 new
+V4 < B > apply
+V8 new
+Stream iterator
+V7 toNonEmptyList
+P1 _1
+P1 map V7 map V8 new
+V8 < F > head P1 apply V8 < F > tail V7 apply V8 new
+V8 < B > apply
+V7 new
+Stream iterator
+V6 toNonEmptyList
+P1 _1
+P1 map V6 map V7 new
+V7 < F > head P1 apply V7 < F > tail V6 apply V7 new
+V7 < B > apply
+V6 new
+Stream iterator
+V5 toNonEmptyList
+P1 _1
+P1 map V5 map V6 new
+V6 < F > head P1 apply V6 < F > tail V5 apply V6 new
+V6 < B > apply
+Empty new
+Ord isLessThan Set < A > member Ord eq Set < A > member
+Set < A > makeBlack
+Stream iterator
+Stream map
+Monoid zero Set < A > foldMap F f Monoid sum Set < A > foldMap Monoid sum
+Monoid zero Set < A > foldMapRight F f Monoid sum Set < A > foldMapRight Monoid sum
+HashSet new
+TreeSet new
+ArrayList new
+Set < A > isEmpty Set < A > toStream Stream append
+Set < A > isEmpty Set < A > toStreamReverse Stream append
+Set < A > toStream Stream append
+Stream filter
+Set member
+Set member
+Ord compare Set < A > split P3 _1 P3 _2 P3 _3 Set < A > split P3 _1 P3 _2 P3 _3
+Set < A > isEmpty Set < A > head Ord compare Set < A > l Set < A > r
+Set < A > isEmpty Set < A > head Ord compare Set < A > r Set < A > l
+Set < A > isEmpty Set < A > head Ord compare Set < A > l Set < A > r
+Set < A > isEmpty Set < A > head Ord compare Set < A > l Set < A > r
+Set < A > isEmpty Set < A > head Ord compare Set < A > l Set < A > r
+Set < A > isEmpty Set < A > split P3 _2 P3 _1 Set < A > subsetOf P3 _3 Set < A > subsetOf
+Set < Set < A > foldMap
+Set < A > insert
+Definition < A > equal
+Definition < A > equal
+Definition < A > equal
+F f Definition < A > equal F f F f Definition < A > equal Definition < B > new
+Equal new
+Equal new
+Equal new
+Equal < A > contramap
+A _1 A _1 Definition < A > equal A _2 A _2 Definition < B > equal
+A _1 A _1 Definition < A > equal A _2 A _2 Definition < B > equal A _3 A _3 Definition < C > equal
+A _1 A _1 Definition < A > equal A _2 A _2 Definition < B > equal A _3 A _3 Definition < C > equal A _4 A _4 Definition < D > equal
+A _1 A _1 Definition < A > equal A _2 A _2 Definition < B > equal A _3 A _3 Definition < C > equal A _4 A _4 Definition < D > equal A _5 A _5 Definition < E > equal
+A _1 A _1 Definition < A > equal A _2 A _2 Definition < B > equal A _3 A _3 Definition < C > equal A _4 A _4 Definition < D > equal A _5 A _5 Definition < E > equal A _6 A _6 Definition < F$ > equal
+A _1 A _1 Definition < A > equal A _2 A _2 Definition < B > equal A _3 A _3 Definition < C > equal A _4 A _4 Definition < D > equal A _5 A _5 Definition < E > equal A _6 A _6 Definition < F$ > equal A _7 A _7 Definition < G > equal
+A _1 A _1 Definition < A > equal A _2 A _2 Definition < B > equal A _3 A _3 Definition < C > equal A _4 A _4 Definition < D > equal A _5 A _5 Definition < E > equal A _6 A _6 Definition < F$ > equal A _7 A _7 Definition < G > equal A _8 A _8 Definition < H > equal
+Equal < Stream > contramap
+Equal < Stream > contramap
+Equal < Stream > contramap
+Equal < Stream > contramap
+Equal < Stream > contramap
+Equal < Stream > contramap
+Equal < Stream > contramap
+A head A head Definition < E > equal A tail A tail Definition < L > equal
+Equal < Stream > contramap
+Class < isInstance Equal < A > eq
+Class < isInstance F0 f
+Function andThen
+Function identity
+Strategy new
+F f
+Strategy obtain List map
+List map
+List map
+Array map
+Strategy < List > parMap
+Strategy < Array > parMap
+List partition Strategy < List > parList
+List zipWith
+Array zipWith
+ParModule new
+List map
+Stream map
+P1 map
+NonEmptyList toList
+Array toStream
+Zipper rights Zipper focus Zipper lefts
+Tree subForest ParModule mapStream ParModule parMapTree Tree root
+TreeZipper p P4 _4 TreeZipper rights TreeZipper lefts P4 _1
+List zipWith
+Stream zipWith
+Array toStream Array toStream
+Stream isEmpty Monoid zero Stream map Monoid sum
+Zipper positions
+Tree cojoin
+TreeZipper positions
+NonEmptyList tails
+Actor act
+Actor act
+Promise < Promise < A > bind
+Actor act Effect1 new Actor promise
+Promise < F > bind
+Promise < B > apply
+List isEmpty List head List tail F new
+Stream isEmpty Stream head Promise join F new
+CountDownLatch await Error new Option some
+CountDownLatch await Error new
+Option isSome
+Stream isEmpty Stream head
+AtomicBoolean new ConcurrentLinkedQueue new ConcurrentLinkedQueue < T > poll Effect1 f Strategy par AtomicBoolean set P1 new ConcurrentLinkedQueue < T > offer ConcurrentLinkedQueue < T > isEmpty AtomicBoolean compareAndSet Strategy par Effect1 new
+Actor new
+Actor new
+F f
+Callable < A > call F f
+Callables liftM2 List foldRight
+F0 f Either isLeft Either left Either right
+F0 f Option isSome Option some Exception new
+Callable < A > call
+DriverManager getConnection Connector new
+DbState new
+DbState new
+DbState new
+DbState new
+Connector connect Connection setAutoCommit DB run Connection rollback Exception addSuppressed DB run
+Pure new
+Suspend new
+Gen map Gen bind Gen map
+F f
+Gen new
+F f F f
+F f Effect1 f
+Gen new
+Gen < B > apply
+Gen < C > apply
+Gen < D > apply
+Gen < E > apply
+Gen < F$ > apply
+Gen < G > apply
+Gen < H > apply
+Gen < F > bind
+Gen new
+Gen new
+Gen new
+Gen new
+Gen new
+Arg new
+LongGen new HashMap < LongGen , Gen > get HashMap < LongGen , Gen > put
+F f
+Property gen Gen bind
+Property gen Gen bind
+Property gen Gen bind
+F f Result isNoResult Result isProven Result args Result isUnfalsified Result isFalsified Result args Result isException Result args Result exception
+F0 f Property new
+Property new
+Property new
+List map
+List toArray
+List toArray
+PrintStream println ClassNotFoundException printStackTrace
+CheckResult new
+CheckResult new
+CheckResult new
+CheckResult new
+CheckResult new
+CheckResult new
+CheckResult succeeded CheckResult args Option some List length List head Show showS CheckResult isProven CheckResult isPassed CheckResult succeeded CheckResult discarded CheckResult discarded CheckResult isFalsified CheckResult succeeded CheckResult isExhausted CheckResult succeeded CheckResult discarded CheckResult isPropException StringWriter new PrintWriter new CheckResult exception Option some CheckResult isGenException StringWriter new PrintWriter new CheckResult exception Option some CheckResult getClass F new
+CheckResult isProven CheckResult isPassed CheckResult isExhausted CheckResult isFalsified CheckResult isPropException CheckResult isGenException Error new CheckResult getClass F new
+Cogen cogen F new
+Gen map
+Gen map
+Gen map
+Gen map
+Gen map
+Gen map
+Gen map
+Gen map
+Gen map
+Gen map Gen map
+Gen bind
+Gen map
+Class < A > getEnumConstants
+Option some
+F f Option map Result new
+Option orSome
+Result new
+Result new
+Result new
+Result new
+Result new
+F f
+F f
+F f
+F f
+F f
+Shrink new
+GreedoLayoutSizeCalculator setFixedHeight
+GreedoLayoutSizeCalculator setMaxRowHeight
+SparseArray new Size getHeight Size getHeight SparseArray put SparseArray size SparseArray valueAt State getItemCount SparseArray get Recycler getViewForPosition View getMeasuredWidth View getMeasuredHeight Size new Size getWidth Size getHeight SparseArray remove Size getWidth Size getHeight Size getWidth SparseArray size SparseArray valueAt Recycler recycleView

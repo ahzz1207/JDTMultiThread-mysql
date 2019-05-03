@@ -1,0 +1,3 @@
+set fixed height
+set max row height
+pre fill grid
