@@ -19,20 +19,16 @@ public class Main {
         listClasses(new File(dir));
 
         final int threadNum = 5; // 开5个线程, 每个线程处理一个project, 每个线程的处理结果写入一个文件，最后进行merge处理
+        ArrayList<MultiVisitor> multiVisitors = new ArrayList<>();
 
         int i = 0;
         for(i = 0; i < listProj.size(); i+= threadNum) {
-            MultiVisitor multiVisitor1 = new MultiVisitor(listProj.get(i),"t1");
-            MultiVisitor multiVisitor2 = new MultiVisitor(listProj.get(i + 1), "t2");
-            MultiVisitor multiVisitor3 = new MultiVisitor(listProj.get(i + 2), "t3");
-            MultiVisitor multiVisitor4 = new MultiVisitor(listProj.get(i + 3), "t4");
-            MultiVisitor multiVisitor5 = new MultiVisitor(listProj.get(i + 4), "t5");
-
-            multiVisitor1.start();
-            multiVisitor2.start();
-            multiVisitor3.start();
-            multiVisitor4.start();
-            multiVisitor5.start();
+            for (int k = 0; k < threadNum; k++){
+                multiVisitors.add(new MultiVisitor(listProj.get(i + k), "t" + String.valueOf(k + 1)));
+            }
+            for (int k = 0; k < threadNum; k++){
+                multiVisitors.get(k).start();
+            }
         }
 
         for(; i < listProj.size(); i++){
