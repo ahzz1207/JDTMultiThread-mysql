@@ -8,11 +8,18 @@ public class Main {
     public static String dir = "src/main/resources/project";
     public static ArrayList<String> listProj = new ArrayList<>();
     public static void listClasses(File projDir) {
+        // 一级目录是username
+        // 二级目录是projname
         ArrayList<String> wrongProects = new ArrayList<>();
         File[] files = projDir.listFiles();
-        for (File f : files) {
-            if (f.isDirectory() && (!wrongProects.contains(f.getName())))
-                listProj.add(f.getPath());
+        for (File username : files) {
+            if (username.isDirectory()){
+                for(File proj : username.listFiles()){
+                    if(proj.isDirectory() && !(wrongProects.contains(proj.getName()))){
+                        listProj.add(proj.getPath());
+                    }
+                }
+            }
         }
     }
     public static void main(String[] args) throws IOException, ClassNotFoundException{
@@ -23,7 +30,7 @@ public class Main {
         for(int k = 0; k < threadNum; k++)
             splitProj.add(new ArrayList<String>());
         int i = 0;
-        for (i = 0; i< listProj.size() / threadNum * threadNum; i+=threadNum){
+        for (i = 0; i< listProj.size() / threadNum * threadNum; i += threadNum){
             for(int k = 0; k < threadNum; k++)
                 splitProj.get(k).add(listProj.get(i + k));
         }
