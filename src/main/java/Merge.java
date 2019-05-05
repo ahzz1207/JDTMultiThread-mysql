@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class Merge {
     public static String dir = "src/main/resources/project";
-    static final int threadNum = 5; // 线程数
+    static final int threadNum = 2; // 线程数
 
     //合并json存储的ast树
     public static void mergeJson(String feature) throws Exception{
