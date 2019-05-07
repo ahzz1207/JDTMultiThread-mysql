@@ -1,3 +1,0 @@
-on create
-set indicator color
-add update listener

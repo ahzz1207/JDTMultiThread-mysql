@@ -1,3 +1,0 @@
-AVLoadingIndicatorView setIndicator
-Indicator setColor
-HashMap < ValueAnimator , AnimatorUpdateListener > put

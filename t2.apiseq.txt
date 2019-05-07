@@ -1,5 +1,0 @@
-TagView isInputAvailable TagView endInput TagView getText OnTagChangeListener onAppend
-TagView getText
-ArrayList new TagView getText List < String > add List < String > size List < String > toArray
-IllegalStateException new TagView new TagView setOnClickListener
-TagView new TagView setOnClickListener

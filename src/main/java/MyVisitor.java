@@ -1,18 +1,20 @@
-
 import org.eclipse.jdt.core.dom.*;
-
-import java.io.File;
-import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.*;
 
-import org.json.*;
-
 public class MyVisitor extends ASTVisitor{
-    static String version;
-    MyVisitor(){}
-    MyVisitor(String version){
-        this.version = version;
+    static AtomicInteger id = new AtomicInteger();
+    private Connection conn;
+    private PreparedStatement stmt = null;
+    private String sql;
+
+    MyVisitor( Connection conn, String sql) {
+        this.conn = conn;
+        this.sql = sql;
     }
 
     static String[] keyWord = {
@@ -90,14 +92,15 @@ public class MyVisitor extends ASTVisitor{
 
     public static boolean isJdkApi(String s){
         for(String si: jdkPrefix){
-            if(s.startsWith(si))
+            if(s.startsWith(si)) {
                 return true;
+            }
         }
         return false;
     }
 
     private String parseMethname(String name){
-        ArrayList<String> Methnames = new ArrayList<>();
+        ArrayList<String> methNames = new ArrayList<>();
         int start = 0;
         int l = name.length();
         int end;
@@ -109,8 +112,9 @@ public class MyVisitor extends ASTVisitor{
                 token.append(name.charAt(end));
                 end++;
             }
-            if(token.length() > 1)
-                Methnames.add(token.toString());
+            if(token.length() > 1) {
+                methNames.add(token.toString());
+            }
             if(end < l){
                 start = end;
             }
@@ -119,8 +123,8 @@ public class MyVisitor extends ASTVisitor{
             }
         }
         StringBuffer sb = new StringBuffer();
-        for(int i = 0; i < Methnames.size(); i++){
-            sb.append(Methnames.get(i));
+        for(int i = 0; i < methNames.size(); i++){
+            sb.append(methNames.get(i));
             sb.append(" ");
         }
         return  sb.toString().trim();
@@ -170,32 +174,20 @@ public class MyVisitor extends ASTVisitor{
         return to.toString().trim();
     }
 
-    private void writeTXT(String content, String file_path){
-        try{
-            FileOutputStream out = new FileOutputStream(new File(file_path), true);
-            out.write((content.toString() + "\n").getBytes());
-            out.flush();
-            out.close();
-        }catch (Exception e){
-            System.err.println(e.toString());
-        }
-    }
-
-    private void handleAST(List<ASTNode> astNodes, String ast_file){
+    private String handleAST(List<ASTNode> astNodes) {
         // ast的信息写入json文件
         Map<ASTNode, Integer> astNum = new HashMap<>();
-        for(int i = 0; i < astNodes.size(); i++){
+        for (int i = 0; i < astNodes.size(); i++) {
             astNum.put(astNodes.get(i), i);
         }
 
         Map<ASTNode, ArrayList<Integer>> AST_child = new HashMap<>();
-        for(int i = 0; i < astNodes.size(); i++){
+        for (int i = 0; i < astNodes.size(); i++) {
             ASTNode parent = astNodes.get(i).getParent();
-            if(parent != null){
-                if(AST_child.containsKey(parent)){
+            if (parent != null) {
+                if (AST_child.containsKey(parent)) {
                     AST_child.get(parent).add(i);
-                }
-                else{
+                } else {
                     ArrayList<Integer> child = new ArrayList<>();
                     child.add(i);
                     AST_child.put(parent, child);
@@ -204,45 +196,37 @@ public class MyVisitor extends ASTVisitor{
         }
 
         ArrayList<Map<String, Object>> finalAST = new ArrayList<>();
-        for(int i = 0; i < astNodes.size(); i++){
+        for (int i = 0; i < astNodes.size(); i++) {
             Map<String, Object> treeNode = new HashMap<>();
             treeNode.put("index", i);
             String type = astNodes.get(i).getClass().toString();
 
             treeNode.put("type", type.substring(1 + type.lastIndexOf(".")));
-            if(AST_child.containsKey(astNodes.get(i))){
+            if (AST_child.containsKey(astNodes.get(i))) {
                 treeNode.put("children", AST_child.get(astNodes.get(i)));
-            }
-            else{
+            } else {
                 //叶结点
                 // string / char => <STR>
                 // number => <NUM>
                 ASTNode n = astNodes.get(i);
-                if(n instanceof StringLiteral)
+                if (n instanceof StringLiteral) {
                     treeNode.put("value", "<STR>");
-                else if (n instanceof NumberLiteral)
+                } else if (n instanceof NumberLiteral) {
                     treeNode.put("value", "<NUM>");
-
-                else
+                } else {
                     treeNode.put("value", n.toString());
+                }
             }
             finalAST.add(treeNode);
         }
 
         //写入json文件
-        try{
-            FileOutputStream out = new FileOutputStream(new File(ast_file), true);
-            JSONArray ast = new JSONArray(finalAST);
-            out.write((ast.toString() + "\n").getBytes());
-            out.flush();
-            out.close();
-        }catch (Exception e){
-            System.err.println(e.toString());
-        }
+        return finalAST.toString();
     }
 
     @Override
     public boolean visit(MethodDeclaration node) {
+
         Block block = node.getBody();
 
         String methName = "";
@@ -253,11 +237,12 @@ public class MyVisitor extends ASTVisitor{
 
         bodyToken = getTokens(node.toString());
 
-        methName = parseMethname(node.getName().toString()); //方法名
+        methName = parseMethname(node.getName().toString());
 
         Javadoc docs = node.getJavadoc();
-        if(docs == null)
+        if(docs == null) {
             return true;
+        }
         List tags = docs.tags();
 
         boolean hasJavadoc = false;
@@ -279,12 +264,17 @@ public class MyVisitor extends ASTVisitor{
             }
         }
 
-        if(!hasJavadoc)
+        if(!hasJavadoc) {
             return true;
+        }
 
         //删掉注释
         docs.delete();
         String methodComplete = node.toString().replaceAll("\\n", " ");
+
+        if (block == null){
+            return false;
+        }
 
         block.accept(new ASTVisitor() {
             @Override
@@ -295,24 +285,14 @@ public class MyVisitor extends ASTVisitor{
                     ITypeBinding typeBinding = expr.resolveTypeBinding();
                     if(typeBinding != null){
                         String qualifiedName = typeBinding.getQualifiedName();
-
                         Pattern p = Pattern.compile("<|>|,");
                         Matcher m = p.matcher(qualifiedName);
                         String[] className = p.split(qualifiedName);
-
                         StringBuffer api = new StringBuffer();
-                        for(int i = 0; i < className.length; i++){
-                            String[] packageName = className[i].split("\\.");
-                            api.append(packageName[packageName.length - 1]);
-                            if(m.find()){
-                                api.append(" ");
-                                api.append(m.group());
-                                api.append(" ");
-                            }
-                        }
+
                         api.append(" ");
                         api.append(node.getName());
-
+                        matcher(api, m, className);
                         apiseq.add(api.toString().replaceAll(" +", " ").trim());
                         //System.out.println("api: " + api.toString().replaceAll(" +", " "));
 //                        if(isJdkApi(qualifiedName)){
@@ -322,26 +302,31 @@ public class MyVisitor extends ASTVisitor{
                 }
             }
 
-            // 处理new o
-            public void endVisit(ClassInstanceCreation node){
-                String qualifiedName = node.getType().resolveBinding().getQualifiedName();
-
-                Pattern p = Pattern.compile("<|>|,");
-                Matcher m = p.matcher(qualifiedName);
-
-                String[] className = p.split(qualifiedName);
-                StringBuffer api = new StringBuffer();
-
+            public void matcher(StringBuffer api, Matcher m, String[] className){
                 for(int i = 0; i < className.length; i++){
                     String[] packageName = className[i].split("\\.");
                     api.append(packageName[packageName.length - 1]);
-
                     if(m.find()){
                         api.append(" ");
                         api.append(m.group());
                         api.append(" ");
                     }
                 }
+            }
+
+            // 处理new o
+            @Override
+            public void endVisit(ClassInstanceCreation node){
+                if (node == null){
+                    return;
+                }
+                String qualifiedName = node.getType().resolveBinding().getQualifiedName();
+                Pattern p = Pattern.compile("<|>|,");
+                Matcher m = p.matcher(qualifiedName);
+                String[] className = p.split(qualifiedName);
+                StringBuffer api = new StringBuffer();
+
+                matcher(api, m, className);
 
                 api.append(" new");
 
@@ -359,35 +344,34 @@ public class MyVisitor extends ASTVisitor{
         }
         String api = APIseq.toString().trim();
 
-        if(!bodyToken.isEmpty() && !methName.isEmpty() && !comments.isEmpty() && !api.isEmpty()){
-            System.out.println("body token: " + bodyToken);
-            System.out.println("method name: " + methName);
-            System.out.println("comments: " + comments);
-            System.out.println("apiseq: " + api);
-            System.out.println("method complete: " + methodComplete);
+        NodeVisitor nv = new NodeVisitor();
+        node.accept(nv);
+        List<ASTNode> astNodes = nv.getASTNodes();
 
-            NodeVisitor nv = new NodeVisitor();
-            node.accept(nv);
-
-            List<ASTNode> astNodes = nv.getASTNodes();
-            handleAST(astNodes, version + ".ast.json");
-
-            //preprocessFile(version + ".tokens.txt");
-            writeTXT(bodyToken, version + ".tokens.txt");
-
-            //preprocessFile(version + ".methname.txt");
-            writeTXT(methName, version + ".methname.txt");
-
-            //preprocessFile(version + ".desc.txt");
-            writeTXT(comments, version + ".desc.txt");
-
-            //preprocessFile(version + ".apiseq.txt");
-            writeTXT(api, version + ".apiseq.txt");
-
-            //preprocessFile(version + ".rawcode.txt");
-            writeTXT(methodComplete, version + ".rawcode.txt");
+        if(!bodyToken.isEmpty() && !methName.isEmpty() && !comments.isEmpty() && !api.isEmpty() && !astNodes.isEmpty()){
+            int key = id.getAndIncrement();
+            // 写入数据库
+            try {
+                stmt = conn.prepareStatement(sql);
+                // stmt.setInt(1, key);
+                stmt.setString(1, methName);
+                stmt.setString(2, bodyToken);
+                stmt.setString(3, comments);
+                stmt.setString(4, methodComplete);
+                stmt.setString(5, api);
+                stmt.setString(6, handleAST(astNodes));
+                stmt.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 }

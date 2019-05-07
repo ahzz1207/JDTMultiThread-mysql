@@ -11,9 +11,9 @@ public class JdtAstUtil {
             bufferedInputStream.read(input);
             bufferedInputStream.close();
         }catch (FileNotFoundException e){
-            System.err.println(e.toString());
+            e.printStackTrace();
         }catch (IOException e){
-            System.err.println(e.toString());
+            e.printStackTrace();
         }
 
         ASTParser astParser = ASTParser.newParser(AST.JLS8);

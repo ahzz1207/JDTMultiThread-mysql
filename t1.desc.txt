@@ -1,3 +1,0 @@
-created by jack wang on 2016/8/5
-setindicatorcolor(0xff00ff00) or setindicatorcolor(color
-your should use this to add animatorupdatelistener when create animator , otherwise , animator doesn't work when the animation restart
