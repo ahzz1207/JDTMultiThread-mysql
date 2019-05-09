@@ -7,13 +7,13 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
-    public static String dir = "C:\\githubRepo";
+    public static String dir = "D:\\github";
     public static ArrayList<String> listProj = new ArrayList<>();
     public static AtomicInteger succesMeth = new AtomicInteger();
     public static AtomicInteger failedMeth = new AtomicInteger();
     public static AtomicInteger repos = new AtomicInteger();
 
-    public static void listClasses(File projDir, Connection conn) {
+    public static void listClasses(File projDir, Connection conn, HashSet<String> selected) {
         // 一级目录是username
         // 二级目录是projname
         // 不同username下的projname可能会重复 username-projname
@@ -30,18 +30,21 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // ArrayList<String> wrongProjects = new ArrayList<>();
-
         File[] userNameFiles = projDir.listFiles();
+        HashSet<String> test = new HashSet<>();
         for (File username : userNameFiles) {
             if (username.isDirectory()) {
                 for (File proj : username.listFiles()) {
                     if (proj.isDirectory()) {
                         //未处理过
                         if (!dealtProjects.contains(username.getName() + "-" + proj.getName()) &&
-                                !dealtProjects.contains((username.getName() + "@$$" + proj.getName()))) {
-                            listProj.add(proj.getPath());
+                                !dealtProjects.contains((username.getName() + "@$$" + proj.getName())) &&
+                                selected.contains(username.getName() + "-" + proj.getName())) {
+                            // 用set确保没有重复项目
+                            if (!test.contains(proj.getPath())){
+                                listProj.add(proj.getPath());
+                            }
+                            test.add(proj.getPath());
                         }
                     }
                 }
@@ -50,6 +53,33 @@ public class Main {
         System.out.println("The files number is: " + listProj.size());
     }
 
+    public static HashSet<String> selectFile(){
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://10.141.221.85:3306/github?serverTimezone=UTC";
+        String user = "root";
+        String password = "root";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+       HashSet<String> selected = new HashSet<>();
+        try {
+            String sql = "select repos_name, owner_name from repository_java where id < 40000 and stars_count > 10";
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            stmt = conn.prepareStatement(sql);
+            ResultSet result = stmt.executeQuery();
+            while (result.next()){
+                selected.add(result.getString("owner_name") +
+                        "-" +result.getString("repos_name"));
+            }
+            stmt.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return selected;
+    }
     public static void main(String[] args) {
         // 链接数据库
         Connection conn = null;
@@ -67,8 +97,9 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        listClasses(new File(dir), conn);
+        HashSet<String> selected = selectFile();
+        System.out.println(selected.size());
+        listClasses(new File(dir), conn, selected);
         // 开2个线程, 每个线程处理一个project, 每个线程的处理结果写入一个文件，最后进行merge处理
         final int threadNum = 40;
         ArrayList<ArrayList<String>> splitProj = new ArrayList<>();
