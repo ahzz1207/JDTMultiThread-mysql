@@ -349,11 +349,10 @@ public class MyVisitor extends ASTVisitor{
         List<ASTNode> astNodes = nv.getASTNodes();
 
         if(!bodyToken.isEmpty() && !methName.isEmpty() && !comments.isEmpty() && !api.isEmpty() && !astNodes.isEmpty()){
-            int key = id.getAndIncrement();
+            // int key = id.getAndIncrement();
             // 写入数据库
             try {
                 stmt = conn.prepareStatement(sql);
-                // stmt.setInt(1, key);
                 stmt.setString(1, methName);
                 stmt.setString(2, bodyToken);
                 stmt.setString(3, comments);

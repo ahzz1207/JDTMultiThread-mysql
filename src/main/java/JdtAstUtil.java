@@ -23,8 +23,13 @@ public class JdtAstUtil {
         astParser.setResolveBindings(true);
         astParser.setBindingsRecovery(true);
         astParser.setUnitName("any_name");
-        CompilationUnit result = (CompilationUnit) (astParser.createAST(null));
-
-        return result;
+        try {
+            CompilationUnit result = (CompilationUnit) (astParser.createAST(null));
+            return result;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
