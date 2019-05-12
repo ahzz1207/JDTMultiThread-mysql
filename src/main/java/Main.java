@@ -62,7 +62,8 @@ public class Main {
         PreparedStatement stmt = null;
        HashSet<String> selected = new HashSet<>();
         try {
-            String sql = "select repos_name, owner_name from repository_java where id < 40000 and stars_count > 10";
+            String sql = "select repos_name, owner_name from repository_java where id < 40000 and " +
+                    "stars_count > 5 and stars_count < 10";
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             stmt = conn.prepareStatement(sql);
@@ -148,6 +149,16 @@ public class Main {
             PreparedStatement stmt = null;
             for (int i = 0; i < projPath.size(); i++) {
                 long startTime = new Date().getTime();
+                String[] info = projPath.get(i).split("\\\\");
+                // 记录已处理的项目
+                try {
+                    stmt = conn.prepareStatement(logsql);
+                    stmt.setString(1, (info[info.length - 2] + "@$$" + info[info.length - 1]));
+                    stmt.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 new DirExplorer((level, path, file) -> path.endsWith(".java"), (level, path, file) -> {
                     // System.out.println(file.getPath());
                     try {
@@ -167,20 +178,11 @@ public class Main {
                         return;
                     }
                 }).explore(new File(projPath.get(i)));
-                // 判断日志文件是否存在 存在就追加写入
                 // projPath 是绝对路径
-                String[] info = projPath.get(i).split("\\\\");
                 long endTIme = new Date().getTime();
                 // 记录已完成的repository
-                try {
-                    stmt = conn.prepareStatement(logsql);
-                    stmt.setString(1, (info[info.length - 2] + "@$$" + info[info.length - 1]));
-                    stmt.execute();
-                    System.out.println(this.thread.getName() + " Already handled repos: " + (this.repos.getAndIncrement() + 1));
-                    System.out.println(info[info.length - 2] + "-" + info[info.length - 1] + " consume time:" + (endTIme - startTime));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.println(this.thread.getName() + " Already handled repos: " + (this.repos.getAndIncrement() + 1));
+                System.out.println(info[info.length - 2] + "-" + info[info.length - 1] + " consume time:" + (endTIme - startTime));
             }
             try {
                 stmt.close();
