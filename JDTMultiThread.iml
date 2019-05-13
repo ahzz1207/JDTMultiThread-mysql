@@ -25,8 +25,13 @@
     <orderEntry type="library" name="Maven: org.eclipse.platform:org.eclipse.core.filesystem:1.7.300" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.platform:org.eclipse.text:3.8.100" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.platform:org.eclipse.core.commands:3.9.300" level="project" />
-    <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.13" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.6.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.json-lib:json-lib:jdk15:2.4" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.8.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.ezmorph:ezmorph:1.0.6" level="project" />
   </component>
 </module>
