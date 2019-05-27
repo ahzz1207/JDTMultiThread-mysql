@@ -5,9 +5,10 @@ import java.sql.*;
 import java.util.*;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
+import com.mysql.cj.jdbc.Driver;
 
 public class Main {
-    public static String dir = "D:\\github";
+    public static String dir = "/home/fdse/data/repo/github";
     public static ArrayList<String> listProj = new ArrayList<>();
     public static AtomicInteger succesMeth = new AtomicInteger();
     public static AtomicInteger failedMeth = new AtomicInteger();
@@ -37,9 +38,9 @@ public class Main {
                 for (File proj : username.listFiles()) {
                     if (proj.isDirectory()) {
                         //未处理过
-                        if (!dealtProjects.contains(username.getName() + "-" + proj.getName()) &&
-                                !dealtProjects.contains((username.getName() + "@$$" + proj.getName())) &&
-                                selected.contains(username.getName() + "-" + proj.getName())) {
+                        if (!dealtProjects.contains((username.getName() + "@$$" + proj.getName())) &&
+                                !dealtProjects.contains((username.getName() + "$$%" + proj.getName())) &&
+                                selected.contains(username.getName() + "$$%" + proj.getName())) {
                             // 用set确保没有重复项目
                             if (!test.contains(proj.getPath())){
                                 listProj.add(proj.getPath());
@@ -53,29 +54,18 @@ public class Main {
         System.out.println("The files number is: " + listProj.size());
     }
 
-    public static HashSet<String> selectFile(){
-        String driver = "com.mysql.cj.jdbc.Driver";
-        String url = "jdbc:mysql://10.141.221.85:3306/github?serverTimezone=UTC";
-        String user = "root";
-        String password = "root";
-        Connection conn = null;
+    public static HashSet<String> selectFile(Connection connection){
+        Connection conn = connection;
         PreparedStatement stmt = null;
-       HashSet<String> selected = new HashSet<>();
+        HashSet<String> selected = new HashSet<>();
         try {
-            String sql = "select repos_name, owner_name from repository_java where id < 40000 and " +
-                    "stars_count > 5 and stars_count < 10";
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url, user, password);
+            String sql = "select repo_name from star20";
             stmt = conn.prepareStatement(sql);
             ResultSet result = stmt.executeQuery();
             while (result.next()){
-                selected.add(result.getString("owner_name") +
-                        "-" +result.getString("repos_name"));
+                selected.add(result.getString(1));
             }
             stmt.close();
-            conn.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,7 +75,7 @@ public class Main {
         // 链接数据库
         Connection conn = null;
         String driver = "com.mysql.cj.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/githubreposfile?serverTimezone=UTC";
+        String url = "jdbc:mysql://10.131.252.198:3306/githubreposfile?serverTimezone=UTC";
         String user = "root";
         String password = "17210240114";
         String sql = "insert into reposFile (`methName`, `tokens`, `comments`, `rawcode`, `apiseq`, `ast`) values (?,?,?,?,?,?)" ;
@@ -98,7 +88,7 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        HashSet<String> selected = selectFile();
+        HashSet<String> selected = selectFile(conn);
         System.out.println(selected.size());
         listClasses(new File(dir), conn, selected);
         // 开2个线程, 每个线程处理一个project, 每个线程的处理结果写入一个文件，最后进行merge处理
@@ -149,11 +139,11 @@ public class Main {
             PreparedStatement stmt = null;
             for (int i = 0; i < projPath.size(); i++) {
                 long startTime = new Date().getTime();
-                String[] info = projPath.get(i).split("\\\\");
+                String[] info = projPath.get(i).split(File.separator);
                 // 记录已处理的项目
                 try {
                     stmt = conn.prepareStatement(logsql);
-                    stmt.setString(1, (info[info.length - 2] + "@$$" + info[info.length - 1]));
+                    stmt.setString(1, (info[info.length - 2] + "$$%" + info[info.length - 1]));
                     stmt.execute();
                 } catch (SQLException e) {
                     e.printStackTrace();

@@ -1,3 +1,4 @@
+import net.sf.json.JSONArray;
 import org.eclipse.jdt.core.dom.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -221,7 +222,8 @@ public class MyVisitor extends ASTVisitor{
         }
 
         //写入json文件
-        return finalAST.toString();
+        JSONArray jsonArray = JSONArray.fromObject(finalAST);
+        return jsonArray.toString();
     }
 
     @Override
