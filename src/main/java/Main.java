@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.mysql.cj.jdbc.Driver;
 
 public class Main {
-    public static String dir = "/home/fdse/data/repo/github";
+    public static String dir = "src/main/resources/project";
     public static ArrayList<String> listProj = new ArrayList<>();
     public static AtomicInteger succesMeth = new AtomicInteger();
     public static AtomicInteger failedMeth = new AtomicInteger();
@@ -40,7 +40,7 @@ public class Main {
                         //未处理过
                         if (!dealtProjects.contains((username.getName() + "@$$" + proj.getName())) &&
                                 !dealtProjects.contains((username.getName() + "$$%" + proj.getName())) &&
-                                selected.contains(username.getName() + "$$%" + proj.getName())) {
+                                !selected.contains(username.getName() + "$$%" + proj.getName())) {
                             // 用set确保没有重复项目
                             if (!test.contains(proj.getPath())){
                                 listProj.add(proj.getPath());
@@ -59,7 +59,7 @@ public class Main {
         PreparedStatement stmt = null;
         HashSet<String> selected = new HashSet<>();
         try {
-            String sql = "select repo_name from star20";
+            String sql = "select repo from reposname";
             stmt = conn.prepareStatement(sql);
             ResultSet result = stmt.executeQuery();
             while (result.next()){
@@ -75,9 +75,9 @@ public class Main {
         // 链接数据库
         Connection conn = null;
         String driver = "com.mysql.cj.jdbc.Driver";
-        String url = "jdbc:mysql://10.131.252.198:3306/githubreposfile?serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost:3306/githubreposfile?serverTimezone=UTC";
         String user = "root";
-        String password = "17210240114";
+        String password = "Taylorswift-1997";
         String sql = "insert into reposFile (`methName`, `tokens`, `comments`, `rawcode`, `apiseq`, `ast`, `newapiseq`) values (?,?,?,?,?,?,?)" ;
         String logsql = "insert into reposName (`repo`) values (?)";
         try {
