@@ -235,6 +235,10 @@ public class MyVisitor extends ASTVisitor{
         String comments = "";
         ArrayList<String> apiseq = new ArrayList<>();
         StringBuffer APIseq = new StringBuffer();
+
+        ArrayList<String> jdkapiseq = new ArrayList<>();
+        StringBuffer jdkAPIseq = new StringBuffer();
+
         String bodyToken = "";
 
         bodyToken = getTokens(node.toString());
@@ -292,10 +296,15 @@ public class MyVisitor extends ASTVisitor{
                         String[] className = p.split(qualifiedName);
                         StringBuffer api = new StringBuffer();
 
+                        matcher(api, m, className);
                         api.append(" ");
                         api.append(node.getName());
-                        matcher(api, m, className);
+
                         apiseq.add(api.toString().replaceAll(" +", " ").trim());
+
+                        if(isJdkApi(qualifiedName)){
+                            jdkapiseq.add(api.toString().replaceAll(" +", " ").trim());
+                        }
                         //System.out.println("api: " + api.toString().replaceAll(" +", " "));
 //                        if(isJdkApi(qualifiedName)){
 //                            ret.add(qualifiedName + " " + node.getName());
@@ -333,6 +342,10 @@ public class MyVisitor extends ASTVisitor{
                 api.append(" new");
 
                 apiseq.add(api.toString().replaceAll(" +", " ").trim());
+
+                if(isJdkApi(qualifiedName)){
+                    jdkapiseq.add(api.toString().replaceAll(" +", " ").trim());
+                }
                 //System.out.println("api: " + api.toString().replaceAll(" +", " "));
 //                if(isJdkApi(qualifiedName)){
 //                    ret.add(qualifiedName + " " + "new");
@@ -344,7 +357,14 @@ public class MyVisitor extends ASTVisitor{
             APIseq.append(api);
             APIseq.append(" ");
         }
+        for(String api: jdkapiseq){
+            jdkAPIseq.append(api);
+            jdkAPIseq.append(" ");
+        }
         String api = APIseq.toString().trim();
+        String jdkapi = jdkAPIseq.toString().trim();
+        if(jdkapi.length() == 0)
+            jdkapi = null;
 
         NodeVisitor nv = new NodeVisitor();
         node.accept(nv);
@@ -361,6 +381,7 @@ public class MyVisitor extends ASTVisitor{
                 stmt.setString(4, methodComplete);
                 stmt.setString(5, api);
                 stmt.setString(6, handleAST(astNodes));
+                stmt.setString(7, jdkapi);
                 stmt.execute();
             } catch (SQLException e) {
                 e.printStackTrace();

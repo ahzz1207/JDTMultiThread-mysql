@@ -78,7 +78,7 @@ public class Main {
         String url = "jdbc:mysql://10.131.252.198:3306/githubreposfile?serverTimezone=UTC";
         String user = "root";
         String password = "17210240114";
-        String sql = "insert into reposFile (`methName`, `tokens`, `comments`, `rawcode`, `apiseq`, `ast`) values (?,?,?,?,?,?)" ;
+        String sql = "insert into reposFile (`methName`, `tokens`, `comments`, `rawcode`, `apiseq`, `ast`, `newapiseq`) values (?,?,?,?,?,?,?)" ;
         String logsql = "insert into reposName (`repo`) values (?)";
         try {
             Class.forName(driver);
